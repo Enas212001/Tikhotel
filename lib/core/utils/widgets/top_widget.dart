@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
-
 import 'package:ticket_flow/core/utils/app_colors.dart';
-import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/core/utils/text_styles.dart';
 
 class TopWidget extends StatelessWidget {
-  const TopWidget({super.key, required this.search, required this.title});
+  const TopWidget({
+    super.key,
+    required this.search,
+    required this.title,
+    this.isDashboard = false,
+  });
   final String title, search;
+  final bool isDashboard;
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 130.h,
       decoration: BoxDecoration(
         color: AppColors.primary,
         borderRadius: BorderRadius.only(
@@ -33,9 +35,9 @@ class TopWidget extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  GoRouter.of(context).push(AppRoutes.admin);
+                  Scaffold.of(context).openDrawer();
                 },
-                child: SvgPicture.asset(Assets.resourceImagesSetting),
+                child: SvgPicture.asset(Assets.imagesSetting),
               ),
               Spacer(flex: 2),
               Text(title, style: TextStyles.text14MeduimWhite),
@@ -43,26 +45,29 @@ class TopWidget extends StatelessWidget {
             ],
           ),
           SizedBox(height: 10.h),
-          SizedBox(
-            height: 40.h,
-            child: TextField(
-              decoration: InputDecoration(
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: AppColors.lightGrey,
-                  size: 24.sp,
+          isDashboard
+              ? SizedBox()
+              : SizedBox(
+                  height: 40.h,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: AppColors.lightGrey,
+                        size: 24.sp,
+                      ),
+                      filled: true,
+                      fillColor: AppColors.white,
+                      hintText: 'Search $search',
+                      hintStyle: TextStyles.text12RegularLightGrey,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.r),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
                 ),
-                filled: true,
-                fillColor: AppColors.white,
-                hintText: 'Search for any $search',
-                hintStyle: TextStyles.text12RegularLightGrey,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.r),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
+          SizedBox(height: isDashboard ? 0 : 10.h),
         ],
       ),
     );

@@ -18,7 +18,7 @@ class GuestCard extends StatelessWidget {
             DetailItem(
               title: 'Room:',
               value: '9027',
-              image: Assets.resourceImagesRoom,
+              image: Assets.imagesRoom,
               hasIcon: true,
             ),
           ],

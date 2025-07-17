@@ -1,71 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
-import 'package:ticket_flow/core/utils/widgets/card_detail.dart';
 import 'package:ticket_flow/core/utils/widgets/detail_item.dart';
+
+import 'admin_details_card.dart';
+import 'delete_user.dart';
 
 class UserDetailCard extends StatelessWidget {
   const UserDetailCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-      child: Stack(
+    return AdminDeatailsCard(
+      topCard: Column(
         children: [
-          DetailCard(
-            topCard: Column(
-              children: [
-                DetailItem(
-                  title: 'Name:',
-                  value: 'Tasneem',
-                  hasIcon: true,
-                  image: Assets.resourceImagesFname,
-                ),
-                DetailItem(
-                  title: 'Department:',
-                  value: 'General',
-                  hasIcon: true,
-                  image: Assets.resourceImagesDepartment,
-                ),
-              ],
-            ),
-            bottomCard: Column(
-              children: [
-                DetailItem(title: 'Email:', value: 'tasneem@gmail.com'),
-                DetailItem(title: 'Role:', value: 'Administrator'),
-                DetailItem(title: 'Status:', value: 'Active'),
-              ],
-            ),
+          DetailItem(
+            title: 'Name:',
+            value: 'Tasneem',
+            hasIcon: true,
+            image: Assets.imagesFname,
           ),
-          Positioned(
-            top: 12.h,
-            right: 16.w,
-            child: Row(
-              children: [
-                GestureDetector(
-                  onTap: () {},
-                  child: SvgPicture.asset(
-                    Assets.resourceImagesEdit,
-                    width: 22.sp,
-                    height: 22.sp,
-                  ),
-                ),
-                SizedBox(width: 4.w),
-                GestureDetector(
-                  onTap: () {},
-                  child: SvgPicture.asset(
-                    Assets.resourceImagesDelete,
-                    width: 22.sp,
-                    height: 22.sp,
-                  ),
-                ),
-              ],
-            ),
+          DetailItem(
+            title: 'Department:',
+            value: 'General',
+            hasIcon: true,
+            image: Assets.imagesDepartment,
           ),
         ],
       ),
+      bottomCard: Column(
+        children: [
+          DetailItem(title: 'Email:', value: 'tasneem@gmail.com'),
+          DetailItem(title: 'Role:', value: 'Administrator'),
+          DetailItem(title: 'Status:', value: 'Active'),
+        ],
+      ),
+      deleteWidget: DeleteUserDialog(
+        onDelete: () {
+          Navigator.pop(context);
+        },
+      ),
+      route: AppRoutes.updateUser,
     );
   }
 }

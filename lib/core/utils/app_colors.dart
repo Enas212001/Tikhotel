@@ -18,4 +18,5 @@ class AppColors {
   static const Color acceptedBgColor = Color(0xFFEFF7E9);
   static const Color closedColor = Color(0xFFC45252);
   static const Color closedBgColor = Color(0xFFF7EDEE);
+  static const Color percent = Color(0xFF00B69B);
 }

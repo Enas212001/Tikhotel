@@ -28,7 +28,7 @@ class CommonAuthWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(height: 28.h),
-                      Image.asset(Assets.resourceImagesLogo),
+                      Image.asset(Assets.imagesLogo),
                       SizedBox(height: 60.h),
                       child,
                     ],

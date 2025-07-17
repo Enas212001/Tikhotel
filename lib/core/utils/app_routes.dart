@@ -1,28 +1,35 @@
 import 'package:go_router/go_router.dart';
+import 'package:ticket_flow/features/admin/pages/add_department_page.dart';
+import 'package:ticket_flow/features/admin/pages/add_location_page.dart';
+import 'package:ticket_flow/features/admin/pages/add_member_page.dart';
+import 'package:ticket_flow/features/admin/pages/add_problem_page.dart';
+import 'package:ticket_flow/features/admin/pages/add_request_type_page.dart';
+import 'package:ticket_flow/features/admin/pages/add_worker_page.dart';
+import 'package:ticket_flow/features/admin/pages/add_topic_page.dart';
+import 'package:ticket_flow/features/admin/pages/add_user_page.dart';
+import 'package:ticket_flow/features/admin/pages/admin_page.dart';
+import 'package:ticket_flow/features/admin/pages/update_dep_page.dart';
+import 'package:ticket_flow/features/admin/pages/update_location_page.dart';
+import 'package:ticket_flow/features/admin/pages/update_member_page.dart';
+import 'package:ticket_flow/features/admin/pages/update_problem_page.dart';
+import 'package:ticket_flow/features/admin/pages/update_worker_page.dart';
+import 'package:ticket_flow/features/admin/pages/update_type_page.dart';
+import 'package:ticket_flow/features/admin/pages/update_topic.dart';
 import 'package:ticket_flow/features/admin/pages/update_user_page.dart';
 import 'package:ticket_flow/features/auth/presentation/pages/admin_login_page.dart';
 import 'package:ticket_flow/features/auth/presentation/pages/forget_pass_page.dart';
 import 'package:ticket_flow/features/auth/presentation/pages/guest_login_page.dart';
-import 'package:ticket_flow/features/admin/pages/add_user_page.dart';
-import 'package:ticket_flow/features/admin/pages/department_page.dart';
-import 'package:ticket_flow/features/admin/pages/location_page.dart';
-import 'package:ticket_flow/features/admin/pages/members_page.dart';
-import 'package:ticket_flow/features/admin/pages/porblems_page.dart';
-import 'package:ticket_flow/features/admin/pages/report_schedule_page.dart';
-import 'package:ticket_flow/features/admin/pages/request_types_page.dart';
-import 'package:ticket_flow/features/admin/pages/admin_page.dart';
-import 'package:ticket_flow/features/admin/pages/topic_page.dart';
-import 'package:ticket_flow/features/admin/pages/workers_page.dart';
+import 'package:ticket_flow/features/dashboard/pages/dashboard_page.dart';
 import 'package:ticket_flow/features/feedback/pages/closed_feedback_page.dart';
 import 'package:ticket_flow/features/feedback/pages/feedback_page.dart';
 import 'package:ticket_flow/features/guest/views/guest_page.dart';
 import 'package:ticket_flow/features/home/presentation/pages/report_page.dart';
-import 'package:ticket_flow/features/work_order/pages/closed_work_order_page.dart';
+import 'package:ticket_flow/features/onboarding/onboarding_page.dart';
 import 'package:ticket_flow/features/request/presentation/pages/add_request_page.dart';
 import 'package:ticket_flow/features/request/presentation/pages/new_request_page.dart';
 import 'package:ticket_flow/features/request/presentation/pages/view_request_page.dart';
-import 'package:ticket_flow/features/onboarding/onboarding_page.dart';
 import 'package:ticket_flow/features/splash/splash_page.dart';
+import 'package:ticket_flow/features/work_order/pages/closed_work_order_page.dart';
 
 class AppRoutes {
   static const String splash = '/';
@@ -39,17 +46,25 @@ class AppRoutes {
   static const String closedWorkOrder = '/closedWorkOrder';
   static const String report = '/report';
   static const String user = '/user';
-  static const String topic = '/topic';
-  static const String department = '/department';
-  static const String workers = '/workers';
-  static const String location = '/location';
-  static const String members = '/members';
-  static const String requestTypes = '/requestTypes';
-  static const String problems = '/problems';
+  static const String addTopic = '/addTopic';
   static const String reportSchedule = '/reportSchedule';
   static const String admin = '/admin';
   static const String addUser = '/addUser';
   static const String updateUser = '/updateUser';
+  static const String addDepartment = '/addDepartment';
+  static const String updateDepartment = '/updateDepartment';
+  static const String dashboard = '/dashboard';
+  static const String updateTopic = '/updateTopic';
+  static const String addWorker = '/addWorker';
+  static const String updateWorker = '/updateWorker';
+  static const String addLocation = '/addLocation';
+  static const String updateLocation = '/updateLocation';
+  static const String addMember = '/addMember';
+  static const String updateMember = '/updateMember';
+  static const String addProblem = '/addProblem';
+  static const String updateProblem = '/updateProblem';
+  static const String addRequestType = '/addRequestType';
+  static const String updateRequestType = '/updateRequestType';
   static final router = GoRouter(
     routes: [
       GoRoute(path: splash, builder: (context, state) => const SplashPage()),
@@ -96,34 +111,71 @@ class AppRoutes {
       ),
       GoRoute(path: report, builder: (context, state) => const ReportPage()),
       GoRoute(path: user, builder: (context, state) => const AdminPage()),
-      GoRoute(path: topic, builder: (context, state) => const TopicPage()),
-      GoRoute(
-        path: department,
-        builder: (context, state) => const DepartmentPage(),
-      ),
-      GoRoute(path: workers, builder: (context, state) => const WorkersPage()),
-      GoRoute(
-        path: location,
-        builder: (context, state) => const LocationPage(),
-      ),
-      GoRoute(path: members, builder: (context, state) => const MembersPage()),
-      GoRoute(
-        path: requestTypes,
-        builder: (context, state) => const RequestTypesPage(),
-      ),
-      GoRoute(
-        path: problems,
-        builder: (context, state) => const ProblemsPage(),
-      ),
-      GoRoute(
-        path: reportSchedule,
-        builder: (context, state) => const ReportSchedulePage(),
-      ),
       GoRoute(path: admin, builder: (context, state) => const AdminPage()),
       GoRoute(path: addUser, builder: (context, state) => const AddUserPage()),
       GoRoute(
         path: updateUser,
         builder: (context, state) => const UpdateUserPage(),
+      ),
+      GoRoute(
+        path: addDepartment,
+        builder: (context, state) => const AddDepartmentPage(),
+      ),
+      GoRoute(
+        path: updateDepartment,
+        builder: (context, state) => const UpdateDepPage(),
+      ),
+      GoRoute(
+        path: dashboard,
+        builder: (context, state) => const DashboardPage(),
+      ),
+      GoRoute(
+        path: addTopic,
+        builder: (context, state) => const AddTopicPage(),
+      ),
+      GoRoute(
+        path: updateTopic,
+        builder: (context, state) => const UpdateTopic(),
+      ),
+      GoRoute(
+        path: addWorker,
+        builder: (context, state) => const AddWorkerPage(),
+      ),
+      GoRoute(
+        path: updateWorker,
+        builder: (context, state) => const UpdateWorkerPage(),
+      ),
+      GoRoute(
+        path: addLocation,
+        builder: (context, state) => const AddLocationPage(),
+      ),
+      GoRoute(
+        path: updateLocation,
+        builder: (context, state) => const UpdateLocationPage(),
+      ),
+      GoRoute(
+        path: addMember,
+        builder: (context, state) => const AddMemberPage(),
+      ),
+      GoRoute(
+        path: updateMember,
+        builder: (context, state) => const UpdateMemberPage(),
+      ),
+      GoRoute(
+        path: addProblem,
+        builder: (context, state) => const AddProblemPage(),
+      ),
+      GoRoute(
+        path: updateProblem,
+        builder: (context, state) => const UpdateProblemPage(),
+      ),
+      GoRoute(
+        path: addRequestType,
+        builder: (context, state) => const AddRequestTypePage(),
+      ),
+      GoRoute(
+        path: updateRequestType,
+        builder: (context, state) => const UpdateTypePage(),
       ),
     ],
   );

@@ -15,7 +15,7 @@ class UsersBody extends StatelessWidget {
         AddFilterWidget(
           title: 'Add User',
           onTap: () {
-            context.push(AppRoutes.updateUser);
+            context.push(AppRoutes.addUser);
           },
         ),
         ListView.builder(

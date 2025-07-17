@@ -17,11 +17,7 @@ class SuccessMessage extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Image.asset(
-                  Assets.resourceImagesAdded,
-                  width: 50.w,
-                  height: 50.h,
-                ),
+                Image.asset(Assets.imagesAdded, width: 50.w, height: 50.h),
                 SizedBox(height: 12.h),
                 Text(
                   messageName,

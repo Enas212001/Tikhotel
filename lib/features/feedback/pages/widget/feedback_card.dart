@@ -22,14 +22,14 @@ class FeedbackCard extends StatelessWidget {
                   hasIcon: true,
                   title: 'Location:',
                   value: '6001 ',
-                  image: Assets.resourceImagesLocation,
+                  image: Assets.imagesLocation,
                 ),
                 DetailItem(
                   hasIcon: true,
                   title: 'Department:',
                   value: 'Engineering',
-                  image: Assets.resourceImagesDepartment,
-                ),
+                  image: Assets.imagesDepartment,
+                ),  
               ],
             ),
             bottomCard: Column(

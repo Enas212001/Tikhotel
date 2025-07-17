@@ -28,7 +28,7 @@ class DetailItem extends StatelessWidget {
               children: [
                 if (hasIcon)
                   SvgPicture.asset(
-                    image ?? Assets.resourceImagesFname,
+                    image ?? Assets.imagesFname,
                     width: 18.w,
                     height: 18.h,
                   ),

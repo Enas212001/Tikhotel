@@ -28,7 +28,7 @@ class AddFilterWidget extends StatelessWidget {
             text: title,
           ),
           IconWithTItle(
-            icon: SvgPicture.asset(Assets.resourceImagesFilter),
+            icon: SvgPicture.asset(Assets.imagesFilter),
             text: 'Filter',
             onTap: filterOnTap,
           ),

@@ -25,7 +25,7 @@ class MessageReplay extends StatelessWidget {
                 curve: Curves.easeOut,
               );
             },
-            child: SvgPicture.asset(Assets.resourceImagesReply),
+            child: SvgPicture.asset(Assets.imagesReply),
           ),
         ),
       ],

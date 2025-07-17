@@ -70,7 +70,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     final cache = getIt<CacheHelper>();
     final isAdminLoggedIn = cache.getData(key: 'admin_logged_in') == true;
     if (isAdminLoggedIn) {
-      if (mounted) context.go(AppRoutes.newRequest);
+      if (mounted) context.go(AppRoutes.admin);
     } else {
       await Future.delayed(const Duration(seconds: 1));
       if (mounted) context.go('/onboarding');
@@ -99,7 +99,6 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Icon part: appears and moves up after text is revealed
                     AnimatedBuilder(
                       animation: _iconAppearMoveController,
                       builder: (context, child) {
@@ -112,20 +111,16 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                         );
                       },
                       child: Image.asset(
-                        Assets.resourceImagesLogoIcon,
+                        Assets.imagesLogoIcon,
                         height: 75.h,
                         width: 35.w,
                       ),
                     ),
-                    // Text part, reveals from nothing to full
                     SizeTransition(
                       sizeFactor: _textReveal,
                       axis: Axis.horizontal,
                       axisAlignment: -1.0,
-                      child: Image.asset(
-                        Assets.resourceImagesLogoText,
-                        height: 30.h,
-                      ),
+                      child: Image.asset(Assets.imagesLogoText, height: 30.h),
                     ),
                   ],
                 ),

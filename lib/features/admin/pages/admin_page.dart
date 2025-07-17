@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ticket_flow/app/my_app_drawer.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/text_styles.dart';
 import 'package:ticket_flow/core/utils/widgets/top_widget.dart';
+import 'package:ticket_flow/features/admin/pages/location_body.dart';
+import 'package:ticket_flow/features/admin/pages/member_body.dart';
+import 'package:ticket_flow/features/admin/pages/porblems_body.dart';
+import 'package:ticket_flow/features/admin/pages/report_schedule_body.dart';
+import 'package:ticket_flow/features/admin/pages/request_types_body.dart';
 import 'package:ticket_flow/features/admin/pages/user_body.dart';
+import 'package:ticket_flow/features/admin/pages/worker_body.dart';
+
+import 'department_body.dart';
+import 'topic_body.dart';
 
 class AdminPage extends StatefulWidget {
   const AdminPage({super.key});
@@ -17,23 +27,24 @@ class _AdminPageState extends State<AdminPage> {
   final List<String> items = [
     'Users',
     'Departments',
-    'Locations',
-    'Daily Report Members',
     'Topics',
     'Workers',
+    'Locations',
+    'Daily Report Members',
     'Request Types',
     'Problems',
+    'Report Schedule',
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: MyAppDrawer(),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: TopWidget(search: 'user', title: 'Users'),
+            child: TopWidget(search: '', title: 'Administration'),
           ),
-          // SliverToBoxAdapter(child: SizedBox(height: 16.h)),
           SliverToBoxAdapter(
             child: Container(
               height: 50.h,
@@ -108,40 +119,21 @@ class _AdminPageState extends State<AdminPage> {
       case 0:
         return const UsersBody();
       case 1:
-        return const Text(
-          'You selected Departments!',
-          style: TextStyle(fontSize: 20),
-        );
+        return const DepartmentBody();
       case 2:
-        return const Text(
-          'You selected Locations!',
-          style: TextStyle(fontSize: 20),
-        );
+        return const TopicBody();
       case 3:
-        return const Text(
-          'You selected Daily Report Members!',
-          style: TextStyle(fontSize: 20),
-        );
+        return const WorkerBody();
       case 4:
-        return const Text(
-          'You selected Topics!',
-          style: TextStyle(fontSize: 20),
-        );
+        return const LocationBody();
       case 5:
-        return const Text(
-          'You selected Workers!',
-          style: TextStyle(fontSize: 20),
-        );
+        return const MemberBody();
       case 6:
-        return const Text(
-          'You selected Request Types!',
-          style: TextStyle(fontSize: 20),
-        );
+        return const RequestTypesBody();
       case 7:
-        return const Text(
-          'You selected Problems!',
-          style: TextStyle(fontSize: 20),
-        );
+        return const ProblemsBody();
+      case 8:
+        return const ReportScheduleBody();
       default:
         return const SizedBox.shrink();
     }

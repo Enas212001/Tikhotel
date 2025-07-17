@@ -19,7 +19,7 @@ class FileUpload extends StatelessWidget {
             color: AppColors.upload,
             borderRadius: BorderRadius.circular(10.r),
           ),
-          child: SvgPicture.asset(Assets.resourceImagesUpload),
+          child: SvgPicture.asset(Assets.imagesUpload),
         ),
         SizedBox(height: 8.h),
         Text('Choose files', style: TextStyles.text12LightGrey),

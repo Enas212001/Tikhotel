@@ -22,7 +22,7 @@ class OnboardingPage extends StatelessWidget {
               SizedBox(height: 68.h),
 
               // Logo
-              Image.asset(Assets.resourceImagesLogo, height: 65.h, width: 80.w),
+              Image.asset(Assets.imagesLogo, height: 65.h, width: 80.w),
               SizedBox(height: 77.h),
 
               // Welcome Text
