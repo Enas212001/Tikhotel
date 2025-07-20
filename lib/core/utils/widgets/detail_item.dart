@@ -23,7 +23,7 @@ class DetailItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 120.w,
+            width: 110.w,
             child: Row(
               children: [
                 if (hasIcon)

@@ -24,31 +24,10 @@ class MyAppDrawer extends StatelessWidget {
             },
           ),
           DrawerItem(
-            image: Assets.imagesClosedWorkOrder,
-            title: 'Closed Work Orders',
-            onTap: () {
-              GoRouter.of(context).pushReplacement(AppRoutes.closedWorkOrder);
-            },
-          ),
-          DrawerItem(
-            image: Assets.imagesClosedFeedback,
-            title: 'Closed Feedback',
-            onTap: () {
-              GoRouter.of(context).pushReplacement(AppRoutes.closedFeedback);
-            },
-          ),
-          DrawerItem(
             image: Assets.imagesGuests,
             title: 'Guests',
             onTap: () {
               GoRouter.of(context).pushReplacement(AppRoutes.guest);
-            },
-          ),
-          DrawerItem(
-            image: Assets.imagesReport,
-            title: 'Reports',
-            onTap: () {
-              GoRouter.of(context).pushReplacement(AppRoutes.report);
             },
           ),
           DrawerItem(
@@ -66,17 +45,34 @@ class MyAppDrawer extends StatelessWidget {
             },
           ),
           DrawerItem(
+            image: Assets.imagesClosedFeedback,
+            title: 'Closed Feedback',
+            onTap: () {
+              GoRouter.of(context).pushReplacement(AppRoutes.closedFeedback);
+            },
+          ),
+          DrawerItem(
+            image: Assets.imagesClosedWorkOrder,
+            title: 'Closed Work Orders',
+            onTap: () {
+              GoRouter.of(context).pushReplacement(AppRoutes.closedWorkOrder);
+            },
+          ),
+          DrawerItem(
+            image: Assets.imagesReport,
+            title: 'Reports',
+            onTap: () {
+              GoRouter.of(context).pushReplacement(AppRoutes.report);
+            },
+          ),
+          DrawerItem(
             image: Assets.imagesAdmin,
             title: 'Administration',
             onTap: () {
               GoRouter.of(context).pushReplacement(AppRoutes.admin);
             },
           ),
-          DrawerItem(
-            image: Assets.imagesLogout,
-            title: 'Logout',
-            onTap: () {},
-          ),
+          DrawerItem(image: Assets.imagesLogout, title: 'Logout', onTap: () {}),
         ],
       ),
     );

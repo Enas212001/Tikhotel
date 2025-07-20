@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/widgets/add_filter_widget.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 import '../../../../../core/utils/widgets/top_widget.dart';
-import 'reuest_info_card.dart';
+import 'request_info_card.dart';
+import 'request_type_selection_dialog.dart';
 
 class NewRequestBody extends StatelessWidget {
   const NewRequestBody({super.key});
@@ -15,15 +15,21 @@ class NewRequestBody extends StatelessWidget {
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
-          child: TopWidget(title: 'New Request', search: 'for any request'),
+          child: TopWidget(
+            title: S.of(context).newRequest,
+            search: S.of(context).forAnyRequest,
+          ),
         ),
         SliverToBoxAdapter(child: SizedBox(height: 16.h)),
         SliverToBoxAdapter(
           child: AddFilterWidget(
             onTap: () {
-              GoRouter.of(context).push(AppRoutes.addRequest);
+              showDialog(
+                context: context,
+                builder: (context) => const RequestTypeSelectionDialog(),
+              );
             },
-            title: 'New Request',
+            title: S.of(context).newRequest,
           ),
         ),
         SliverToBoxAdapter(child: SizedBox(height: 16.h)),

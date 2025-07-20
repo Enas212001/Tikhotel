@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_flow/core/func/container_decoration.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/text_styles.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 class DetailCard extends StatefulWidget {
   const DetailCard({
@@ -39,7 +40,9 @@ class _DetailCardState extends State<DetailCard> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      isExpanded ? 'Hide Details' : 'View Details',
+                      isExpanded
+                          ? S.of(context).hideDetails
+                          : S.of(context).viewDetails,
                       style: TextStyles.text12RegularGrey.copyWith(
                         color: AppColors.primary,
                       ),

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 import 'request_text.dart';
 import 'ticket_shape_border.dart';
@@ -45,19 +46,19 @@ class RequestInfoCard extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        TopText(text: 'Location'),
+                        TopText(text: S.of(context).location),
                         TopText(text: '9301'),
                       ],
                     ),
                     Column(
                       children: [
-                        TopText(text: 'Requested By'),
-                        TopText(text: 'Status'),
+                        TopText(text: S.of(context).requestedBy),
+                        TopText(text: 'Guest'),
                       ],
                     ),
                     Column(
                       children: [
-                        TopText(text: 'Guest'),
+                        TopText(text: S.of(context).guest),
                         TopText(text: 'Accepted'),
                       ],
                     ),
@@ -74,12 +75,12 @@ class RequestInfoCard extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          RequestText(text: 'Department'),
-                          RequestText(text: 'Worker'),
-                          RequestText(text: 'Start Time'),
-                          RequestText(text: 'Dep Time'),
-                          RequestText(text: 'Problem'),
-                          RequestText(text: 'Message'),
+                          RequestText(text: S.of(context).department),
+                          RequestText(text: S.of(context).worker),
+                          RequestText(text: S.of(context).startTime),
+                          RequestText(text: S.of(context).depTime),
+                          RequestText(text: S.of(context).problem),
+                          RequestText(text: S.of(context).message),
                         ],
                       ),
                     ),

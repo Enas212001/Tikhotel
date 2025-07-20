@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/widgets/add_filter_widget.dart';
 
+import 'widgets/common_admin_list_view.dart';
 import 'widgets/user_detail_card.dart';
 
 class UsersBody extends StatelessWidget {
@@ -18,13 +19,7 @@ class UsersBody extends StatelessWidget {
             context.push(AppRoutes.addUser);
           },
         ),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: 10,
-          padding: EdgeInsets.zero,
-          itemBuilder: (context, index) => UserDetailCard(),
-        ),
+        CommonAdminListView(item: UserDetailCard()),
       ],
     );
   }

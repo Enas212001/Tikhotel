@@ -25,8 +25,8 @@ class EditOrDelete extends StatelessWidget {
             },
             child: SvgPicture.asset(
               Assets.imagesEdit,
-              width: 22.sp,
-              height: 22.sp,
+              width: 18.sp,
+              height: 18.sp,
             ),
           ),
           SizedBox(width: 4.w),
@@ -36,8 +36,8 @@ class EditOrDelete extends StatelessWidget {
             },
             child: SvgPicture.asset(
               Assets.imagesDelete,
-              width: 22.sp,
-              height: 22.sp,
+              width: 18.sp,
+              height: 18.sp,
             ),
           ),
         ],

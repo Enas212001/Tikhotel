@@ -56,6 +56,8 @@ class Assets {
 
   static const String imagesEdit = "assets/images/edit.svg";
 
+  static const String imagesEmail = "assets/images/email.svg";
+
   static const String imagesFeedback = "assets/images/feedback.svg";
 
   static const String imagesFilter = "assets/images/filter.svg";
@@ -78,11 +80,15 @@ class Assets {
 
   static const String imagesPendingRequest = "assets/images/pendingRequest.svg";
 
+  static const String imagesProblem = "assets/images/problem.svg";
+
   static const String imagesReply = "assets/images/reply.svg";
 
   static const String imagesReport = "assets/images/report.svg";
 
   static const String imagesRequest = "assets/images/request.svg";
+
+  static const String imagesRightArrow = "assets/images/rightArrow.svg";
 
   static const String imagesRoom = "assets/images/room.svg";
 

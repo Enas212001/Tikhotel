@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ticket_flow/features/admin/pages/widgets/add_common_page.dart';
+import 'package:ticket_flow/features/admin/pages/widgets/add_update_page.dart';
 import 'package:ticket_flow/features/request/presentation/pages/widgets/request_text_field.dart';
 
 class AddTopicBody extends StatelessWidget {
@@ -7,7 +7,7 @@ class AddTopicBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AddCommonPage(
+    return AddOrUpdatePage(
       child: Column(
         children: [
           CustomRequestTextField(label: 'Topic Name', isReadOnly: false),

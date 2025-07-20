@@ -4,6 +4,7 @@ import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/core/utils/text_styles.dart';
 import 'package:ticket_flow/features/onboarding/widget/custom_button.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 class DeleteWidget extends StatelessWidget {
   const DeleteWidget({super.key, required this.onDelete, required this.title});
@@ -19,7 +20,7 @@ class DeleteWidget extends StatelessWidget {
           width: 320.w,
           padding: EdgeInsets.all(24.r),
           decoration: BoxDecoration(
-            color: AppColors.white,
+            color: AppColors.scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(16.r),
             boxShadow: [
               BoxShadow(
@@ -44,10 +45,13 @@ class DeleteWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Delete $title', style: TextStyles.text16MeduimGrey),
+                  Text(
+                    S.of(context).deleteConfirmation(title),
+                    style: TextStyles.text16MeduimGrey,
+                  ),
                   SizedBox(height: 16.h),
                   Text(
-                    'Are you sure you want to delete this $title?',
+                    S.of(context).deleteConfirmationMessage(title),
                     textAlign: TextAlign.center,
                     style: TextStyles.text14RegularlightGrey,
                   ),
@@ -57,7 +61,7 @@ class DeleteWidget extends StatelessWidget {
                     children: [
                       Expanded(
                         child: CustomButton(
-                          text: 'Cancel',
+                          text: S.of(context).cancel,
                           isPrimary: false,
                           onPressed: () => Navigator.of(context).pop(),
                         ),
@@ -65,7 +69,7 @@ class DeleteWidget extends StatelessWidget {
                       SizedBox(width: 16.w),
                       Expanded(
                         child: CustomButton(
-                          text: 'Delete',
+                          text: S.of(context).delete,
                           isPrimary: true,
                           onPressed: () {
                             Navigator.of(context).pop();

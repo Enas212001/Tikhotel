@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ticket_flow/core/func/container_decoration.dart';
-import 'package:ticket_flow/core/utils/text_styles.dart';
-import 'package:ticket_flow/features/onboarding/widget/custom_button.dart';
+import 'package:ticket_flow/core/utils/widgets/form_with_title.dart';
 import 'package:ticket_flow/features/request/presentation/pages/widgets/request_text_field.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 class ReportByRoom extends StatelessWidget {
   const ReportByRoom({super.key});
@@ -14,35 +13,31 @@ class ReportByRoom extends StatelessWidget {
       padding:
           EdgeInsets.symmetric(horizontal: 16.r) +
           EdgeInsets.only(bottom: 16.h),
-      child: Container(
-        padding: EdgeInsets.all(20.r),
-        decoration: containerDecoration(),
+      child: FormWithTitle(
+        title: S.of(context).reportByRoom,
+        buttonText: S.of(context).generate,
         child: Column(
           children: [
-            Text('Report by Room', style: TextStyles.text14RegularGrey),
-            SizedBox(height: 12.h),
             CustomRequestTextField(
-              label: 'Date From',
+              label: S.of(context).dateFrom,
               isDate: true,
               value: '12-7-2025',
             ),
             CustomRequestTextField(
-              label: 'Date To',
+              label: S.of(context).dateTo,
               isDate: true,
               value: '12-7-2025',
             ),
             CustomRequestTextField(
-              label: 'Location',
+              label: S.of(context).location,
               value: '1001',
               isList: true,
             ),
             CustomRequestTextField(
-              label: 'Department',
+              label: S.of(context).department,
               value: 'Housekeeping',
               isList: true,
             ),
-            SizedBox(height: 20.h),
-            CustomButton(text: 'Generate', onPressed: () {}, isPrimary: true),
           ],
         ),
       ),

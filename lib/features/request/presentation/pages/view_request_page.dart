@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 import 'widgets/edit_request.dart';
 import 'widgets/replay_message.dart';
@@ -21,9 +21,8 @@ class _ViewRequestPageState extends State<ViewRequestPage> {
         controller: scrollController,
         child: Column(
           children: [
-            CustomAppBar(text: 'View Request'),
+            CustomAppBar(text: S.of(context).viewRequest),
             EditRequest(scrollController: scrollController),
-            SizedBox(height: 16.h),
             ReplayMessage(),
           ],
         ),

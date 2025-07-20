@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 import 'widgets/add_request_body.dart';
 import '../../../../core/utils/widgets/custom_app_bar.dart';
 
@@ -11,7 +12,7 @@ class AddRequestPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            CustomAppBar(text: 'Add Request'),
+            CustomAppBar(text: S.of(context).addRequest),
             AddRequestBody(),
           ],
         ),

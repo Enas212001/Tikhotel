@@ -4,6 +4,8 @@ import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/widgets/add_filter_widget.dart';
 import 'package:ticket_flow/features/admin/pages/widgets/department_card.dart';
 
+import 'widgets/common_admin_list_view.dart';
+
 class DepartmentBody extends StatelessWidget {
   const DepartmentBody({super.key});
 
@@ -17,13 +19,7 @@ class DepartmentBody extends StatelessWidget {
             context.push(AppRoutes.addDepartment);
           },
         ),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: 10,
-          padding: EdgeInsets.zero,
-          itemBuilder: (context, index) => DepartmentDetailCard(),
-        ),
+        CommonAdminListView(item: DepartmentDetailCard()),
       ],
     );
   }

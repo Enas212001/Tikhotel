@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/text_styles.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 import 'common_auth_widget.dart';
 import 'title_with_text_field.dart';
@@ -15,7 +16,7 @@ class AdminLoginBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonAuthWidget(
-      buttonText: 'Login',
+      buttonText: S.of(context).login,
       onPressed: () async {
         final cache = getIt<CacheHelper>();
         await cache.saveData(key: 'admin_logged_in', value: true);
@@ -24,15 +25,15 @@ class AdminLoginBody extends StatelessWidget {
       child: Column(
         children: [
           TitleWithTextField(
-            title: 'Email',
+            title: S.of(context).email,
             controller: TextEditingController(),
-            hintText: 'Enter your email',
+            hintText: S.of(context).enterYourEmail,
           ),
           SizedBox(height: 16.h),
           TitleWithTextField(
-            title: 'Password',
+            title: S.of(context).password,
             controller: TextEditingController(),
-            hintText: 'Enter your password',
+            hintText: S.of(context).enterYourPassword,
             isPassword: true,
           ),
           Align(
@@ -42,7 +43,7 @@ class AdminLoginBody extends StatelessWidget {
                 context.push(AppRoutes.forgetPassword);
               },
               child: Text(
-                'Forgot Password?',
+                S.of(context).forgotPassword,
                 style: TextStyles.text12RegularLightGrey,
               ),
             ),

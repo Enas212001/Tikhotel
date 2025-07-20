@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_flow/app/my_app_drawer.dart';
-import 'package:ticket_flow/core/utils/app_colors.dart';
-import 'package:ticket_flow/core/utils/text_styles.dart';
 import 'package:ticket_flow/core/utils/widgets/top_widget.dart';
+import 'package:ticket_flow/features/admin/pages/widgets/admin_list_view.dart';
 import 'package:ticket_flow/features/admin/pages/location_body.dart';
 import 'package:ticket_flow/features/admin/pages/member_body.dart';
 import 'package:ticket_flow/features/admin/pages/porblems_body.dart';
@@ -24,17 +23,6 @@ class AdminPage extends StatefulWidget {
 
 class _AdminPageState extends State<AdminPage> {
   int selectedIndex = 0;
-  final List<String> items = [
-    'Users',
-    'Departments',
-    'Topics',
-    'Workers',
-    'Locations',
-    'Daily Report Members',
-    'Request Types',
-    'Problems',
-    'Report Schedule',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -46,66 +34,18 @@ class _AdminPageState extends State<AdminPage> {
             child: TopWidget(search: '', title: 'Administration'),
           ),
           SliverToBoxAdapter(
-            child: Container(
-              height: 50.h,
-              decoration: BoxDecoration(
-                color: AppColors.scaffoldBackgroundColor,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.08),
-                    blurRadius: 16.r,
-                    offset: Offset(4.r, 4.r),
-                  ),
-                ],
-              ),
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  final isSelected = selectedIndex == index;
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedIndex = index;
-                      });
-                    },
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 12.w) +
-                          EdgeInsets.only(top: 8.h),
-                      child: IntrinsicWidth(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              items[index],
-                              style: TextStyles.text12MediumPrimary.copyWith(
-                                color: AppColors.grey,
-                              ),
-                            ),
-                            SizedBox(height: 4.h),
-                            Container(
-                              height: 2.h,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: isSelected
-                                    ? AppColors.main
-                                    : Colors.transparent,
-                                borderRadius: BorderRadius.circular(1),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
+            child: AdminListView(
+              selectedIndex: selectedIndex,
+              onIndexChanged: (index) {
+                setState(() {
+                  selectedIndex = index;
+                });
+              },
             ),
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 32.h),
+              padding: EdgeInsets.symmetric(vertical: 12.h),
               child: Center(child: _buildSelectedContent(selectedIndex)),
             ),
           ),

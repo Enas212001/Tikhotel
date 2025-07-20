@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 class FailureModel {
   final String errorMessage;
@@ -82,7 +83,7 @@ ServerFailure handleDioException(DioException dioException) {
         throw ServerFailure(
           failure: FailureModel(
             status: 'error',
-            errorMessage: 'Unknown error occurred.',
+            errorMessage: S.current.unknownErrorOccurred,
           ),
         );
       }

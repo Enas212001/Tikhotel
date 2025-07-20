@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/text_styles.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 class CustomTextFormField extends StatefulWidget {
   const CustomTextFormField({
@@ -44,7 +45,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       controller: widget.controller,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter ${widget.title}';
+          return S.of(context).pleaseEnter(widget.title);
         }
         return null;
       },

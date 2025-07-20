@@ -6,6 +6,7 @@ import 'package:ticket_flow/features/onboarding/widget/custom_button.dart';
 import 'package:ticket_flow/features/request/presentation/pages/widgets/file_upload.dart';
 import 'package:ticket_flow/features/request/presentation/pages/widgets/message_text_field.dart';
 import 'package:ticket_flow/features/request/presentation/pages/widgets/title_on_border.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 import 'request_text_field.dart';
 
@@ -21,34 +22,45 @@ class AddRequestBody extends StatelessWidget {
         decoration: containerDecoration(),
         child: Column(
           children: [
-            TitleOnBorder(onUpload: () {}, title: 'Room', child: DownArrow()),
             TitleOnBorder(
               onUpload: () {},
-              title: 'Request Type',
+              title: S.of(context).room,
               child: DownArrow(),
             ),
             TitleOnBorder(
               onUpload: () {},
-              title: 'Quantity',
+              title: S.of(context).requestType,
               child: DownArrow(),
             ),
             TitleOnBorder(
               onUpload: () {},
-              title: 'Department',
+              title: S.of(context).quantity,
               child: DownArrow(),
             ),
-            CustomRequestTextField(label: 'Compensation', isReadOnly: false),
-            TitleOnBorder(onUpload: () {}, title: 'Amount', child: DownArrow()),
             TitleOnBorder(
               onUpload: () {},
-              title: 'Problem',
+              title: S.of(context).department,
               child: DownArrow(),
             ),
-            MessageTextField(value: '', label: 'Message'),
+            CustomRequestTextField(
+              label: S.of(context).compensation,
+              isReadOnly: false,
+            ),
+            CustomRequestTextField(label: S.of(context).amount, isList: true),
+            CustomRequestTextField(label: S.of(context).problem, isList: true),
+            MessageTextField(value: '', label: S.of(context).message),
             SizedBox(height: 16.h),
-            TitleOnBorder(onUpload: () {}, title: 'File', child: FileUpload()),
+            TitleOnBorder(
+              onUpload: () {},
+              title: S.of(context).file,
+              child: FileUpload(),
+            ),
             SizedBox(height: 16.h),
-            CustomButton(text: 'Save', isPrimary: true, onPressed: () {}),
+            CustomButton(
+              text: S.of(context).save,
+              isPrimary: true,
+              onPressed: () {},
+            ),
           ],
         ),
       ),

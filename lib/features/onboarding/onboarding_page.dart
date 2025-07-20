@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 import '../../core/utils/assets.dart';
 import '../../core/utils/text_styles.dart';
@@ -13,7 +14,6 @@ class OnboardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -27,7 +27,7 @@ class OnboardingPage extends StatelessWidget {
 
               // Welcome Text
               Text(
-                'Welcome to Ticketel app',
+                S.of(context).welcomeToTicketelApp,
                 style: TextStyles.text16primaary,
                 textAlign: TextAlign.center,
               ),
@@ -35,7 +35,7 @@ class OnboardingPage extends StatelessWidget {
 
               // Subtitle
               Text(
-                'Please choose to continue as a Guest or an Administrator',
+                S.of(context).chooseUserType,
                 style: TextStyles.text14RegularlightGrey,
                 textAlign: TextAlign.center,
               ),
@@ -43,7 +43,7 @@ class OnboardingPage extends StatelessWidget {
 
               // Guest Button
               CustomButton(
-                text: 'Guest',
+                text: S.of(context).guest,
                 isPrimary: true,
                 onPressed: () {
                   context.push(AppRoutes.guestLogin);
@@ -53,7 +53,7 @@ class OnboardingPage extends StatelessWidget {
 
               // Administrator Button
               CustomButton(
-                text: 'Administrator',
+                text: S.of(context).administrator,
                 isPrimary: false,
                 onPressed: () {
                   context.push(AppRoutes.adminLogin);

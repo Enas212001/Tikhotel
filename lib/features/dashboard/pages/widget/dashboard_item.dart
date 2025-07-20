@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/core/utils/text_styles.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 class DashboardItem extends StatelessWidget {
   final String title;
@@ -61,7 +62,7 @@ class DashboardItem extends StatelessWidget {
                   color: AppColors.percent,
                 ),
               ),
-              Text(' Up Today', style: TextStyles.text12RegularGrey),
+              Text(S.of(context).upToday, style: TextStyles.text12RegularGrey),
             ],
           ),
         ],

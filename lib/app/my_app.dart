@@ -17,13 +17,13 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
-          localizationsDelegates: const [
+          localizationsDelegates: [
             S.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          supportedLocales: const [Locale('en', ''), Locale('ar', '')],
+          supportedLocales: S.delegate.supportedLocales,
           routerConfig: AppRoutes.router,
           builder: (context, child) => child!,
           theme: ThemeData(

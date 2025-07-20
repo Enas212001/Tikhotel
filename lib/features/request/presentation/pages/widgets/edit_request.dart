@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_flow/core/func/container_decoration.dart';
 import 'package:ticket_flow/features/onboarding/widget/custom_button.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 import 'message_replay.dart';
 import 'request_text_field.dart';
@@ -23,50 +24,54 @@ class EditRequest extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 CustomRequestTextField(
-                  label: 'Request ID',
+                  label: S.of(context).requestId,
                   value: '1324434',
                   onPressed: () {},
                 ),
                 CustomRequestTextField(
-                  label: 'Start Time',
+                  label: S.of(context).startTime,
                   value: '7-7-2025',
                   isDate: true,
                   onPressed: () {},
                 ),
                 CustomRequestTextField(
-                  label: 'Dep time Date',
+                  label: S.of(context).depTime,
                   value: '12-7-2025',
                   isDate: true,
                   onPressed: () {},
                 ),
                 CustomRequestTextField(
-                  label: 'Department',
+                  label: S.of(context).department,
                   value: 'Housekeeping',
                   onPressed: () {},
                 ),
                 CustomRequestTextField(
-                  label: 'Vacant',
+                  label: S.of(context).vacant,
                   value: '5005',
                   onPressed: () {},
                 ),
                 CustomRequestTextField(
-                  label: 'Problem',
+                  label: S.of(context).problem,
                   value: 'T.V Remote',
                   onPressed: () {},
                 ),
                 CustomRequestTextField(
-                  label: 'Status',
+                  label: S.of(context).status,
                   value: 'Accepted',
                   isList: true,
                   onPressed: () {},
                 ),
                 CustomRequestTextField(
-                  label: 'Worker',
+                  label: S.of(context).worker,
                   value: 'Mohamed ahmed',
                   isList: true,
                   onPressed: () {},
                 ),
-                CustomButton(text: 'Save', isPrimary: true, onPressed: () {}),
+                CustomButton(
+                  text: S.of(context).save,
+                  isPrimary: true,
+                  onPressed: () {},
+                ),
               ],
             ),
           ),
@@ -76,6 +81,4 @@ class EditRequest extends StatelessWidget {
       ),
     );
   }
-
-  
 }

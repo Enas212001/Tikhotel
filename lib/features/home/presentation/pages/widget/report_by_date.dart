@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ticket_flow/core/func/container_decoration.dart';
-import 'package:ticket_flow/core/utils/text_styles.dart';
-import 'package:ticket_flow/features/onboarding/widget/custom_button.dart';
+import 'package:ticket_flow/core/utils/widgets/form_with_title.dart';
 import 'package:ticket_flow/features/request/presentation/pages/widgets/request_text_field.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 class ReportByDate extends StatelessWidget {
   const ReportByDate({super.key});
@@ -12,32 +11,29 @@ class ReportByDate extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(16.r),
-      child: Container(
-        padding: EdgeInsets.all(20.r),
-        decoration: containerDecoration(),
+      child: FormWithTitle(
+        title: S.of(context).reportByDate,
+        buttonText: S.of(context).generate,
         child: Column(
           children: [
-            Text('Report by Date', style: TextStyles.text14RegularGrey),
-            SizedBox(height: 12.h),
             CustomRequestTextField(
-              label: 'Date From',
+              label: S.of(context).dateFrom,
               isDate: true,
               value: '12-7-2025',
             ),
             CustomRequestTextField(
-              label: 'Date To',
+              label: S.of(context).dateTo,
               isDate: true,
               value: '12-7-2025',
             ),
             CustomRequestTextField(
-              label: 'Department',
+              label: S.of(context).department,
               value: 'Housekeeping',
               isList: true,
             ),
-            SizedBox(height: 20.h),
-            CustomButton(text: 'Generate', onPressed: () {}, isPrimary: true),
           ],
         ),
+        onPressed: () {},
       ),
     );
   }

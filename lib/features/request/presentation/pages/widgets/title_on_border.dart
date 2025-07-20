@@ -19,6 +19,7 @@ class TitleOnBorder extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 8.h, bottom: 16.h),
       child: Stack(
+        clipBehavior: Clip.none,
         children: [
           Container(
             width: double.infinity,
@@ -31,10 +32,10 @@ class TitleOnBorder extends StatelessWidget {
           ),
           Positioned(
             left: 7,
-            top: -5,
+            top: -6,
             child: Center(
               child: Container(
-                color: AppColors.white,
+                color: AppColors.scaffoldBackgroundColor,
                 padding: EdgeInsets.symmetric(horizontal: 8.w),
                 child: Text(title, style: TextStyles.text12LightGrey),
               ),

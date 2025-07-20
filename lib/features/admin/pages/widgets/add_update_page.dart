@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_flow/core/func/container_decoration.dart';
 import 'package:ticket_flow/features/onboarding/widget/custom_button.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
-class UpdateCommonPage extends StatelessWidget {
-  const UpdateCommonPage({
+class AddOrUpdatePage extends StatelessWidget {
+  const AddOrUpdatePage({
     super.key,
     required this.child,
     required this.onPressed,
@@ -21,8 +22,8 @@ class UpdateCommonPage extends StatelessWidget {
         child: Column(
           children: [
             child,
-            SizedBox(height: MediaQuery.sizeOf(context).height * 0.15),
-            CustomButton(text: 'Save', isPrimary: true, onPressed: onPressed),
+            SizedBox(height: MediaQuery.sizeOf(context).height * 0.15.h),
+            CustomButton(text: S.of(context).save, isPrimary: true, onPressed: onPressed),
           ],
         ),
       ),

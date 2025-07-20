@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_flow/features/request/presentation/pages/widgets/request_text_field.dart';
 
-import 'update_common_page.dart';
+import 'add_update_page.dart';
 
 class UpdateTopicBody extends StatelessWidget {
   const UpdateTopicBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return UpdateCommonPage(
+    return AddOrUpdatePage(
       onPressed: () {},
       child: Column(
         children: [

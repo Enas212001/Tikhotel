@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/core/utils/text_styles.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 class FileUpload extends StatelessWidget {
   const FileUpload({super.key});
@@ -22,7 +23,7 @@ class FileUpload extends StatelessWidget {
           child: SvgPicture.asset(Assets.imagesUpload),
         ),
         SizedBox(height: 8.h),
-        Text('Choose files', style: TextStyles.text12LightGrey),
+        Text(S.of(context).chooseFiles, style: TextStyles.text12LightGrey),
       ],
     );
   }

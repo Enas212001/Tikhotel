@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/features/request/presentation/pages/widgets/icon_with_title.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 class AddFilterWidget extends StatelessWidget {
   const AddFilterWidget({
@@ -16,7 +17,7 @@ class AddFilterWidget extends StatelessWidget {
   final VoidCallback? onTap, filterOnTap;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {  
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Row(
@@ -29,7 +30,7 @@ class AddFilterWidget extends StatelessWidget {
           ),
           IconWithTItle(
             icon: SvgPicture.asset(Assets.imagesFilter),
-            text: 'Filter',
+            text: S.of(context).filter,
             onTap: filterOnTap,
           ),
         ],

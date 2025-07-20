@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/core/utils/text_styles.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 class TopWidget extends StatelessWidget {
   const TopWidget({
@@ -57,8 +58,8 @@ class TopWidget extends StatelessWidget {
                         size: 24.sp,
                       ),
                       filled: true,
-                      fillColor: AppColors.white,
-                      hintText: 'Search $search',
+                      fillColor: AppColors.scaffoldBackgroundColor,
+                      hintText: S.of(context).searchForAny(search),
                       hintStyle: TextStyles.text12RegularLightGrey,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.r),

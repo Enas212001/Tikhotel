@@ -34,10 +34,13 @@ class SwitchDetail extends StatelessWidget {
             ],
           ),
         ),
-        CupertinoSwitch(
-          value: true,
-          activeColor: AppColors.primary,
-          onChanged: (value) {},
+        Transform.scale(
+          scale: 0.8,
+          child: CupertinoSwitch(
+            value: true,
+            activeColor: AppColors.primary,
+            onChanged: (value) {},
+          ),
         ),
       ],
     );

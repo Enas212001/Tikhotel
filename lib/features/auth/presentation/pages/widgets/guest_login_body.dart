@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 import 'common_auth_widget.dart';
 import 'title_with_text_field.dart';
@@ -10,22 +11,22 @@ class GuestLoginBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonAuthWidget(
-      buttonText: 'Login',
+      buttonText: S.of(context).login,
       onPressed: () {
         // Guest login logic
       },
       child: Column(
         children: [
           TitleWithTextField(
-            title: 'Room Number',
+            title: S.of(context).roomNumber,
             controller: TextEditingController(),
-            hintText: 'Enter your Room number',
+            hintText: S.of(context).enterYourRoomNumber,
           ),
           SizedBox(height: 16.h),
           TitleWithTextField(
-            title: 'First Name',
+            title: S.of(context).firstName,
             controller: TextEditingController(),
-            hintText: 'Enter your First Name',
+            hintText: S.of(context).enterYourFirstName,
           ),
         ],
       ),

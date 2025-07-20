@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_flow/core/utils/widgets/custom_app_bar.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 import 'widgets/add_dep_body.dart';
 
@@ -12,7 +13,7 @@ class AddDepartmentPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            CustomAppBar(text: 'Add Department'),
+            CustomAppBar(text: S.of(context).addDepartment),
             AddDepBody(),
           ],
         ),
