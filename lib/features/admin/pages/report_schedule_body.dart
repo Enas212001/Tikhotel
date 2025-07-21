@@ -18,10 +18,22 @@ class ReportScheduleBody extends StatelessWidget {
             buttonText: S.of(context).submit,
             child: Column(
               children: [
-                CustomRequestTextField(label: S.of(context).reportName, isReadOnly: false),
-                CustomRequestTextField(label: S.of(context).reportTime, isDate: true),
-                CustomRequestTextField(label: S.of(context).runDate, isList: true),
-                CustomRequestTextField(label: S.of(context).status, isList: true),
+                CustomRequestTextField(
+                  label: S.of(context).reportName,
+                  isReadOnly: false,
+                ),
+                CustomRequestTextField(
+                  label: S.of(context).reportTime,
+                  isDate: true,
+                ),
+                CustomRequestTextField(
+                  label: S.of(context).runDate,
+                  isList: true,
+                ),
+                CustomRequestTextField(
+                  label: S.of(context).status,
+                  isList: true,
+                ),
               ],
             ),
           ),

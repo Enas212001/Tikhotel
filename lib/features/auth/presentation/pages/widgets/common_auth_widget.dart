@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/features/onboarding/widget/custom_button.dart';
+
 class CommonAuthWidget extends StatelessWidget {
   const CommonAuthWidget({
     super.key,

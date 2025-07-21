@@ -29,7 +29,7 @@ class FeedbackCard extends StatelessWidget {
                   title: 'Department:',
                   value: 'Engineering',
                   image: Assets.imagesDepartment,
-                ),  
+                ),
               ],
             ),
             bottomCard: Column(

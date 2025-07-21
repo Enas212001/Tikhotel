@@ -3,7 +3,7 @@ import 'package:ticket_flow/generated/l10n.dart';
 
 class FailureModel {
   final String errorMessage;
-  final String status;
+  final bool status;
 
   FailureModel({required this.errorMessage, required this.status});
   factory FailureModel.fromJson(Map<String, dynamic> json) {
@@ -82,7 +82,7 @@ ServerFailure handleDioException(DioException dioException) {
       } else {
         throw ServerFailure(
           failure: FailureModel(
-            status: 'error',
+            status: false,
             errorMessage: S.current.unknownErrorOccurred,
           ),
         );

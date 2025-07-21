@@ -23,7 +23,7 @@ class ClosedFeedbackCard extends StatelessWidget {
             DetailItem(
               hasIcon: true,
               title: 'Department:',
-              value: 'Engineering'  ,
+              value: 'Engineering',
               image: Assets.imagesDepartment,
             ),
           ],

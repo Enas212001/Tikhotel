@@ -6,8 +6,11 @@ class DeleteTopicDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DeleteWidget(onDelete: (){
-      Navigator.pop(context);
-    }, title: 'Topic');
+    return DeleteWidget(
+      onDelete: () {
+        Navigator.pop(context);
+      },
+      title: 'Topic',
+    );
   }
 }

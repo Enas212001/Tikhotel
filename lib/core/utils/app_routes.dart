@@ -19,7 +19,7 @@ import 'package:ticket_flow/features/admin/pages/update_user_page.dart';
 import 'package:ticket_flow/features/auth/presentation/pages/admin_login_page.dart';
 import 'package:ticket_flow/features/auth/presentation/pages/forget_pass_page.dart';
 import 'package:ticket_flow/features/auth/presentation/pages/guest_login_page.dart';
-import 'package:ticket_flow/features/dashboard/pages/dashboard_page.dart';
+import 'package:ticket_flow/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:ticket_flow/features/feedback/pages/closed_feedback_page.dart';
 import 'package:ticket_flow/features/feedback/pages/feedback_page.dart';
 import 'package:ticket_flow/features/guest/views/guest_page.dart';

@@ -20,28 +20,20 @@ class OnboardingPage extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: 68.h),
-
-              // Logo
               Image.asset(Assets.imagesLogo, height: 65.h, width: 80.w),
               SizedBox(height: 77.h),
-
-              // Welcome Text
               Text(
                 S.of(context).welcomeToTicketelApp,
                 style: TextStyles.text16primaary,
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 20.h),
-
-              // Subtitle
               Text(
                 S.of(context).chooseUserType,
                 style: TextStyles.text14RegularlightGrey,
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 150.h),
-
-              // Guest Button
               CustomButton(
                 text: S.of(context).guest,
                 isPrimary: true,
@@ -50,8 +42,6 @@ class OnboardingPage extends StatelessWidget {
                 },
               ),
               SizedBox(height: 20.h),
-
-              // Administrator Button
               CustomButton(
                 text: S.of(context).administrator,
                 isPrimary: false,

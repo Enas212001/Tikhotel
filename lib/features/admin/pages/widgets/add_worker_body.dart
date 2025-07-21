@@ -14,8 +14,14 @@ class AddWorkerBody extends StatelessWidget {
     return AddOrUpdatePage(
       child: Column(
         children: [
-          CustomRequestTextField(label: S.of(context).workerName, isReadOnly: false),
-          CustomRequestTextField(label: S.of(context).phoneNumber, isReadOnly: false),
+          CustomRequestTextField(
+            label: S.of(context).workerName,
+            isReadOnly: false,
+          ),
+          CustomRequestTextField(
+            label: S.of(context).phoneNumber,
+            isReadOnly: false,
+          ),
           CustomRequestTextField(label: S.of(context).department, isList: true),
           CustomRequestTextField(label: S.of(context).status, isList: true),
           ListTile(

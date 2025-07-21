@@ -23,7 +23,10 @@ class ProblemCard extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(S.of(context).problem, style: TextStyles.text12RegularDarkGrey),
+            Text(
+              S.of(context).problem,
+              style: TextStyles.text12RegularDarkGrey,
+            ),
             Text(
               '1st floor ceiling painting',
               style: TextStyles.text12RegularLightGrey,

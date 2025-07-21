@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:ticket_flow/core/cache/cache_helper.dart';
+import 'package:ticket_flow/core/utils/api_key.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
 import '../../core/utils/assets.dart';
@@ -68,7 +69,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     await Future.delayed(const Duration(milliseconds: 300));
     await _logoMoveController.forward();
     final cache = getIt<CacheHelper>();
-    final isAdminLoggedIn = cache.getData(key: 'admin_logged_in') == true;
+    final isAdminLoggedIn = cache.getData(key: CacheKey.adminLoggedIn) == false;
     if (isAdminLoggedIn) {
       if (mounted) context.go(AppRoutes.dashboard);
     } else {

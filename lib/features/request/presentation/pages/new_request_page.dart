@@ -8,9 +8,6 @@ class NewRequestPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: MyAppDrawer(),
-      body: NewRequestBody(),
-    );
+    return Scaffold(drawer: MyAppDrawer(), body: NewRequestBody());
   }
 }

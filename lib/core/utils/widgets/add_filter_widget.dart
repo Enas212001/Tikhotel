@@ -17,7 +17,7 @@ class AddFilterWidget extends StatelessWidget {
   final VoidCallback? onTap, filterOnTap;
 
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Row(

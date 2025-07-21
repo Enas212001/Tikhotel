@@ -10,7 +10,7 @@ class DashboardItem extends StatelessWidget {
   final String title;
   final String asset;
   final int number;
-  final double percent;
+  final num percent;
   final bool isUp;
 
   const DashboardItem({
@@ -57,7 +57,9 @@ class DashboardItem extends StatelessWidget {
               SvgPicture.asset(Assets.imagesTrending),
               SizedBox(width: 6.w),
               Text(
-                '${percent.toStringAsFixed(1)}%',
+                percent % 1 == 0
+                    ? '${percent.toInt()}% '
+                    : '${percent.toStringAsFixed(1)}% ',
                 style: TextStyles.text12RegularGrey.copyWith(
                   color: AppColors.percent,
                 ),
