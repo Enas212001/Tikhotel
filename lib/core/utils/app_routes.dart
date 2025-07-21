@@ -20,16 +20,16 @@ import 'package:ticket_flow/features/auth/presentation/pages/admin_login_page.da
 import 'package:ticket_flow/features/auth/presentation/pages/forget_pass_page.dart';
 import 'package:ticket_flow/features/auth/presentation/pages/guest_login_page.dart';
 import 'package:ticket_flow/features/dashboard/presentation/pages/dashboard_page.dart';
-import 'package:ticket_flow/features/feedback/pages/closed_feedback_page.dart';
-import 'package:ticket_flow/features/feedback/pages/feedback_page.dart';
-import 'package:ticket_flow/features/guest/views/guest_page.dart';
+import 'package:ticket_flow/features/Tickets/presentation/views/closed_feedback_page.dart';
+import 'package:ticket_flow/features/Tickets/presentation/views/feedback_page.dart';
+import 'package:ticket_flow/features/guest/presentation/views/guest_page.dart';
 import 'package:ticket_flow/features/home/presentation/pages/report_page.dart';
 import 'package:ticket_flow/features/onboarding/onboarding_page.dart';
-import 'package:ticket_flow/features/request/presentation/pages/add_request_page.dart';
-import 'package:ticket_flow/features/request/presentation/pages/new_request_page.dart';
-import 'package:ticket_flow/features/request/presentation/pages/view_request_page.dart';
+import 'package:ticket_flow/features/Tickets/presentation/views/add_request_page.dart';
+import 'package:ticket_flow/features/Tickets/presentation/views/new_request_page.dart';
+import 'package:ticket_flow/features/Tickets/presentation/views/view_request_page.dart';
 import 'package:ticket_flow/features/splash/splash_page.dart';
-import 'package:ticket_flow/features/work_order/pages/closed_work_order_page.dart';
+import 'package:ticket_flow/features/Tickets/presentation/views/closed_work_order_page.dart';
 
 class AppRoutes {
   static const String splash = '/';

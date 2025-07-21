@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/func/container_decoration.dart';
 import 'package:ticket_flow/core/func/custom_show_dialog.dart';
 import 'package:ticket_flow/features/onboarding/widget/custom_button.dart';
-import 'package:ticket_flow/features/request/presentation/pages/widgets/file_upload.dart';
+import 'package:ticket_flow/features/Tickets/presentation/views/widgets/file_upload.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'message_text_field.dart';

@@ -10,8 +10,10 @@ class DetailCard extends StatefulWidget {
     super.key,
     required this.topCard,
     required this.bottomCard,
+    this.date = '1/1/2025',
   });
   final Widget topCard, bottomCard;
+  final String date;
   @override
   State<DetailCard> createState() => _DetailCardState();
 }
@@ -59,7 +61,7 @@ class _DetailCardState extends State<DetailCard> {
                 ),
               ),
               Spacer(),
-              Text('7/2/2025', style: TextStyles.text12RegularLightGrey),
+              Text(widget.date, style: TextStyles.text12RegularLightGrey),
             ],
           ),
           SizedBox(height: 6.h),

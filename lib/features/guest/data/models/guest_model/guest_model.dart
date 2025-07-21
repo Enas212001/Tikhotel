@@ -27,6 +27,7 @@ class GuestModel extends Equatable {
   final String? status;
   final String? ts;
   final String? test;
+  final int? ticketCount;
 
   const GuestModel({
     this.id,
@@ -55,6 +56,7 @@ class GuestModel extends Equatable {
     this.status,
     this.ts,
     this.test,
+    this.ticketCount,
   });
 
   factory GuestModel.fromJson(Map<String, dynamic> json) => GuestModel(
@@ -84,6 +86,7 @@ class GuestModel extends Equatable {
     status: json['status'] as String?,
     ts: json['ts'] as String?,
     test: json['test'] as String?,
+    ticketCount: json['ticket_count'] as int?,
   );
 
   Map<String, dynamic> toJson() => {
@@ -113,6 +116,7 @@ class GuestModel extends Equatable {
     'status': status,
     'ts': ts,
     'test': test,
+    'ticket_count': ticketCount,
   };
 
   @override
@@ -144,6 +148,7 @@ class GuestModel extends Equatable {
       status,
       ts,
       test,
+      ticketCount,
     ];
   }
 }

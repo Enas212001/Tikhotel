@@ -69,7 +69,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     await Future.delayed(const Duration(milliseconds: 300));
     await _logoMoveController.forward();
     final cache = getIt<CacheHelper>();
-    final isAdminLoggedIn = cache.getData(key: CacheKey.adminLoggedIn) == false;
+    final isAdminLoggedIn = cache.getData(key: CacheKey.adminLoggedIn) == true;
     if (isAdminLoggedIn) {
       if (mounted) context.go(AppRoutes.dashboard);
     } else {

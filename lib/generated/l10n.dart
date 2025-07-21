@@ -174,6 +174,16 @@ class S {
     return Intl.message('First Name', name: 'firstName', desc: '', args: []);
   }
 
+  /// `First Name:`
+  String get firstNameColon {
+    return Intl.message(
+      'First Name:',
+      name: 'firstNameColon',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Enter your First Name`
   String get enterYourFirstName {
     return Intl.message(
@@ -187,6 +197,16 @@ class S {
   /// `Last Name`
   String get lastName {
     return Intl.message('Last Name', name: 'lastName', desc: '', args: []);
+  }
+
+  /// `Last Name:`
+  String get lastNameColon {
+    return Intl.message(
+      'Last Name:',
+      name: 'lastNameColon',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Enter your Last Name`
@@ -217,6 +237,16 @@ class S {
   /// `Guests`
   String get guests {
     return Intl.message('Guests', name: 'guests', desc: '', args: []);
+  }
+
+  /// `for any guest`
+  String get forAnyGuest {
+    return Intl.message(
+      'for any guest',
+      name: 'forAnyGuest',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `New Requests`
@@ -482,6 +512,11 @@ class S {
   /// `Room`
   String get room {
     return Intl.message('Room', name: 'room', desc: '', args: []);
+  }
+
+  /// `Room:`
+  String get roomColon {
+    return Intl.message('Room:', name: 'roomColon', desc: '', args: []);
   }
 
   /// `Request Type`

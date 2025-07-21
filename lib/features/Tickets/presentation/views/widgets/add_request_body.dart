@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_flow/core/func/container_decoration.dart';
 import 'package:ticket_flow/core/utils/widgets/down_arrow.dart';
 import 'package:ticket_flow/features/onboarding/widget/custom_button.dart';
-import 'package:ticket_flow/features/request/presentation/pages/widgets/file_upload.dart';
-import 'package:ticket_flow/features/request/presentation/pages/widgets/message_text_field.dart';
-import 'package:ticket_flow/features/request/presentation/pages/widgets/title_on_border.dart';
+import 'package:ticket_flow/features/Tickets/presentation/views/widgets/file_upload.dart';
+import 'package:ticket_flow/features/Tickets/presentation/views/widgets/message_text_field.dart';
+import 'package:ticket_flow/features/Tickets/presentation/views/widgets/title_on_border.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'request_text_field.dart';
