@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:ticket_flow/core/func/border_text_field.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/core/utils/text_styles.dart';
@@ -14,17 +15,19 @@ class CustomRequestTextField extends StatelessWidget {
     this.isList = false,
     this.onPressed,
     this.isReadOnly = true,
+    this.controller,
   });
 
   final String? label, value;
   final bool isDate, isList, isReadOnly;
   final Function()? onPressed;
-
+  final TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(bottom: 14.h),
       child: TextFormField(
+        controller: controller,
         initialValue: value,
         style: TextStyles.text12LightGrey,
         cursorColor: AppColors.primary,
@@ -53,13 +56,6 @@ class CustomRequestTextField extends StatelessWidget {
                     : null),
         ),
       ),
-    );
-  }
-
-  OutlineInputBorder borderTextField() {
-    return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(16.r),
-      borderSide: BorderSide(color: AppColors.border, width: 1.w),
     );
   }
 }

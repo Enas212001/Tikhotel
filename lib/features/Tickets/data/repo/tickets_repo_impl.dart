@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:ticket_flow/core/api/api_consumer.dart';
 import 'package:ticket_flow/core/error/server_failure.dart';
 import 'package:ticket_flow/core/utils/api_key.dart';
-import 'package:ticket_flow/features/Tickets/data/models/tickets_model/datum.dart';
+import 'package:ticket_flow/features/Tickets/data/models/ticket_model/datum.dart';
 import 'package:ticket_flow/features/Tickets/data/repo/tickets_repo.dart';
 
 class TicketsRepoImpl implements TicketsRepo {
@@ -25,20 +25,13 @@ class TicketsRepoImpl implements TicketsRepo {
       );
     }
   }
-@override
+
+  @override
   Future<Either<ServerFailure, List<Datum>>> getFeedbackTicketsData() async {
     final result = await getTickets();
     return result.map(
       (allTickets) => allTickets
-          .where(
-            (ticket) => [
-              'New',
-              'InProgress',
-              'Closed',
-              'Hold',
-              'Closed with Feedback',
-            ].contains(ticket.status),
-          )
+          .where((ticket) => ['Closed'].contains(ticket.status))
           .toList(),
     );
   }
@@ -68,7 +61,24 @@ class TicketsRepoImpl implements TicketsRepo {
     return result.map(
       (allTickets) => allTickets
           .where(
-            (ticket) => ['New', 'InProgress', 'Closed'].contains(ticket.status),
+            (ticket) => [
+              'New',
+              'InProgress',
+              'Closed',
+              'Closed with work order',
+            ].contains(ticket.status),
+          )
+          .toList(),
+    );
+  }
+
+  @override
+  Future<Either<ServerFailure, List<Datum>>> getRequests() async {
+    final result = await getTickets();
+    return result.map(
+      (allTickets) => allTickets
+          .where(
+            (ticket) => ['New', 'InProgress', 'Hold'].contains(ticket.status),
           )
           .toList(),
     );

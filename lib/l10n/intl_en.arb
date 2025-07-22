@@ -167,5 +167,10 @@
     "runDate": "Run Date",
     "hideDetails": "Hide Details",
     "viewDetails": "View Details",
-    "unknownErrorOccurred": "Unknown error occurred."
+    "unknownErrorOccurred": "Unknown error occurred.",
+    "user": "User",
+    "operational": "Operational",
+    "pleaseSelect": "Please select a {label}",
+    "admin": "Admin",
+    "operator": "Operator"
 }

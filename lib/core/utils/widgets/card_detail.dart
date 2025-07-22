@@ -10,7 +10,7 @@ class DetailCard extends StatefulWidget {
     super.key,
     required this.topCard,
     required this.bottomCard,
-    this.date = '1/1/2025',
+    required this.date,
   });
   final Widget topCard, bottomCard;
   final String date;

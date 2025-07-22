@@ -53,6 +53,18 @@ final class TicketClosedFeedbackFailure extends TicketState {
 
 final class TicketClosedWorkOrderLoading extends TicketState {}
 
+final class RequestLoading extends TicketState {}
+
+final class RequestSuccess extends TicketState {
+  final List<Datum> tickets;
+  const RequestSuccess({required this.tickets});
+}
+
+final class RequestFailure extends TicketState {
+  final String message;
+  const RequestFailure({required this.message});
+}
+
 final class TicketClosedWorkOrderSuccess extends TicketState {
   final List<Datum> tickets;
 

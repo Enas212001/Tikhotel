@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ticket_flow/core/func/refactor_date.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/core/utils/text_styles.dart';
 import 'package:ticket_flow/core/utils/widgets/card_detail.dart';
 import 'package:ticket_flow/core/utils/widgets/detail_item.dart';
-import 'package:ticket_flow/features/Tickets/data/models/tickets_model/datum.dart';
+import 'package:ticket_flow/features/Tickets/data/models/ticket_model/datum.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 class FeedbackCard extends StatelessWidget {
@@ -18,12 +19,13 @@ class FeedbackCard extends StatelessWidget {
       child: Stack(
         children: [
           DetailCard(
+            date: refactorDateWithTime(ticket.created.toString()),
             topCard: Column(
               children: [
                 DetailItem(
                   hasIcon: true,
                   title: S.of(context).locationColon,
-                  value: ticket.locationId.toString(),
+                  value: ticket.locationName ?? '',
                   image: Assets.imagesLocation,
                 ),
                 DetailItem(
@@ -36,11 +38,26 @@ class FeedbackCard extends StatelessWidget {
             ),
             bottomCard: Column(
               children: [
-                DetailItem(title: S.of(context).requestedByColon, value: ticket.requestedBy.toString()),
-                DetailItem(title: S.of(context).workerColon, value: ticket.workerId.toString()),
-                DetailItem(title: S.of(context).closeTimeColon, value: ticket.closed.toString()),
-                DetailItem(title: S.of(context).problemColon, value: ticket.problemId.toString()),
-                DetailItem(title: S.of(context).messageColon, value: ticket.message.toString()),
+                DetailItem(
+                  title: S.of(context).requestedByColon,
+                  value: ticket.requestedBy.toString(),
+                ),
+                DetailItem(
+                  title: S.of(context).workerColon,
+                  value: ticket.workerFname,
+                ),
+                DetailItem(
+                  title: S.of(context).closeTimeColon,
+                  value: refactorDateWithTime(ticket.closed.toString()),
+                ),
+                DetailItem(
+                  title: S.of(context).problemColon,
+                  value: ticket.problemTopic ?? '',
+                ),
+                DetailItem(
+                  title: S.of(context).messageColon,
+                  value: ticket.message,
+                ),
               ],
             ),
           ),

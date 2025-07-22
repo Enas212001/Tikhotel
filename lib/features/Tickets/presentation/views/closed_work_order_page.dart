@@ -4,7 +4,7 @@ import 'package:ticket_flow/app/my_app_drawer.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/widgets/common_page_widget.dart';
 import 'package:ticket_flow/features/Tickets/presentation/manager/cubit/ticket_cubit.dart';
-import 'package:ticket_flow/features/Tickets/presentation/views/widgets/shimmer_loading.dart';
+import 'package:ticket_flow/core/utils/widgets/shimmer_loading.dart';
 
 import 'widgets/closed_work_order_card.dart';
 

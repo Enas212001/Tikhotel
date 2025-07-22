@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:ticket_flow/core/api/dio_consumer.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
-import 'package:ticket_flow/features/Tickets/data/models/tickets_model/datum.dart';
+import 'package:ticket_flow/features/Tickets/data/models/ticket_model/datum.dart';
 import 'package:ticket_flow/features/Tickets/data/repo/tickets_repo.dart';
 import 'package:ticket_flow/features/Tickets/data/repo/tickets_repo_impl.dart';
 
@@ -47,8 +47,19 @@ class TicketCubit extends Cubit<TicketState> {
     emit(TicketClosedWorkOrderLoading());
     final result = await ticketsRepo.getClosedWorkOrderTicketsData();
     result.fold(
-      (failure) => emit(TicketClosedWorkOrderFailure(message: failure.failure.errorMessage)),
+      (failure) => emit(
+        TicketClosedWorkOrderFailure(message: failure.failure.errorMessage),
+      ),
       (tickets) => emit(TicketClosedWorkOrderSuccess(tickets: tickets)),
+    );
+  }
+
+  Future<void> fetchRequests() async {
+    emit(RequestLoading());
+    final result = await ticketsRepo.getRequests();
+    result.fold(
+      (failure) => emit(RequestFailure(message: failure.failure.errorMessage)),
+      (tickets) => emit(RequestSuccess(tickets: tickets)),
     );
   }
 }

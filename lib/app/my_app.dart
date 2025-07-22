@@ -30,6 +30,11 @@ class MyApp extends StatelessWidget {
             scaffoldBackgroundColor: AppColors.scaffoldBackgroundColor,
             primaryColor: AppColors.primary,
             fontFamily: 'Poppins',
+            appBarTheme: AppBarTheme(
+              backgroundColor: Colors.transparent,
+              surfaceTintColor: Colors.transparent,
+              elevation: 0,
+            ),
           ),
         );
       },

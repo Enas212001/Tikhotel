@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ticket_flow/core/func/refactor_date.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/core/utils/widgets/card_detail.dart';
 import 'package:ticket_flow/core/utils/widgets/detail_item.dart';
-import 'package:ticket_flow/features/Tickets/data/models/tickets_model/datum.dart';
+import 'package:ticket_flow/features/Tickets/data/models/ticket_model/datum.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 class ClosedWorkOrderCard extends StatelessWidget {
@@ -11,12 +12,13 @@ class ClosedWorkOrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DetailCard(
+      date: refactorDateWithTime(ticket.created.toString()),
       topCard: Column(
         children: [
           DetailItem(
             hasIcon: true,
             title: S.of(context).locationColon,
-            value: ticket.locationId.toString(),
+            value: ticket.locationName.toString(),
             image: Assets.imagesLocation,
           ),
           DetailItem(
@@ -33,11 +35,17 @@ class ClosedWorkOrderCard extends StatelessWidget {
             title: S.of(context).requestedByColon,
             value: ticket.requestedBy.toString(),
           ),
-          DetailItem(title: S.of(context).workerColon, value: ticket.workerId.toString()),
-          DetailItem(title: S.of(context).closeTimeColon, value: ticket.closed.toString()),
+          DetailItem(
+            title: S.of(context).workerColon,
+            value: ticket.workerFname.toString(),
+          ),
+          DetailItem(
+            title: S.of(context).closeTimeColon,
+            value: refactorDateWithTime(ticket.closed.toString()),
+          ),
           DetailItem(
             title: S.of(context).problemColon,
-            value: ticket.problemId.toString(),
+            value: ticket.problemTopic.toString(),
           ),
           DetailItem(
             title: S.of(context).messageColon,

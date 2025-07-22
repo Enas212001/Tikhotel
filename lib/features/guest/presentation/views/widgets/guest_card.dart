@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ticket_flow/core/func/refactor_date.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/core/utils/widgets/card_detail.dart';
 import 'package:ticket_flow/core/utils/widgets/detail_item.dart';
@@ -11,21 +12,10 @@ class GuestCard extends StatelessWidget {
   final GuestModel guest;
   @override
   Widget build(BuildContext context) {
-    String refactorDate(String? dateStr) {
-      if (dateStr == null || dateStr == 'N/A') return 'N/A';
-      final dateTime = DateTime.tryParse(dateStr);
-      if (dateTime == null) return dateStr;
-      return '${dateTime.year.toString().padLeft(4, '0')}-'
-          '${dateTime.month.toString().padLeft(2, '0')}-'
-          '${dateTime.day.toString().padLeft(2, '0')},'
-          '${dateTime.hour.toString().padLeft(2, '0')}:'
-          '${dateTime.minute.toString().padLeft(2, '0')}';
-    }
-
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
       child: DetailCard(
-        date: refactorDate(guest.lastLogin),
+        date: refactorDateWithTime(guest.lastLogin),
         topCard: Column(
           children: [
             DetailItem(

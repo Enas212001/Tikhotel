@@ -42,15 +42,15 @@ class GuestLoginBody extends StatelessWidget {
             child: Column(
               children: [
                 TitleWithTextField(
-                  title: S.of(context).roomNumber,
-                  controller: cubit.roomNumberController,
-                  hintText: S.of(context).enterYourRoomNumber,
-                ),
-                SizedBox(height: 16.h),
-                TitleWithTextField(
                   title: S.of(context).firstName,
                   controller: cubit.firstNameController,
                   hintText: S.of(context).enterYourFirstName,
+                ),
+                SizedBox(height: 16.h),
+                TitleWithTextField(
+                  title: S.of(context).roomNumber,
+                  controller: cubit.roomNumberController,
+                  hintText: S.of(context).enterYourRoomNumber,
                 ),
               ],
             ),

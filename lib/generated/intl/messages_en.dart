@@ -26,7 +26,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m2(field) => "Please enter ${field}";
 
-  static String m3(type) => "Search for any ${type}";
+  static String m3(label) => "Please select a ${label}";
+
+  static String m4(type) => "Search for any ${type}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -42,6 +44,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "addTopic": MessageLookupByLibrary.simpleMessage("Add Topic"),
     "addUser": MessageLookupByLibrary.simpleMessage("Add User"),
     "addWorker": MessageLookupByLibrary.simpleMessage("Add Worker"),
+    "admin": MessageLookupByLibrary.simpleMessage("Admin"),
     "administration": MessageLookupByLibrary.simpleMessage("Administration"),
     "administrator": MessageLookupByLibrary.simpleMessage("Administrator"),
     "allowWhatsapp": MessageLookupByLibrary.simpleMessage("Allow Whatsapp"),
@@ -111,11 +114,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "nameColon": MessageLookupByLibrary.simpleMessage("Name:"),
     "newRequest": MessageLookupByLibrary.simpleMessage("New Request"),
     "newRequests": MessageLookupByLibrary.simpleMessage("New Requests"),
+    "operational": MessageLookupByLibrary.simpleMessage("Operational"),
+    "operator": MessageLookupByLibrary.simpleMessage("Operator"),
     "password": MessageLookupByLibrary.simpleMessage("Password"),
     "pendingRequests": MessageLookupByLibrary.simpleMessage("Pending Requests"),
     "phoneNumber": MessageLookupByLibrary.simpleMessage("Phone Number"),
     "phoneNumberColon": MessageLookupByLibrary.simpleMessage("Phone Number:"),
     "pleaseEnter": m2,
+    "pleaseSelect": m3,
     "problem": MessageLookupByLibrary.simpleMessage("Problem"),
     "problemColon": MessageLookupByLibrary.simpleMessage("Problem :"),
     "quantity": MessageLookupByLibrary.simpleMessage("Quantity"),
@@ -168,7 +174,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Schedule a Report",
     ),
     "search": MessageLookupByLibrary.simpleMessage("Search"),
-    "searchForAny": m3,
+    "searchForAny": m4,
     "send": MessageLookupByLibrary.simpleMessage("Send"),
     "startTime": MessageLookupByLibrary.simpleMessage("Start Time"),
     "status": MessageLookupByLibrary.simpleMessage("Status"),
@@ -200,6 +206,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "updateTopic": MessageLookupByLibrary.simpleMessage("Update Topic"),
     "updateUser": MessageLookupByLibrary.simpleMessage("Update User"),
     "updateWorker": MessageLookupByLibrary.simpleMessage("Update Worker"),
+    "user": MessageLookupByLibrary.simpleMessage("User"),
     "vacant": MessageLookupByLibrary.simpleMessage("Vacant"),
     "viewDetails": MessageLookupByLibrary.simpleMessage("View Details"),
     "viewRequest": MessageLookupByLibrary.simpleMessage("View Request"),

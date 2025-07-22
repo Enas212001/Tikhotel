@@ -5,7 +5,7 @@ import 'package:ticket_flow/core/utils/widgets/common_page_widget.dart';
 import 'package:ticket_flow/features/Tickets/presentation/manager/cubit/ticket_cubit.dart';
 
 import 'feedback_card.dart';
-import 'shimmer_loading.dart';
+import '../../../../../core/utils/widgets/shimmer_loading.dart';
 
 class FeedbackBody extends StatelessWidget {
   const FeedbackBody({super.key});

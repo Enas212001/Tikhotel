@@ -18,7 +18,7 @@ class AuthRepoImpl extends AuthRepo {
   }) async {
     try {
       final response = await api.post(
-        EndPoints.login,
+        EndPoints.adminLogin,
         data: {ApiKey.email: email, ApiKey.password: password},
       );
       final user = LoginModel.fromJson(response);

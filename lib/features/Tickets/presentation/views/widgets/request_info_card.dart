@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
+import 'package:ticket_flow/features/Tickets/data/models/ticket_model/datum.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'request_text.dart';
@@ -10,7 +11,8 @@ import 'ticket_shape_border.dart';
 import 'top_request_text.dart';
 
 class RequestInfoCard extends StatelessWidget {
-  const RequestInfoCard({super.key});
+  const RequestInfoCard({super.key, required this.ticket});
+  final Datum ticket;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,9 @@ class RequestInfoCard extends StatelessWidget {
         context.push(AppRoutes.requestDetails);
       },
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        padding:
+            EdgeInsets.symmetric(horizontal: 20.w) +
+            EdgeInsets.only(bottom: 16.h),
         child: Material(
           color: AppColors.ticket,
           shape: TicketShapeBorder(
@@ -47,19 +51,19 @@ class RequestInfoCard extends StatelessWidget {
                     Column(
                       children: [
                         TopText(text: S.of(context).location),
-                        TopText(text: '9301'),
+                        TopText(text: ticket.locationName.toString()),
                       ],
                     ),
                     Column(
                       children: [
                         TopText(text: S.of(context).requestedBy),
-                        TopText(text: 'Guest'),
+                        TopText(text: ticket.requestedBy.toString()),
                       ],
                     ),
                     Column(
                       children: [
                         TopText(text: S.of(context).guest),
-                        TopText(text: 'Accepted'),
+                        TopText(text: ticket.status.toString()),
                       ],
                     ),
                   ],
@@ -89,12 +93,12 @@ class RequestInfoCard extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          RequestText(text: 'IT'),
-                          RequestText(text: 'John Doe'),
-                          RequestText(text: '09:00 AM'),
-                          RequestText(text: '10:00 AM'),
-                          RequestText(text: 'No internet'),
-                          RequestText(text: 'No internet'),
+                          RequestText(text: ticket.departmentId.toString()),
+                          RequestText(text: ticket.workerFname.toString()),
+                          RequestText(text: ticket.created.toString()),
+                          RequestText(text: ticket.closed.toString()),
+                          RequestText(text: ticket.problemTopic.toString()),
+                          RequestText(text: ticket.message.toString()),
                         ],
                       ),
                     ),

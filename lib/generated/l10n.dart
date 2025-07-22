@@ -1093,6 +1093,36 @@ class S {
       args: [],
     );
   }
+
+  /// `User`
+  String get user {
+    return Intl.message('User', name: 'user', desc: '', args: []);
+  }
+
+  /// `Operational`
+  String get operational {
+    return Intl.message('Operational', name: 'operational', desc: '', args: []);
+  }
+
+  /// `Please select a {label}`
+  String pleaseSelect(Object label) {
+    return Intl.message(
+      'Please select a $label',
+      name: 'pleaseSelect',
+      desc: '',
+      args: [label],
+    );
+  }
+
+  /// `Admin`
+  String get admin {
+    return Intl.message('Admin', name: 'admin', desc: '', args: []);
+  }
+
+  /// `Operator`
+  String get operator {
+    return Intl.message('Operator', name: 'operator', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
