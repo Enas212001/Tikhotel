@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
@@ -44,7 +45,12 @@ class UsersBody extends StatelessWidget {
                     itemCount: state.users.length,
                   );
                 } else if (state is GetUsersFailure) {
-                  return Center(child: Text(state.message));
+                  return Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(18.r),
+                      child: Text(state.message),
+                    ),
+                  );
                 } else if (state is GetUsersLoading) {
                   return const ShimmerLoadingList();
                 }

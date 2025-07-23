@@ -18,7 +18,12 @@ class DashboardGridView extends StatelessWidget {
           return DashboardLoadingWidget();
         }
         if (state is DashboardFailure) {
-          return Center(child: Text(state.message));
+          return Center(
+            child: Padding(
+              padding: EdgeInsets.all(18.r),
+              child: Text(state.message),
+            ),
+          );
         }
         if (state is DashboardSuccess) {
           final dashboard = state.dashboard;

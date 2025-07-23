@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:ticket_flow/core/api/dio_consumer.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
 import 'package:ticket_flow/features/admin/data/models/role_model/role_model.dart';
-import 'package:ticket_flow/features/admin/data/models/user_model/user.dart';
 import 'package:ticket_flow/features/admin/data/models/user_model/user_model.dart';
 import 'package:ticket_flow/features/admin/data/repo/admin_repo.dart';
 import 'package:ticket_flow/features/admin/data/repo/admin_repo_impl.dart';
@@ -31,63 +30,52 @@ class UserCubit extends Cubit<UserState> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController emailControllerEdit = TextEditingController();
+  final TextEditingController passwordControllerEdit = TextEditingController();
+  final TextEditingController firstNameControllerEdit = TextEditingController();
   // Add these variables
-  String? selectedRole;
   String? selectedDepartment;
   String? selectedStatus;
   String? selectedOperational;
+  RoleModel? selectedRole;
+  String? selectedDepartmentEdit;
+  String? selectedStatusEdit;
+  RoleModel? selectedRoleEdit;
 
   // Add methods to update them
-  // void setRole(String? value) {
-  //   selectedRole = value;
-  //   emit(RoleSelected(role: value ?? '')); // emit new state as needed
-  // }
-
- // In UserCubit
-  void getRoles() async {
-    emit((state as RolesState).copyWith(loading: true));
-    final result = await repo.getRoles();
-    result.fold(
-      (failure) => emit(
-        (state as RolesState).copyWith(
-          loading: false,
-          error: failure.failure.errorMessage,
-        ),
-      ),
-      (roles) => emit(
-        (state as RolesState).copyWith(
-          roles: roles,
-          loading: false,
-          error: null,
-        ),
-      ),
-    );
+  void setRole(RoleModel? value) {
+    selectedRole = value;
   }
 
-  void setRole(String? value) {
-    emit((state as RolesState).copyWith(selectedRole: value));
+  void setRoleEdit(RoleModel? value) {
+    selectedRoleEdit = value;
   }
 
   void setDepartment(String? value) {
     selectedDepartment = value;
-    emit(DepartmentSelected(department: value ?? ''));
+  }
+
+  void setDepartmentEdit(String? value) {
+    selectedDepartmentEdit = value;
   }
 
   void setStatus(String? value) {
     selectedStatus = value;
-    emit(StatusSelected(status: value ?? ''));
+  }
+
+  void setStatusEdit(String? value) {
+    selectedStatusEdit = value;
   }
 
   void setOperational(String? value) {
     selectedOperational = value;
-    emit(OperationalSelected(operational: value ?? ''));
   }
+
 
   Future<void> addUser() async {
     emit(AddUserLoading());
     final result = await repo.addUser(
-      role: selectedRole ?? '',
-      roleId: '1',
+      roleId: selectedRole!.id!,
       email: emailController.text,
       password: passwordController.text,
       firstName: firstNameController.text,
@@ -114,6 +102,46 @@ class UserCubit extends Cubit<UserState> {
       },
       (message) {
         emit(DeleteUserSuccess(message: message));
+      },
+    );
+  }
+
+  Future<void> editUser(String id) async {
+    emit(EditUserLoading());
+    final result = await repo.editUser(
+      id,
+      roleId: selectedRoleEdit?.id ?? selectedRole?.id,
+      email: emailControllerEdit.text.isEmpty
+          ? null
+          : emailControllerEdit.text,
+      password: passwordControllerEdit.text.isEmpty
+          ? null
+          : passwordControllerEdit.text,
+      firstName: firstNameControllerEdit.text.isEmpty
+          ? null
+          : firstNameControllerEdit.text,
+      department: selectedDepartmentEdit ?? selectedDepartment,
+      status: selectedStatusEdit ?? selectedStatus,
+    );
+    result.fold(
+      (failure) {
+        emit(EditUserFailure(message: failure.failure.errorMessage));
+      },
+      (user) {
+        emit(EditUserSuccess(user: user));
+      },
+    );
+  }
+
+  Future<void> getRoles() async {
+    emit(RolesLoading());
+    final result = await repo.getRoles();
+    result.fold(
+      (failure) {
+        emit(RolesFailure(message: failure.failure.errorMessage));
+      },
+      (roles) {
+        emit(RolesLoaded(roles));
       },
     );
   }

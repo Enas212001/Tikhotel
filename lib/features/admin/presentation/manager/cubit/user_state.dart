@@ -16,34 +16,6 @@ final class RoleSelected extends UserState {
   const RoleSelected({required this.role});
 }
 
-class RolesState extends UserState {
-  final List<RoleModel> roles;
-  final String? selectedRole;
-  final bool loading;
-  final String? error;
-
-  const RolesState({
-    required this.roles,
-    this.selectedRole,
-    this.loading = false,
-    this.error,
-  });
-
-  RolesState copyWith({
-    List<RoleModel>? roles,
-    String? selectedRole,
-    bool? loading,
-    String? error,
-  }) {
-    return RolesState(
-      roles: roles ?? this.roles,
-      selectedRole: selectedRole ?? this.selectedRole,
-      loading: loading ?? this.loading,
-      error: error,
-    );
-  }
-}
-
 class RolesLoading extends UserState {}
 
 class RolesLoaded extends UserState {
@@ -53,7 +25,7 @@ class RolesLoaded extends UserState {
 
 class RolesFailure extends UserState {
   final String message;
-  const RolesFailure(this.message);
+  const RolesFailure({required this.message});
 }
 
 final class StatusSelected extends UserState {
@@ -96,7 +68,7 @@ final class AddUserFailure extends UserState {
 final class EditUserLoading extends UserState {}
 
 final class EditUserSuccess extends UserState {
-  final User user;
+  final UserModel user;
   const EditUserSuccess({required this.user});
 }
 

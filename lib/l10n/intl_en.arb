@@ -172,5 +172,14 @@
     "operational": "Operational",
     "pleaseSelect": "Please select a {label}",
     "admin": "Admin",
-    "operator": "Operator"
+    "operator": "Operator",
+    "noRequests": "No Requests",
+    "generic": "Generic",
+    "engineering": "Engineering",
+    "frontOffice": "Front Office",
+    "housekeeping": "Housekeeping",
+    "registrationDate": "Registration Date",
+    "ipAddress": "IP Address",
+    "anUnexpectedErrorOccurred": "An unexpected error occurred",
+    "noInternetConnection": "No internet connection. Please check your internet."
 }

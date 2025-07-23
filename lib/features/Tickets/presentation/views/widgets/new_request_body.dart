@@ -48,6 +48,11 @@ class NewRequestBody extends StatelessWidget {
                 );
               }
               if (state is RequestSuccess) {
+                if (state.tickets.isEmpty) {
+                  return SliverFillRemaining(
+                    child: Center(child: Text(S.of(context).noRequests)),
+                  );
+                }
                 return SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {
                     return RequestInfoCard(ticket: state.tickets[index]);

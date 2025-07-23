@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:ticket_flow/features/admin/data/models/user_model/user_model.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/add_department_page.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/add_location_page.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/add_member_page.dart';
@@ -115,7 +116,10 @@ class AppRoutes {
       GoRoute(path: addUser, builder: (context, state) => const AddUserPage()),
       GoRoute(
         path: updateUser,
-        builder: (context, state) => const UpdateUserPage(),
+        builder: (context, state) {
+          final user = state.extra as UserModel;
+          return UpdateUserPage(user: user);
+        },
       ),
       GoRoute(
         path: addDepartment,

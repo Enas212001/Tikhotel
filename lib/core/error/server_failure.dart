@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
@@ -6,8 +7,12 @@ class FailureModel {
   final bool status;
 
   FailureModel({required this.errorMessage, required this.status});
+
   factory FailureModel.fromJson(Map<String, dynamic> json) {
-    return FailureModel(status: json['status'], errorMessage: json['message']);
+    return FailureModel(
+      status: json['status'] ?? false,
+      errorMessage: json['message'] ?? S.current.anUnexpectedErrorOccurred,
+    );
   }
 }
 
@@ -18,83 +23,43 @@ class ServerFailure implements Exception {
 }
 
 ServerFailure handleDioException(DioException dioException) {
+  final response = dioException.response;
+  final data = response?.data;
+
+  FailureModel defaultFailure = FailureModel(
+    status: false,
+    errorMessage: S.current.anUnexpectedErrorOccurred,
+  );
+
+  FailureModel parseFailureModel(dynamic data) {
+    if (data is Map<String, dynamic>) {
+      return FailureModel.fromJson(data);
+    } else {
+      return defaultFailure;
+    }
+  }
+
+  if (dioException.error is SocketException) {
+    return ServerFailure(
+      failure: FailureModel(
+        status: false,
+        errorMessage: S.current.noInternetConnection,
+      ),
+    );
+  }
+
   switch (dioException.type) {
     case DioExceptionType.connectionTimeout:
-      throw ServerFailure(
-        failure: FailureModel.fromJson(dioException.response!.data),
-      );
     case DioExceptionType.sendTimeout:
-      throw ServerFailure(
-        failure: FailureModel.fromJson(dioException.response!.data),
-      );
     case DioExceptionType.receiveTimeout:
-      throw ServerFailure(
-        failure: FailureModel.fromJson(dioException.response!.data),
-      );
     case DioExceptionType.badResponse:
-      switch (dioException.response!.statusCode) {
-        case 400:
-          throw ServerFailure(
-            failure: FailureModel.fromJson(dioException.response!.data),
-          );
-        case 401:
-          throw ServerFailure(
-            failure: FailureModel.fromJson(dioException.response!.data),
-          );
-        case 403:
-          throw ServerFailure(
-            failure: FailureModel.fromJson(dioException.response!.data),
-          );
-        case 404:
-          throw ServerFailure(
-            failure: FailureModel.fromJson(dioException.response!.data),
-          );
-        case 409:
-          throw ServerFailure(
-            failure: FailureModel.fromJson(dioException.response!.data),
-          );
-        case 422:
-          throw ServerFailure(
-            failure: FailureModel.fromJson(dioException.response!.data),
-          );
-        case 504:
-          throw ServerFailure(
-            failure: FailureModel.fromJson(dioException.response!.data),
-          );
-        default:
-          throw ServerFailure(
-            failure: FailureModel.fromJson(dioException.response!.data),
-          );
-      }
     case DioExceptionType.cancel:
-      throw ServerFailure(
-        failure: FailureModel.fromJson(dioException.response!.data),
-      );
     case DioExceptionType.connectionError:
-      throw ServerFailure(
-        failure: FailureModel.fromJson(dioException.response!.data),
-      );
-    case DioExceptionType.unknown:
-      if (dioException.response != null) {
-        throw ServerFailure(
-          failure: FailureModel.fromJson(dioException.response!.data),
-        );
-      } else {
-        throw ServerFailure(
-          failure: FailureModel(
-            status: false,
-            errorMessage: S.current.unknownErrorOccurred,
-          ),
-        );
-      }
     case DioExceptionType.badCertificate:
-      throw ServerFailure(
-        failure: FailureModel.fromJson(dioException.response!.data),
-      );
-    // ignore: unreachable_switch_default
+      return ServerFailure(failure: parseFailureModel(data));
+
+    case DioExceptionType.unknown:
     default:
-      throw ServerFailure(
-        failure: FailureModel.fromJson(dioException.response!.data),
-      );
+      return ServerFailure(failure: defaultFailure);
   }
 }

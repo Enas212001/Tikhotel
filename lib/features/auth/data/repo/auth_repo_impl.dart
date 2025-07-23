@@ -5,6 +5,7 @@ import 'package:ticket_flow/core/utils/api_key.dart';
 import 'package:ticket_flow/features/auth/data/models/guset_login/guset_login.dart';
 import 'package:ticket_flow/features/auth/data/models/login_model/login_model.dart';
 import 'package:ticket_flow/features/auth/data/repo/auth_repo.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 class AuthRepoImpl extends AuthRepo {
   final ApiConsumer api;
@@ -21,9 +22,20 @@ class AuthRepoImpl extends AuthRepo {
         EndPoints.adminLogin,
         data: {ApiKey.email: email, ApiKey.password: password},
       );
-      final user = LoginModel.fromJson(response);
 
-      return right(user);
+      if (response is Map<String, dynamic>) {
+        final user = LoginModel.fromJson(response);
+        return right(user);
+      } else {
+        return left(
+          ServerFailure(
+            failure: FailureModel(
+              status: false,
+              errorMessage: S.current.noInternetConnection,
+            ),
+          ),
+        );
+      }
     } on ServerFailure catch (e) {
       return left(e);
     }

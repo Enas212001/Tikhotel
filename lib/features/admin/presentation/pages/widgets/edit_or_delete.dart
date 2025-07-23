@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_svg/svg.dart';  
 import 'package:ticket_flow/core/utils/assets.dart';
 
 class EditOrDelete extends StatelessWidget {
-  const EditOrDelete({super.key, required this.route, required this.onDelete});
-  final String route;
+  const EditOrDelete({super.key, required this.onDelete, required this.onEdit});
   final VoidCallback onDelete;
+  final VoidCallback onEdit;
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -16,9 +15,7 @@ class EditOrDelete extends StatelessWidget {
       child: Row(
         children: [
           GestureDetector(
-            onTap: () {
-              context.push(route);
-            },
+            onTap: onEdit,
             child: SvgPicture.asset(
               Assets.imagesEdit,
               width: 18.sp,

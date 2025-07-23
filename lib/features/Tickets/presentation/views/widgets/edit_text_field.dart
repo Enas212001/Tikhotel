@@ -6,8 +6,8 @@ import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/core/utils/text_styles.dart';
 
-class CustomRequestTextField extends StatelessWidget {
-  const CustomRequestTextField({
+class EditTextField extends StatelessWidget {
+  const EditTextField({
     super.key,
     required this.label,
     this.value,
@@ -16,26 +16,22 @@ class CustomRequestTextField extends StatelessWidget {
     this.onPressed,
     this.isReadOnly = true,
     this.controller,
-    this.onChanged,
   });
 
   final String? label, value;
   final bool isDate, isList, isReadOnly;
   final Function()? onPressed;
   final TextEditingController? controller;
-  final Function(String)? onChanged;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(bottom: 14.h),
-      child: TextFormField(
+      child: TextField(
         controller: controller,
-        initialValue: value,
         style: TextStyles.text12LightGrey,
         cursorColor: AppColors.primary,
         readOnly: isReadOnly,
         onTap: onPressed,
-        onChanged: onChanged,
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: ' $label ',

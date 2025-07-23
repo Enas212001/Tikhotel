@@ -4,6 +4,7 @@ import 'package:ticket_flow/core/error/server_failure.dart';
 import 'package:ticket_flow/core/utils/api_key.dart';
 import 'package:ticket_flow/features/Tickets/data/models/ticket_model/datum.dart';
 import 'package:ticket_flow/features/Tickets/data/repo/tickets_repo.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 class TicketsRepoImpl implements TicketsRepo {
   final ApiConsumer api;
@@ -13,10 +14,22 @@ class TicketsRepoImpl implements TicketsRepo {
   Future<Either<ServerFailure, List<Datum>>> getTickets() async {
     try {
       final response = await api.get(EndPoints.tickets);
-      final tickets = (response['data'] as List)
-          .map((e) => Datum.fromJson(e))
-          .toList();
-      return right(tickets);
+      if (response is Map<String, dynamic>) {
+        final tickets = (response['data'] as List)
+            .map((e) => Datum.fromJson(e))
+            .toList();
+        return right(tickets);
+      } else {
+        return left(
+          ServerFailure(
+            failure: FailureModel(
+              status: false,
+              errorMessage: S.current.noInternetConnection,
+            ),
+          ),
+        );
+      }
+      
     } catch (e) {
       return left(
         ServerFailure(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/core/utils/widgets/card_detail.dart';
@@ -43,7 +44,9 @@ class WokerDetailCard extends StatelessWidget {
             ),
           ),
           EditOrDelete(
-            route: AppRoutes.updateWorker,
+            onEdit: () {
+              context.push(AppRoutes.updateWorker);
+            },
             onDelete: () {
               showDialog(
                 context: context,

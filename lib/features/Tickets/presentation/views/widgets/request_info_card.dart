@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ticket_flow/core/func/refactor_date.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
+import 'package:ticket_flow/core/utils/widgets/detail_item.dart';
 import 'package:ticket_flow/features/Tickets/data/models/ticket_model/datum.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
-import 'request_text.dart';
 import 'ticket_shape_border.dart';
 import 'top_request_text.dart';
 
@@ -51,19 +52,19 @@ class RequestInfoCard extends StatelessWidget {
                     Column(
                       children: [
                         TopText(text: S.of(context).location),
-                        TopText(text: ticket.locationName.toString()),
+                        TopText(text: ticket.locationName ?? ''),
                       ],
                     ),
                     Column(
                       children: [
                         TopText(text: S.of(context).requestedBy),
-                        TopText(text: ticket.requestedBy.toString()),
+                        TopText(text: ticket.requestedBy ?? ''),
                       ],
                     ),
                     Column(
                       children: [
                         TopText(text: S.of(context).guest),
-                        TopText(text: ticket.status.toString()),
+                        TopText(text: ticket.status ?? ''),
                       ],
                     ),
                   ],
@@ -71,36 +72,32 @@ class RequestInfoCard extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 27.w, vertical: 10.h),
-                child: Row(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Left column
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          RequestText(text: S.of(context).department),
-                          RequestText(text: S.of(context).worker),
-                          RequestText(text: S.of(context).startTime),
-                          RequestText(text: S.of(context).depTime),
-                          RequestText(text: S.of(context).problem),
-                          RequestText(text: S.of(context).message),
-                        ],
-                      ),
+                    DetailItem(
+                      title: S.of(context).department,
+                      value: ticket.departmentId.toString(),
                     ),
-                    // Right column
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          RequestText(text: ticket.departmentId.toString()),
-                          RequestText(text: ticket.workerFname.toString()),
-                          RequestText(text: ticket.created.toString()),
-                          RequestText(text: ticket.closed.toString()),
-                          RequestText(text: ticket.problemTopic.toString()),
-                          RequestText(text: ticket.message.toString()),
-                        ],
-                      ),
+                    DetailItem(
+                      title: S.of(context).worker,
+                      value: ticket.workerFname ?? '',
+                    ),
+                    DetailItem(
+                      title: S.of(context).startTime,
+                      value: refactorDateWithTime(ticket.created),
+                    ),
+                    DetailItem(
+                      title: S.of(context).depTime,
+                      value: refactorDateWithTime(ticket.closed),
+                    ),
+                    DetailItem(
+                      title: S.of(context).problem,
+                      value: ticket.problemTopic ?? '',
+                    ),
+                    DetailItem(
+                      title: S.of(context).message,
+                      value: ticket.message ?? '',
                     ),
                   ],
                 ),

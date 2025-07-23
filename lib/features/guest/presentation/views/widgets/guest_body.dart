@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
@@ -22,10 +24,11 @@ class GuestBody extends StatelessWidget {
             return GuestsLoadingShimmer();
           }
           if (state is GuestFailure) {
+            log(state.message);
             return CommonPageWidget(
               title: S.of(context).guests,
               search: S.of(context).forAnyGuest,
-              listView: SliverToBoxAdapter(
+              listView: SliverFillRemaining(
                 child: Center(child: Text(state.message)),
               ),
             );

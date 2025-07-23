@@ -56,7 +56,7 @@ class FeedbackCard extends StatelessWidget {
                 ),
                 DetailItem(
                   title: S.of(context).messageColon,
-                  value: ticket.message,
+                  value: ticket.message ?? '',
                 ),
               ],
             ),

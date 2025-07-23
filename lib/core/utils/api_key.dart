@@ -4,7 +4,6 @@ class ApiKey {
   static const String roomNumber = 'room';
   static const String firstName = 'fname';
   static const String name = 'name';
-  static const String role = 'role';
   static const String roleId = 'role_id';
   static const String department = 'department';
   static const String status = 'status';

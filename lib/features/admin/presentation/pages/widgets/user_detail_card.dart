@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/func/refactor_date.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
@@ -52,7 +53,9 @@ class UserDetailCard extends StatelessWidget {
               DeleteUserDialog(id: user.id.toString(), parentContext: context),
         );
       },
-      route: AppRoutes.updateUser,
+      onEdit: () {
+        context.push(AppRoutes.updateUser, extra: user);
+      },
     );
   }
 }

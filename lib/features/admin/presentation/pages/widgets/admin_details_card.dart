@@ -9,12 +9,11 @@ class AdminDeatailsCard extends StatelessWidget {
     required this.topCard,
     required this.bottomCard,
     required this.onDelete,
-    required this.route,
+    required this.onEdit,
     required this.date,
   });
   final Widget topCard, bottomCard;
-  final VoidCallback onDelete;
-  final String route;
+  final VoidCallback onDelete,onEdit;
   final String date;
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class AdminDeatailsCard extends StatelessWidget {
       child: Stack(
         children: [
           DetailCard(topCard: topCard, bottomCard: bottomCard, date: date),
-          EditOrDelete(route: route, onDelete: onDelete),
+          EditOrDelete(onDelete: onDelete, onEdit: onEdit),
         ],
       ),
     );
