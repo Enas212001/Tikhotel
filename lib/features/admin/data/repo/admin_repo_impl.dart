@@ -356,11 +356,16 @@ class AdminRepoImpl implements AdminRepo {
   Future<Either<ServerFailure, ProblemItem>> addProblem({
     required String topic,
     required int departmentId,
+    required int sla,
   }) async {
     try {
       final response = await api.post(
         EndPoints.addProblem,
-        data: {ApiKey.topic: topic, ApiKey.departmentId: departmentId},
+        data: {
+          ApiKey.topic: topic,
+          ApiKey.departmentId: departmentId,
+          ApiKey.sla: sla,
+        },
       );
       if (response is Map<String, dynamic> && response['data'] != null) {
         final problem = ProblemItem.fromJson(response['data']);
@@ -391,11 +396,16 @@ class AdminRepoImpl implements AdminRepo {
     String id, {
     required String topic,
     required int departmentId,
+    required int sla,
   }) async {
     try {
       final response = await api.put(
         EndPoints.editProblem(id),
-        data: {ApiKey.topic: topic, ApiKey.departmentId: departmentId},
+        data: {
+          ApiKey.topic: topic,
+          ApiKey.departmentId: departmentId,
+          ApiKey.sla: sla,
+        },
       );
       if (response is Map<String, dynamic> && response['data'] != null) {
         final problem = ProblemItem.fromJson(response['data']);

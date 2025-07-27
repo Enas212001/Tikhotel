@@ -22,7 +22,6 @@ class UpdateUserBody extends StatelessWidget {
     return BlocConsumer<UserCubit, UserState>(
       listener: (context, state) {
         if (state is EditUserSuccess) {
-          // context.read<UserCubit>().getUsers();
           context.pop();
         } else if (state is EditUserFailure) {
           showToast(state.message);
@@ -73,7 +72,7 @@ class UpdateUserBody extends StatelessWidget {
             ],
           ),
           onPressed: () {
-            context.read<UserCubit>().editUser(user.id.toString());
+            cubit.editUser(user.id.toString());
           },
         );
       },

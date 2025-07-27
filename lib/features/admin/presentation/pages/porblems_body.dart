@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/widgets/add_filter_widget.dart';
+import 'package:ticket_flow/core/utils/widgets/shimmer_loading.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/problem_cubit/problem_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
@@ -33,15 +34,15 @@ class ProblemsBody extends StatelessWidget {
         children: [
           AddFilterWidget(
             title: S.of(context).addProblem,
-            onTap: () {
-              context.push(AppRoutes.addProblem);
+            onTap: () async {
+              await context.push(AppRoutes.addProblem);
               context.read<ProblemCubit>().getProblems();
             },
           ),
           BlocBuilder<ProblemCubit, ProblemState>(
             builder: (context, state) {
               if (state is ProblemFetching) {
-                return const Center(child: CircularProgressIndicator());
+                return const ShimmerLoadingList();
               }
               if (state is ProblemFetchingError) {
                 return Center(child: Text(state.error));

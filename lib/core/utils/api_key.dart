@@ -11,6 +11,9 @@ class ApiKey {
   static const String requestType = 'RequestType';
   static const String topic = 'topic';
   static const String departmentId = 'department_id';
+  static const String sla = 'sla';
+  static const String page = 'page';
+  static const String limit = 'limit';
 }
 
 class EndPoints {

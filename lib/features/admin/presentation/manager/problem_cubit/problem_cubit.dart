@@ -16,7 +16,10 @@ class ProblemCubit extends Cubit<ProblemState> {
   TextEditingController topicController = TextEditingController();
   TextEditingController departmentController = TextEditingController();
   TextEditingController slaController = TextEditingController();
-  
+  TextEditingController topicEditController = TextEditingController();
+  TextEditingController departmentEditController = TextEditingController();
+  TextEditingController slaEditController = TextEditingController();
+
   Future<void> getProblems() async {
     emit(ProblemFetching());
     final result = await repo.getProblems();
@@ -26,14 +29,12 @@ class ProblemCubit extends Cubit<ProblemState> {
     );
   }
 
-  Future<void> addProblem({
-    required String topic,
-    required int departmentId,
-  }) async {
+  Future<void> addProblem() async {
     emit(ProblemAdding());
     final result = await repo.addProblem(
-      topic: topic,
-      departmentId: departmentId,
+      topic: topicController.text,
+      departmentId: int.parse(departmentController.text),
+      sla: int.parse(slaController.text),
     );
     result.fold(
       (l) => emit(ProblemAddingError(error: l.failure.errorMessage)),
@@ -41,16 +42,17 @@ class ProblemCubit extends Cubit<ProblemState> {
     );
   }
 
-  Future<void> editProblem({
-    required String id,
-    required String topic,
-    required int departmentId,
-  }) async {
+  Future<void> editProblem({required String id}) async {
     emit(ProblemEditing());
     final result = await repo.editProblem(
       id,
-      topic: topic,
-      departmentId: departmentId,
+      topic: topicEditController.text.isEmpty ? topicController.text : topicEditController.text,
+      departmentId: departmentEditController.text.isEmpty
+          ? int.parse(departmentController.text)
+          : int.parse(departmentEditController.text),
+      sla: slaEditController.text.isEmpty
+          ? int.parse(slaController.text)
+          : int.parse(slaEditController.text),
     );
     result.fold(
       (l) => emit(ProblemEditingError(error: l.failure.errorMessage)),

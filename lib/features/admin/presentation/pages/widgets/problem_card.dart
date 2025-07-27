@@ -41,8 +41,8 @@ class ProblemCard extends StatelessWidget {
             Row(
               children: [
                 GestureDetector(
-                  onTap: () {
-                    context.push(AppRoutes.updateProblem, extra: problem);
+                  onTap: () async {
+                    await context.push(AppRoutes.updateProblem, extra: problem);
                     context.read<ProblemCubit>().getProblems();
                   },
                   child: SvgPicture.asset(

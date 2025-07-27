@@ -40,11 +40,13 @@ abstract class AdminRepo {
   Future<Either<ServerFailure, ProblemItem>> addProblem({
     required String topic,
     required int departmentId,
+    required int sla,
   });
   Future<Either<ServerFailure, ProblemItem>> editProblem(
     String id, {
     required String topic,
     required int departmentId,
+    required int sla,
   });
   Future<Either<ServerFailure, String>> deleteProblem(String id);
 }
