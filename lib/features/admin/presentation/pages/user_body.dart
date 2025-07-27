@@ -6,7 +6,7 @@ import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/widgets/add_filter_widget.dart';
 import 'package:ticket_flow/core/utils/widgets/shimmer_loading.dart';
-import 'package:ticket_flow/features/admin/presentation/manager/cubit/user_cubit.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/user_cubit/user_cubit.dart';
 
 import 'widgets/common_admin_list_view.dart';
 import 'widgets/user_detail_card.dart';
@@ -29,8 +29,9 @@ class UsersBody extends StatelessWidget {
         children: [
           AddFilterWidget(
             title: 'Add User',
-            onTap: () {
-              context.push(AppRoutes.addUser);
+            onTap: () async {
+              await context.push(AppRoutes.addUser);
+              context.read<UserCubit>().getUsers();
             },
           ),
           RefreshIndicator(

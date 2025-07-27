@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ticket_flow/features/admin/data/models/problem_model/problem_item.dart';
+import 'package:ticket_flow/features/admin/data/models/request_type_model/request_type_model.dart';
 import 'package:ticket_flow/features/admin/data/models/user_model/user_model.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/add_department_page.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/add_location_page.dart';
@@ -31,6 +34,7 @@ import 'package:ticket_flow/features/Tickets/presentation/views/new_request_page
 import 'package:ticket_flow/features/Tickets/presentation/views/view_request_page.dart';
 import 'package:ticket_flow/features/splash/splash_page.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/closed_work_order_page.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 class AppRoutes {
   static const String splash = '/';
@@ -171,7 +175,10 @@ class AppRoutes {
       ),
       GoRoute(
         path: updateProblem,
-        builder: (context, state) => const UpdateProblemPage(),
+        builder: (context, state) {
+          final problem = state.extra as ProblemItem;
+          return UpdateProblemPage(problem: problem);
+        },
       ),
       GoRoute(
         path: addRequestType,
@@ -179,7 +186,15 @@ class AppRoutes {
       ),
       GoRoute(
         path: updateRequestType,
-        builder: (context, state) => const UpdateTypePage(),
+        builder: (context, state) {
+          final requestType = state.extra as RequestTypeModel?;
+          if (requestType == null) {
+            return Scaffold(
+              body: Center(child: Text(S.current.anUnexpectedErrorOccurred)),
+            );
+          }
+          return UpdateTypePage(requestType: requestType);
+        },
       ),
     ],
   );

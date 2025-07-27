@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_flow/core/func/border_text_field.dart';
 import 'package:ticket_flow/core/utils/text_styles.dart';
 import 'package:ticket_flow/features/admin/data/models/role_model/role_model.dart';
-import 'package:ticket_flow/features/admin/presentation/manager/cubit/user_cubit.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/user_cubit/user_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 class UserRoles extends StatelessWidget {

@@ -29,7 +29,6 @@ class TicketsRepoImpl implements TicketsRepo {
           ),
         );
       }
-      
     } catch (e) {
       return left(
         ServerFailure(

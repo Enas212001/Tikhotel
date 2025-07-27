@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/core/utils/widgets/detail_item.dart';
@@ -18,7 +19,9 @@ class MemberCard extends StatelessWidget {
           builder: (context) => DeleteMemberDialog(),
         );
       },
-      route: AppRoutes.updateMember,
+      onEdit: () {
+        context.push(AppRoutes.updateMember);
+      },
       child: Column(
         children: [
           DetailItem(

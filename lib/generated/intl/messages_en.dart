@@ -139,6 +139,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseSelect": m3,
         "problem": MessageLookupByLibrary.simpleMessage("Problem"),
         "problemColon": MessageLookupByLibrary.simpleMessage("Problem :"),
+        "problemTopic": MessageLookupByLibrary.simpleMessage("Problem Topic"),
         "quantity": MessageLookupByLibrary.simpleMessage("Quantity"),
         "registrationDate":
             MessageLookupByLibrary.simpleMessage("Registration Date"),
@@ -189,6 +190,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "search": MessageLookupByLibrary.simpleMessage("Search"),
         "searchForAny": m4,
         "send": MessageLookupByLibrary.simpleMessage("Send"),
+        "sla": MessageLookupByLibrary.simpleMessage("SLA"),
         "startTime": MessageLookupByLibrary.simpleMessage("Start Time"),
         "status": MessageLookupByLibrary.simpleMessage("Status"),
         "statusColon": MessageLookupByLibrary.simpleMessage("Status:"),

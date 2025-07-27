@@ -1,12 +1,12 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/func/refactor_date.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/core/utils/widgets/detail_item.dart';
 import 'package:ticket_flow/features/admin/data/models/user_model/user_model.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/user_cubit/user_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'admin_details_card.dart';
@@ -46,15 +46,15 @@ class UserDetailCard extends StatelessWidget {
         ],
       ),
       onDelete: () {
-        log(user.id.toString());
         showDialog(
           context: context,
           builder: (dialogContext) =>
               DeleteUserDialog(id: user.id.toString(), parentContext: context),
         );
       },
-      onEdit: () {
-        context.push(AppRoutes.updateUser, extra: user);
+      onEdit: () async {
+        await context.push(AppRoutes.updateUser, extra: user);
+        context.read<UserCubit>().getUsers();
       },
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
@@ -6,13 +7,15 @@ import 'package:ticket_flow/core/func/container_decoration.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/core/utils/text_styles.dart';
+import 'package:ticket_flow/features/admin/data/models/problem_model/problem_item.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/problem_cubit/problem_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'delete_problem.dart';
 
 class ProblemCard extends StatelessWidget {
-  const ProblemCard({super.key});
-
+  const ProblemCard({super.key, required this.problem});
+  final ProblemItem problem;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -24,19 +27,23 @@ class ProblemCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              S.of(context).problem,
+              S.of(context).problemColon,
               style: TextStyles.text12RegularDarkGrey,
             ),
-            Text(
-              '1st floor ceiling painting',
-              style: TextStyles.text12RegularLightGrey,
-              overflow: TextOverflow.ellipsis,
+            SizedBox(
+              width: 195.w,
+              child: Text(
+                problem.topic ?? '',
+                style: TextStyles.text12RegularLightGrey,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
             Row(
               children: [
                 GestureDetector(
                   onTap: () {
-                    context.push(AppRoutes.updateProblem);
+                    context.push(AppRoutes.updateProblem, extra: problem);
+                    context.read<ProblemCubit>().getProblems();
                   },
                   child: SvgPicture.asset(
                     Assets.imagesEdit,
@@ -49,7 +56,10 @@ class ProblemCard extends StatelessWidget {
                   onTap: () {
                     showDialog(
                       context: context,
-                      builder: (context) => DeleteProblemDialog(),
+                      builder: (dialogContext) => DeleteProblemDialog(
+                        id: problem.id.toString(),
+                        parentContext: context,
+                      ),
                     );
                   },
                   child: SvgPicture.asset(

@@ -71,7 +71,6 @@ class UserCubit extends Cubit<UserState> {
     selectedOperational = value;
   }
 
-
   Future<void> addUser() async {
     emit(AddUserLoading());
     final result = await repo.addUser(
@@ -111,9 +110,7 @@ class UserCubit extends Cubit<UserState> {
     final result = await repo.editUser(
       id,
       roleId: selectedRoleEdit?.id ?? selectedRole?.id,
-      email: emailControllerEdit.text.isEmpty
-          ? null
-          : emailControllerEdit.text,
+      email: emailControllerEdit.text.isEmpty ? null : emailControllerEdit.text,
       password: passwordControllerEdit.text.isEmpty
           ? null
           : passwordControllerEdit.text,

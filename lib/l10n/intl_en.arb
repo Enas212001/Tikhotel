@@ -181,5 +181,7 @@
     "registrationDate": "Registration Date",
     "ipAddress": "IP Address",
     "anUnexpectedErrorOccurred": "An unexpected error occurred",
-    "noInternetConnection": "No internet connection. Please check your internet."
+    "noInternetConnection": "No internet connection. Please check your internet.",
+    "problemTopic": "Problem Topic",
+    "sla": "SLA"
 }

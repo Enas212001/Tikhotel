@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/core/utils/widgets/add_filter_widget.dart';
+import 'package:ticket_flow/core/utils/widgets/shimmer_loading.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/request_type_cubit/request_type_cubit.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 import '../../../../core/utils/app_routes.dart';
 import 'widgets/common_admin_list_view.dart';
@@ -11,19 +17,50 @@ class RequestTypesBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        AddFilterWidget(
-          title: 'Add Request Type',
-          onTap: () {
-            context.push(AppRoutes.addRequestType);
-          },
-        ),
-        CommonAdminListView(
-          item: (context, index) => RequestTypeCard(),
-          itemCount: 10,
-        ),
-      ],
+    return BlocConsumer<RequestTypeCubit, RequestTypeState>(
+      listener: (context, state) {
+        if (state is RequestTypeDeleted) {
+          showToast(state.message);
+          context.read<RequestTypeCubit>().getRequestTypes();
+          context.pop();
+        } else if (state is RequestTypeDeleteFailure) {
+          showToast(state.error);
+        }
+      },
+      builder: (context, state) {
+        return Column(
+          children: [
+            AddFilterWidget(
+              title: S.of(context).addRequestType,
+              onTap: () async {
+                await context.push(AppRoutes.addRequestType);
+                context.read<RequestTypeCubit>().getRequestTypes();
+              },
+            ),
+            BlocBuilder<RequestTypeCubit, RequestTypeState>(
+              builder: (context, state) {
+                if (state is RequestTypeLoaded) {
+                  return CommonAdminListView(
+                    item: (context, index) =>
+                        RequestTypeCard(requestType: state.requestTypes[index]),
+                    itemCount: state.requestTypes.length,
+                  );
+                } else if (state is RequestTypeFailure) {
+                  return Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(18.r),
+                      child: Text(state.error),
+                    ),
+                  );
+                } else if (state is RequestTypeLoading) {
+                  return const ShimmerLoadingList();
+                }
+                return const SizedBox.shrink();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

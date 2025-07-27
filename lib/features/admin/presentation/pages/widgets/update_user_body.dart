@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/request_text_field.dart';
 import 'package:ticket_flow/features/admin/data/models/user_model/user_model.dart';
-import 'package:ticket_flow/features/admin/presentation/manager/cubit/user_cubit.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/user_cubit/user_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/add_user_body.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/user_roles.dart';
 import 'package:ticket_flow/generated/l10n.dart';
@@ -22,7 +22,7 @@ class UpdateUserBody extends StatelessWidget {
     return BlocConsumer<UserCubit, UserState>(
       listener: (context, state) {
         if (state is EditUserSuccess) {
-          context.read<UserCubit>().getUsers();
+          // context.read<UserCubit>().getUsers();
           context.pop();
         } else if (state is EditUserFailure) {
           showToast(state.message);

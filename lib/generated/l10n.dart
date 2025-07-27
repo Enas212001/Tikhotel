@@ -1599,6 +1599,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Problem Topic`
+  String get problemTopic {
+    return Intl.message(
+      'Problem Topic',
+      name: 'problemTopic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SLA`
+  String get sla {
+    return Intl.message(
+      'SLA',
+      name: 'sla',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

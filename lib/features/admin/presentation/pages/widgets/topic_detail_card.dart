@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/core/utils/widgets/detail_item.dart';
@@ -15,7 +16,9 @@ class TopicDetailCard extends StatelessWidget {
       onDelete: () {
         showDialog(context: context, builder: (context) => DeleteTopicDialog());
       },
-      route: AppRoutes.updateTopic,
+      onEdit: () {
+        context.push(AppRoutes.updateTopic);
+      },
       child: Column(
         children: [
           DetailItem(

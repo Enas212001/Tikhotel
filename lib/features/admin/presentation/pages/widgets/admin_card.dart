@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/func/container_decoration.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/edit_or_delete.dart';
 
@@ -8,12 +7,11 @@ class AdminCard extends StatelessWidget {
   const AdminCard({
     super.key,
     required this.child,
-    required this.route,
     required this.onDelete,
+    required this.onEdit,
   });
   final Widget child;
-  final String route;
-  final VoidCallback onDelete;
+  final VoidCallback onDelete, onEdit;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -25,12 +23,7 @@ class AdminCard extends StatelessWidget {
             decoration: containerDecoration(),
             child: child,
           ),
-          EditOrDelete(
-            onEdit: () {
-              context.push(route);
-            },
-            onDelete: onDelete,
-          ),
+          EditOrDelete(onEdit: onEdit, onDelete: onDelete),
         ],
       ),
     );

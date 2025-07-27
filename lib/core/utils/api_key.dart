@@ -8,6 +8,9 @@ class ApiKey {
   static const String department = 'department';
   static const String status = 'status';
   static const String operational = 'operational';
+  static const String requestType = 'RequestType';
+  static const String topic = 'topic';
+  static const String departmentId = 'department_id';
 }
 
 class EndPoints {
@@ -24,6 +27,18 @@ class EndPoints {
   static String editUser(String id) => '$baseUrl/users/edit_user.php?id=$id';
   static String deleteUser(String id) =>
       '$baseUrl/users/delete_user.php?id=$id';
+  static const String requestTypes = '$baseUrl/request_type/get_types.php';
+  static const String addRequestType = '$baseUrl/request_type/add_type.php';
+  static String deleteRequestType(String id) =>
+      '$baseUrl/request_type/delete_type.php?id=$id';
+  static String editRequestType(String id) =>
+      '$baseUrl/request_type/edit_type.php?id=$id';
+  static const String problems = '$baseUrl/problems/get_all_problems.php';
+  static const String addProblem = '$baseUrl/problems/create_problem.php';
+  static String editProblem(String id) =>
+      '$baseUrl/problems/update_problem.php?id=$id';
+  static String deleteProblem(String id) =>
+      '$baseUrl/problems/delete_problem.php?id=$id';
 }
 
 class CacheKey {

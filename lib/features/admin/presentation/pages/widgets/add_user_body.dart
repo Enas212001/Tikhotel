@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/request_text_field.dart';
-import 'package:ticket_flow/features/admin/presentation/manager/cubit/user_cubit.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/user_cubit/user_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/add_update_page.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 

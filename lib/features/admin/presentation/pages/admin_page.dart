@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_flow/app/my_app_drawer.dart';
 import 'package:ticket_flow/core/utils/widgets/top_widget.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/problem_cubit/problem_cubit.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/request_type_cubit/request_type_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/admin_list_view.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/location_body.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/member_body.dart';
@@ -12,7 +14,7 @@ import 'package:ticket_flow/features/admin/presentation/pages/request_types_body
 import 'package:ticket_flow/features/admin/presentation/pages/user_body.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/worker_body.dart';
 
-import '../manager/cubit/user_cubit.dart';
+import '../manager/user_cubit/user_cubit.dart';
 import 'department_body.dart';
 import 'topic_body.dart';
 
@@ -74,9 +76,15 @@ class _AdminPageState extends State<AdminPage> {
       case 5:
         return const MemberBody();
       case 6:
-        return const RequestTypesBody();
+        return BlocProvider(
+          create: (context) => RequestTypeCubit()..getRequestTypes(),
+          child: const RequestTypesBody(),
+        );
       case 7:
-        return const ProblemsBody();
+        return BlocProvider(
+          create: (context) => ProblemCubit()..getProblems(),
+          child: const ProblemsBody(),
+        );
       case 8:
         return const ReportScheduleBody();
       default:

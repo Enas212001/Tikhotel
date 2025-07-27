@@ -13,7 +13,7 @@ class AdminDeatailsCard extends StatelessWidget {
     required this.date,
   });
   final Widget topCard, bottomCard;
-  final VoidCallback onDelete,onEdit;
+  final VoidCallback onDelete, onEdit;
   final String date;
   @override
   Widget build(BuildContext context) {
