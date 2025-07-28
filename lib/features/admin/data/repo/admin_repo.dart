@@ -1,8 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:ticket_flow/core/error/server_failure.dart';
+import 'package:ticket_flow/features/admin/data/models/member_model/member_model.dart';
 import 'package:ticket_flow/features/admin/data/models/problem_model/problem_item.dart';
 import 'package:ticket_flow/features/admin/data/models/request_type_model/request_type_model.dart';
 import 'package:ticket_flow/features/admin/data/models/role_model/role_model.dart';
+import 'package:ticket_flow/features/admin/data/models/topic_model/topic_item.dart';
 import 'package:ticket_flow/features/admin/data/models/user_model/user_model.dart';
 
 abstract class AdminRepo {
@@ -36,17 +38,48 @@ abstract class AdminRepo {
     required String requestType,
   });
   Future<Either<ServerFailure, String>> deleteRequestType(String id);
+  Future<Either<ServerFailure, List<TopicItem>>> getTopics({
+    int page = 1,
+    int limit = 20,
+  });
+  Future<Either<ServerFailure, TopicItem>> addTopic({
+    required String topic,
+    required String departmentId,
+    required String sla,
+  });
+  Future<Either<ServerFailure, TopicItem>> editTopic(
+    String id, {
+    String topic,
+    String departmentId,
+    String sla,
+  });
+  Future<Either<ServerFailure, String>> deleteTopic(String id);
+  Future<Either<ServerFailure, List<MemberModel>>> getMembers();
+  Future<Either<ServerFailure, MemberModel>> addMember({
+    required String title,
+    required String name,
+    required String email,
+    required String status,
+  });
+  Future<Either<ServerFailure, MemberModel>> editMember(
+    String id, {
+    String? title,
+    String? name,
+    String? email,
+    String? status,
+  });
+  Future<Either<ServerFailure, String>> deleteMember(String id);
   Future<Either<ServerFailure, List<ProblemItem>>> getProblems();
   Future<Either<ServerFailure, ProblemItem>> addProblem({
-    required String topic,
-    required int departmentId,
-    required int sla,
+    required String problemTopic,
+    required String departmentId,
+    required String sla,
   });
   Future<Either<ServerFailure, ProblemItem>> editProblem(
     String id, {
-    required String topic,
-    required int departmentId,
-    required int sla,
+    String? problemTopic,
+    String? departmentId,
+    String? sla,
   });
   Future<Either<ServerFailure, String>> deleteProblem(String id);
 }

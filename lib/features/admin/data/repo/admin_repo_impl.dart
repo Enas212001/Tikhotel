@@ -2,9 +2,11 @@ import 'package:dartz/dartz.dart';
 import 'package:ticket_flow/core/api/api_consumer.dart';
 import 'package:ticket_flow/core/error/server_failure.dart';
 import 'package:ticket_flow/core/utils/api_key.dart';
+import 'package:ticket_flow/features/admin/data/models/member_model/member_model.dart';
 import 'package:ticket_flow/features/admin/data/models/problem_model/problem_item.dart';
 import 'package:ticket_flow/features/admin/data/models/request_type_model/request_type_model.dart';
 import 'package:ticket_flow/features/admin/data/models/role_model/role_model.dart';
+import 'package:ticket_flow/features/admin/data/models/topic_model/topic_item.dart';
 import 'package:ticket_flow/features/admin/data/models/user_model/user_model.dart';
 import 'package:ticket_flow/features/admin/data/repo/admin_repo.dart';
 import 'package:ticket_flow/generated/l10n.dart';
@@ -43,7 +45,7 @@ class AdminRepoImpl implements AdminRepo {
           ServerFailure(
             failure: FailureModel(
               status: false,
-              errorMessage: S.current.noInternetConnection,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
             ),
           ),
         );
@@ -81,7 +83,7 @@ class AdminRepoImpl implements AdminRepo {
           ServerFailure(
             failure: FailureModel(
               status: false,
-              errorMessage: S.current.noInternetConnection,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
             ),
           ),
         );
@@ -127,7 +129,7 @@ class AdminRepoImpl implements AdminRepo {
           ServerFailure(
             failure: FailureModel(
               status: false,
-              errorMessage: S.current.noInternetConnection,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
             ),
           ),
         );
@@ -157,7 +159,7 @@ class AdminRepoImpl implements AdminRepo {
           ServerFailure(
             failure: FailureModel(
               status: false,
-              errorMessage: S.current.noInternetConnection,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
             ),
           ),
         );
@@ -183,7 +185,7 @@ class AdminRepoImpl implements AdminRepo {
           ServerFailure(
             failure: FailureModel(
               status: false,
-              errorMessage: S.current.noInternetConnection,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
             ),
           ),
         );
@@ -212,7 +214,7 @@ class AdminRepoImpl implements AdminRepo {
           ServerFailure(
             failure: FailureModel(
               status: false,
-              errorMessage: S.current.noInternetConnection,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
             ),
           ),
         );
@@ -244,7 +246,7 @@ class AdminRepoImpl implements AdminRepo {
         return left(
           ServerFailure(
             failure: FailureModel(
-              errorMessage: S.current.noInternetConnection,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
               status: false,
             ),
           ),
@@ -271,7 +273,7 @@ class AdminRepoImpl implements AdminRepo {
         return left(
           ServerFailure(
             failure: FailureModel(
-              errorMessage: S.current.noInternetConnection,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
               status: false,
             ),
           ),
@@ -305,8 +307,395 @@ class AdminRepoImpl implements AdminRepo {
         return left(
           ServerFailure(
             failure: FailureModel(
-              errorMessage: S.current.noInternetConnection,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
               status: false,
+            ),
+          ),
+        );
+      }
+    } on ServerFailure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(
+        ServerFailure(
+          failure: FailureModel(errorMessage: e.toString(), status: false),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, List<TopicItem>>> getTopics({
+    int page = 1,
+    int limit = 20,
+  }) async {
+    try {
+      final response = await api.get(
+        "${EndPoints.topics}?page=$page&limit=$limit",
+      );
+      if (response is Map<String, dynamic> && response['data'] != null) {
+        final problems = (response['data'] as List)
+            .map((e) => TopicItem.fromJson(e))
+            .toList();
+        return right(problems);
+      } else {
+        return left(
+          ServerFailure(
+            failure: FailureModel(
+              status: false,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
+            ),
+          ),
+        );
+      }
+    } on ServerFailure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(
+        ServerFailure(
+          failure: FailureModel(errorMessage: e.toString(), status: false),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, TopicItem>> addTopic({
+    required String topic,
+    required String departmentId,
+    required String sla,
+  }) async {
+    try {
+      final response = await api.post(
+        EndPoints.addTopic,
+        data: {
+          ApiKey.topic: topic,
+          ApiKey.departmentId: departmentId,
+          ApiKey.sla: sla,
+        },
+      );
+      if (response is Map<String, dynamic> && response['data'] != null) {
+        final problem = TopicItem.fromJson(response['data']);
+        return right(problem);
+      } else {
+        return left(
+          ServerFailure(
+            failure: FailureModel(
+              status: false,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
+            ),
+          ),
+        );
+      }
+    } on ServerFailure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(
+        ServerFailure(
+          failure: FailureModel(errorMessage: e.toString(), status: false),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, TopicItem>> editTopic(
+    String id, {
+    String? topic,
+    String? departmentId,
+    String? sla,
+  }) async {
+    try {
+      final response = await api.put(
+        EndPoints.editTopic(id),
+        data: {
+          ApiKey.topic: topic,
+          ApiKey.departmentId: departmentId,
+          ApiKey.sla: sla,
+        },
+      );
+      if (response is Map<String, dynamic> && response['data'] != null) {
+        final problem = TopicItem.fromJson(response['data']);
+        return right(problem);
+      } else {
+        return left(
+          ServerFailure(
+            failure: FailureModel(
+              status: false,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
+            ),
+          ),
+        );
+      }
+    } on ServerFailure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(
+        ServerFailure(
+          failure: FailureModel(errorMessage: e.toString(), status: false),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, String>> deleteTopic(String id) async {
+    try {
+      final response = await api.delete(EndPoints.deleteTopic(id));
+      if (response is Map<String, dynamic> && response['status'] == true) {
+        return right(response['message'] ?? 'Problem deleted');
+      } else {
+        return left(
+          ServerFailure(
+            failure: FailureModel(
+              status: false,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
+            ),
+          ),
+        );
+      }
+    } on ServerFailure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(
+        ServerFailure(
+          failure: FailureModel(errorMessage: e.toString(), status: false),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, MemberModel>> addMember({
+    required String title,
+    required String name,
+    required String email,
+    required String status,
+  }) async {
+    try {
+      final response = await api.post(
+        EndPoints.addMember,
+        data: {
+          ApiKey.title: title,
+          ApiKey.name: name,
+          ApiKey.email: email,
+          ApiKey.status: status,
+        },
+      );
+      if (response is Map<String, dynamic> && response['data'] != null) {
+        final member = MemberModel.fromJson(response['data']);
+        return right(member);
+      } else {
+        return left(
+          ServerFailure(
+            failure: FailureModel(
+              status: false,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
+            ),
+          ),
+        );
+      }
+    } on ServerFailure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(
+        ServerFailure(
+          failure: FailureModel(errorMessage: e.toString(), status: false),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, String>> deleteMember(String id) async {
+    try {
+      final response = await api.delete(EndPoints.deleteMember(id));
+      if (response is Map<String, dynamic>) {
+        final message = response['message'] ?? 'Member deleted';
+        return right(message);
+      } else {
+        return left(
+          ServerFailure(
+            failure: FailureModel(
+              status: false,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
+            ),
+          ),
+        );
+      }
+    } on ServerFailure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(
+        ServerFailure(
+          failure: FailureModel(errorMessage: e.toString(), status: false),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, MemberModel>> editMember(
+    String id, {
+    String? title,
+    String? name,
+    String? email,
+    String? status,
+  }) async {
+    try {
+      final response = await api.put(
+        EndPoints.editMember(id),
+        data: {
+          ApiKey.title: title,
+          ApiKey.name: name,
+          ApiKey.email: email,
+          ApiKey.status: status,
+        },
+      );
+      if (response is Map<String, dynamic> && response['data'] != null) {
+        final member = MemberModel.fromJson(response['data']);
+        return right(member);
+      } else {
+        return left(
+          ServerFailure(
+            failure: FailureModel(
+              status: false,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
+            ),
+          ),
+        );
+      }
+    } on ServerFailure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(
+        ServerFailure(
+          failure: FailureModel(errorMessage: e.toString(), status: false),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, List<MemberModel>>> getMembers() async {
+    try {
+      final response = await api.get(EndPoints.members);
+      if (response is List) {
+        final members = response.map((e) => MemberModel.fromJson(e)).toList();
+        return right(members);
+      } else {
+        return left(
+          ServerFailure(
+            failure: FailureModel(
+              status: false,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
+            ),
+          ),
+        );
+      }
+    } on ServerFailure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(
+        ServerFailure(
+          failure: FailureModel(errorMessage: e.toString(), status: false),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, ProblemItem>> addProblem({
+    required String problemTopic,
+    required String departmentId,
+    required String sla,
+  }) async {
+    try {
+      final response = await api.post(
+        EndPoints.addProblem,
+        data: {
+          ApiKey.topic: problemTopic,
+          ApiKey.departmentId: departmentId,
+          ApiKey.sla: sla,
+        },
+      );
+      if (response is Map<String, dynamic> && response['data'] != null) {
+        final problem = ProblemItem.fromJson(response['data']);
+        return right(problem);
+      } else {
+        return left(
+          ServerFailure(
+            failure: FailureModel(
+              status: false,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
+            ),
+          ),
+        );
+      }
+    } on ServerFailure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(
+        ServerFailure(
+          failure: FailureModel(errorMessage: e.toString(), status: false),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, String>> deleteProblem(String id) async {
+    try {
+      final response = await api.delete(EndPoints.deleteProblem(id));
+      if (response is Map<String, dynamic>) {
+        final message = response['message'] ?? 'Problem deleted';
+        return right(message);
+      } else {
+        return left(
+          ServerFailure(
+            failure: FailureModel(
+              status: false,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
+            ),
+          ),
+        );
+      }
+    } on ServerFailure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(
+        ServerFailure(
+          failure: FailureModel(errorMessage: e.toString(), status: false),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, ProblemItem>> editProblem(
+    String id, {
+    String? problemTopic,
+    String? departmentId,
+    String? sla,
+  }) async {
+    try {
+      final response = await api.put(
+        EndPoints.editProblem(id),
+        data: {
+          ApiKey.topic: problemTopic,
+          ApiKey.departmentId: departmentId,
+          ApiKey.sla: sla,
+        },
+      );
+      if (response is Map<String, dynamic> && response['data'] != null) {
+        final problem = ProblemItem.fromJson(response['data']);
+        return right(problem);
+      } else {
+        return left(
+          ServerFailure(
+            failure: FailureModel(
+              status: false,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
             ),
           ),
         );
@@ -336,113 +725,7 @@ class AdminRepoImpl implements AdminRepo {
           ServerFailure(
             failure: FailureModel(
               status: false,
-              errorMessage: S.current.noInternetConnection,
-            ),
-          ),
-        );
-      }
-    } on ServerFailure catch (e) {
-      return Left(e);
-    } catch (e) {
-      return Left(
-        ServerFailure(
-          failure: FailureModel(errorMessage: e.toString(), status: false),
-        ),
-      );
-    }
-  }
-
-  @override
-  Future<Either<ServerFailure, ProblemItem>> addProblem({
-    required String topic,
-    required int departmentId,
-    required int sla,
-  }) async {
-    try {
-      final response = await api.post(
-        EndPoints.addProblem,
-        data: {
-          ApiKey.topic: topic,
-          ApiKey.departmentId: departmentId,
-          ApiKey.sla: sla,
-        },
-      );
-      if (response is Map<String, dynamic> && response['data'] != null) {
-        final problem = ProblemItem.fromJson(response['data']);
-        return right(problem);
-      } else {
-        return left(
-          ServerFailure(
-            failure: FailureModel(
-              status: false,
-              errorMessage: S.current.noInternetConnection,
-            ),
-          ),
-        );
-      }
-    } on ServerFailure catch (e) {
-      return Left(e);
-    } catch (e) {
-      return Left(
-        ServerFailure(
-          failure: FailureModel(errorMessage: e.toString(), status: false),
-        ),
-      );
-    }
-  }
-
-  @override
-  Future<Either<ServerFailure, ProblemItem>> editProblem(
-    String id, {
-    required String topic,
-    required int departmentId,
-    required int sla,
-  }) async {
-    try {
-      final response = await api.put(
-        EndPoints.editProblem(id),
-        data: {
-          ApiKey.topic: topic,
-          ApiKey.departmentId: departmentId,
-          ApiKey.sla: sla,
-        },
-      );
-      if (response is Map<String, dynamic> && response['data'] != null) {
-        final problem = ProblemItem.fromJson(response['data']);
-        return right(problem);
-      } else {
-        return left(
-          ServerFailure(
-            failure: FailureModel(
-              status: false,
-              errorMessage: S.current.noInternetConnection,
-            ),
-          ),
-        );
-      }
-    } on ServerFailure catch (e) {
-      return Left(e);
-    } catch (e) {
-      return Left(
-        ServerFailure(
-          failure: FailureModel(errorMessage: e.toString(), status: false),
-        ),
-      );
-    }
-  }
-
-  @override
-  Future<Either<ServerFailure, String>> deleteProblem(String id) async {
-    try {
-      final response = await api.delete(EndPoints.deleteProblem(id));
-      if (response is Map<String, dynamic> && response['data'] != null) {
-        return right(response['message'] ?? 'Problem deleted');
-      } else {
-        return left(
-          ServerFailure(
-            failure: FailureModel(
-              status: false,
-              errorMessage: S.current.noInternetConnection,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
             ),
           ),
         );

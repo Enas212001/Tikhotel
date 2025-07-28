@@ -14,6 +14,8 @@ class ApiKey {
   static const String sla = 'sla';
   static const String page = 'page';
   static const String limit = 'limit';
+  static const String id = 'id';
+  static const String title = 'title';
 }
 
 class EndPoints {
@@ -36,6 +38,18 @@ class EndPoints {
       '$baseUrl/request_type/delete_type.php?id=$id';
   static String editRequestType(String id) =>
       '$baseUrl/request_type/edit_type.php?id=$id';
+  static const String topics = '$baseUrl/topics/get_all_topics.php';
+  static const String addTopic = '$baseUrl/topics/create_topic.php';
+  static String editTopic(String id) =>
+      '$baseUrl/topics/update_topic.php?id=$id';
+  static String deleteTopic(String id) =>
+      '$baseUrl/topics/delete_topic.php?id=$id';
+  static const String members = '$baseUrl/members/get_all.php';
+  static const String addMember = '$baseUrl/members/create_member.php';
+  static String editMember(String id) =>
+      '$baseUrl/members/update_member.php?id=$id';
+  static String deleteMember(String id) =>
+      '$baseUrl/members/delete_member.php?id=$id';
   static const String problems = '$baseUrl/problems/get_all_problems.php';
   static const String addProblem = '$baseUrl/problems/create_problem.php';
   static String editProblem(String id) =>

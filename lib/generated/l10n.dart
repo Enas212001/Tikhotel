@@ -1619,6 +1619,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Mr.`
+  String get mr {
+    return Intl.message(
+      'Mr.',
+      name: 'mr',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ms.`
+  String get ms {
+    return Intl.message(
+      'Ms.',
+      name: 'ms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mrs.`
+  String get mrs {
+    return Intl.message(
+      'Mrs.',
+      name: 'mrs',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dr.`
+  String get dr {
+    return Intl.message(
+      'Dr.',
+      name: 'dr',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Eng.`
+  String get eng {
+    return Intl.message(
+      'Eng.',
+      name: 'eng',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Title`
+  String get title {
+    return Intl.message(
+      'Title',
+      name: 'title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Member`
+  String get member {
+    return Intl.message(
+      'Member',
+      name: 'member',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Topic Name`
+  String get topicName {
+    return Intl.message(
+      'Topic Name',
+      name: 'topicName',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

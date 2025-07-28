@@ -7,6 +7,7 @@ import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/widgets/add_filter_widget.dart';
 import 'package:ticket_flow/core/utils/widgets/shimmer_loading.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/user_cubit/user_cubit.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 import 'widgets/common_admin_list_view.dart';
 import 'widgets/user_detail_card.dart';
@@ -28,7 +29,7 @@ class UsersBody extends StatelessWidget {
       child: Column(
         children: [
           AddFilterWidget(
-            title: 'Add User',
+            title: S.of(context).addUser,
             onTap: () async {
               await context.push(AppRoutes.addUser);
               context.read<UserCubit>().getUsers();

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ticket_flow/features/admin/data/models/member_model/member_model.dart';
 import 'package:ticket_flow/features/admin/data/models/problem_model/problem_item.dart';
+import 'package:ticket_flow/features/admin/data/models/topic_model/topic_item.dart';
 import 'package:ticket_flow/features/admin/data/models/request_type_model/request_type_model.dart';
 import 'package:ticket_flow/features/admin/data/models/user_model/user_model.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/add_department_page.dart';
@@ -143,7 +145,10 @@ class AppRoutes {
       ),
       GoRoute(
         path: updateTopic,
-        builder: (context, state) => const UpdateTopic(),
+        builder: (context, state) {
+          final topic = state.extra as TopicItem;
+          return UpdateTopic(topic: topic);
+        },
       ),
       GoRoute(
         path: addWorker,
@@ -167,7 +172,10 @@ class AppRoutes {
       ),
       GoRoute(
         path: updateMember,
-        builder: (context, state) => const UpdateMemberPage(),
+        builder: (context, state) {
+          final member = state.extra as MemberModel;
+          return UpdateMemberPage(member: member);
+        },
       ),
       GoRoute(
         path: addProblem,

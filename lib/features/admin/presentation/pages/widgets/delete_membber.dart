@@ -1,12 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/member_cubit/member_cubit.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 import 'delete_widget.dart';
 
 class DeleteMemberDialog extends StatelessWidget {
-  const DeleteMemberDialog({super.key});
+  const DeleteMemberDialog({
+    super.key,
+    required this.id,
+    required this.parentContext,
+  });
 
+  final String id;
+  final BuildContext parentContext;
   @override
   Widget build(BuildContext context) {
-    return DeleteWidget(onDelete: () {}, title: 'Member');
+    return DeleteWidget(
+      onDelete: () {
+        parentContext.read<MemberCubit>().deleteMember(id: id);
+      },
+      title: S.of(context).member,
+    );
   }
 }

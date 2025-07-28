@@ -12,6 +12,7 @@ import 'package:ticket_flow/features/admin/presentation/pages/widgets/user_roles
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'add_update_page.dart';
+import 'status_drop_down_menu.dart';
 
 class UpdateUserBody extends StatelessWidget {
   const UpdateUserBody({super.key, required this.user});
@@ -46,7 +47,8 @@ class UpdateUserBody extends StatelessWidget {
               CustomRequestTextField(
                 label: S.of(context).password,
                 isReadOnly: false,
-                value: 'password',
+                value: user.password,
+                isPassword: true,
                 onChanged: (value) {
                   cubit.passwordControllerEdit.text = value;
                 },
@@ -60,7 +62,10 @@ class UpdateUserBody extends StatelessWidget {
                 },
               ),
               DepartmentDropDown(isEdit: true),
-              StatusDropDown(isEdit: true),
+              StatusDropDown(
+                onChanged: (value) => cubit.setStatusEdit(value),
+                value: cubit.selectedStatusEdit ?? cubit.selectedStatus,
+              ),
               CustomRequestTextField(
                 label: S.of(context).registrationDate,
                 value: user.created,

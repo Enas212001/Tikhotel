@@ -26,46 +26,38 @@ class EditRequest extends StatelessWidget {
                 CustomRequestTextField(
                   label: S.of(context).requestId,
                   value: '1324434',
-                  onPressed: () {},
                 ),
                 CustomRequestTextField(
                   label: S.of(context).startTime,
                   value: '7-7-2025',
                   isDate: true,
-                  onPressed: () {},
                 ),
                 CustomRequestTextField(
                   label: S.of(context).depTime,
                   value: '12-7-2025',
                   isDate: true,
-                  onPressed: () {},
                 ),
                 CustomRequestTextField(
                   label: S.of(context).department,
                   value: 'Housekeeping',
-                  onPressed: () {},
                 ),
                 CustomRequestTextField(
                   label: S.of(context).vacant,
                   value: '5005',
-                  onPressed: () {},
                 ),
                 CustomRequestTextField(
                   label: S.of(context).problem,
                   value: 'T.V Remote',
-                  onPressed: () {},
                 ),
                 CustomRequestTextField(
                   label: S.of(context).status,
                   value: 'Accepted',
                   isList: true,
-                  onPressed: () {},
                 ),
                 CustomRequestTextField(
                   label: S.of(context).worker,
                   value: 'Mohamed ahmed',
                   isList: true,
-                  onPressed: () {},
                 ),
                 CustomButton(
                   text: S.of(context).save,

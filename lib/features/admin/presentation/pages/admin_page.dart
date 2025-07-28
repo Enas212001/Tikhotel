@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_flow/app/my_app_drawer.dart';
 import 'package:ticket_flow/core/utils/widgets/top_widget.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/member_cubit/member_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/problem_cubit/problem_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/request_type_cubit/request_type_cubit.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/topic_cubit/topic_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/admin_list_view.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/location_body.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/member_body.dart';
@@ -13,6 +15,7 @@ import 'package:ticket_flow/features/admin/presentation/pages/report_schedule_bo
 import 'package:ticket_flow/features/admin/presentation/pages/request_types_body.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/user_body.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/worker_body.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 import '../manager/user_cubit/user_cubit.dart';
 import 'department_body.dart';
@@ -35,7 +38,7 @@ class _AdminPageState extends State<AdminPage> {
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: TopWidget(search: '', title: 'Administration'),
+            child: TopWidget(search: '', title: S.of(context).administration),
           ),
           SliverToBoxAdapter(
             child: AdminListView(
@@ -68,13 +71,19 @@ class _AdminPageState extends State<AdminPage> {
       case 1:
         return const DepartmentBody();
       case 2:
-        return const TopicBody();
+        return BlocProvider(
+          create: (context) => TopicCubit()..getTopics(),
+          child: const TopicBody(),
+        );
       case 3:
         return const WorkerBody();
       case 4:
         return const LocationBody();
       case 5:
-        return const MemberBody();
+        return BlocProvider(
+          create: (context) => MemberCubit()..getMembers(),
+          child: const MemberBody(),
+        );
       case 6:
         return BlocProvider(
           create: (context) => RequestTypeCubit()..getRequestTypes(),

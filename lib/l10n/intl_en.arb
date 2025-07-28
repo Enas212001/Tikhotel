@@ -183,5 +183,13 @@
     "anUnexpectedErrorOccurred": "An unexpected error occurred",
     "noInternetConnection": "No internet connection. Please check your internet.",
     "problemTopic": "Problem Topic",
-    "sla": "SLA"
+    "sla": "SLA",
+    "mr": "Mr.",
+    "ms": "Ms.",
+    "mrs": "Mrs.",
+    "dr": "Dr.",
+    "eng": "Eng.",
+    "title": "Title",
+    "member": "Member",
+    "topicName":"Topic Name"
 }

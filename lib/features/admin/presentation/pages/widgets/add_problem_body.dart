@@ -35,7 +35,6 @@ class AddProblemBody extends StatelessWidget {
                 ),
                 CustomRequestTextField(
                   label: S.of(context).department,
-                  isList: true,
                   controller: cubit.departmentController,
                   isReadOnly: false,
                 ),

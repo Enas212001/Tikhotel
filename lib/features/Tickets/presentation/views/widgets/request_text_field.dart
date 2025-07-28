@@ -13,17 +13,19 @@ class CustomRequestTextField extends StatelessWidget {
     this.value,
     this.isDate = false,
     this.isList = false,
-    this.onPressed,
+
     this.isReadOnly = true,
     this.controller,
     this.onChanged,
+    this.isPassword = false,
   });
 
   final String? label, value;
   final bool isDate, isList, isReadOnly;
-  final Function()? onPressed;
+
   final TextEditingController? controller;
   final Function(String)? onChanged;
+  final bool isPassword;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -34,8 +36,8 @@ class CustomRequestTextField extends StatelessWidget {
         style: TextStyles.text12LightGrey,
         cursorColor: AppColors.primary,
         readOnly: isReadOnly,
-        onTap: onPressed,
         onChanged: onChanged,
+        obscureText: isPassword,
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: ' $label ',
@@ -49,13 +51,10 @@ class CustomRequestTextField extends StatelessWidget {
                   color: AppColors.lightGrey,
                 )
               : (isDate
-                    ? GestureDetector(
-                        onTap: onPressed,
-                        child: Padding(
-                          padding: EdgeInsets.all(10.r),
-                          child: SvgPicture.asset(Assets.imagesDate),
-                        ),
-                      )
+                    ? Padding(
+                      padding: EdgeInsets.all(10.r),
+                      child: SvgPicture.asset(Assets.imagesDate),
+                    )
                     : null),
         ),
       ),
