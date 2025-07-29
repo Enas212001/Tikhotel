@@ -29,7 +29,7 @@ class UserDetailCard extends StatelessWidget {
           ),
           DetailItem(
             title: S.of(context).departmentColon,
-            value: 'Department',
+            value: user.departments ?? '',
             hasIcon: true,
             image: Assets.imagesDepartment,
           ),

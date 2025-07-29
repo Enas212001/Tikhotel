@@ -3,16 +3,17 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:ticket_flow/core/api/dio_consumer.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
+import 'package:ticket_flow/features/admin/data/models/department_model/department_model.dart';
 import 'package:ticket_flow/features/admin/data/models/role_model/role_model.dart';
 import 'package:ticket_flow/features/admin/data/models/user_model/user_model.dart';
-import 'package:ticket_flow/features/admin/data/repo/admin_repo.dart';
-import 'package:ticket_flow/features/admin/data/repo/admin_repo_impl.dart';
+import 'package:ticket_flow/features/admin/data/repo/user_repo/user_repo.dart';
+import 'package:ticket_flow/features/admin/data/repo/user_repo/user_repo_impl.dart';
 
 part 'user_state.dart';
 
 class UserCubit extends Cubit<UserState> {
   UserCubit() : super(UserInitial());
-  final AdminRepo repo = AdminRepoImpl(api: getIt<DioConsumer>());
+  final UserRepo repo = UserRepoImpl(api: getIt<DioConsumer>());
   Future<void> getUsers() async {
     emit(GetUsersLoading());
     final result = await repo.getUsers();
@@ -34,11 +35,11 @@ class UserCubit extends Cubit<UserState> {
   final TextEditingController passwordControllerEdit = TextEditingController();
   final TextEditingController firstNameControllerEdit = TextEditingController();
   // Add these variables
-  String? selectedDepartment;
+  DepartmentModel? selectedDepartment;
   String? selectedStatus;
   String? selectedOperational;
   RoleModel? selectedRole;
-  String? selectedDepartmentEdit;
+  DepartmentModel? selectedDepartmentEdit;
   String? selectedStatusEdit;
   RoleModel? selectedRoleEdit;
 
@@ -49,22 +50,6 @@ class UserCubit extends Cubit<UserState> {
 
   void setRoleEdit(RoleModel? value) {
     selectedRoleEdit = value;
-  }
-
-  void setDepartment(String? value) {
-    selectedDepartment = value;
-  }
-
-  void setDepartmentEdit(String? value) {
-    selectedDepartmentEdit = value;
-  }
-
-  void setStatus(String? value) {
-    selectedStatus = value;
-  }
-
-  void setStatusEdit(String? value) {
-    selectedStatusEdit = value;
   }
 
   void setOperational(String? value) {
@@ -78,7 +63,7 @@ class UserCubit extends Cubit<UserState> {
       email: emailController.text,
       password: passwordController.text,
       firstName: firstNameController.text,
-      department: selectedDepartment ?? '',
+      department: selectedDepartment?.id?.toString() ?? '',
       status: selectedStatus ?? '',
       operational: selectedOperational ?? '',
     );
@@ -117,7 +102,9 @@ class UserCubit extends Cubit<UserState> {
       firstName: firstNameControllerEdit.text.isEmpty
           ? null
           : firstNameControllerEdit.text,
-      department: selectedDepartmentEdit ?? selectedDepartment,
+      department:
+          selectedDepartmentEdit?.id.toString() ??
+          selectedDepartment?.id.toString(),
       status: selectedStatusEdit ?? selectedStatus,
     );
     result.fold(

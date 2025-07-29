@@ -8,7 +8,7 @@ import 'package:ticket_flow/generated/l10n.dart';
 
 class ClosedWorkOrderCard extends StatelessWidget {
   const ClosedWorkOrderCard({super.key, required this.ticket});
-  final Datum ticket;
+  final TicketItem ticket;
   @override
   Widget build(BuildContext context) {
     return DetailCard(
@@ -24,7 +24,7 @@ class ClosedWorkOrderCard extends StatelessWidget {
           DetailItem(
             hasIcon: true,
             title: S.of(context).departmentColon,
-            value: ticket.departmentId.toString(),
+            value: ticket.departmentName ?? '',
             image: Assets.imagesDepartment,
           ),
         ],

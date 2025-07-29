@@ -22,7 +22,6 @@ class CustomRequestTextField extends StatelessWidget {
 
   final String? label, value;
   final bool isDate, isList, isReadOnly;
-
   final TextEditingController? controller;
   final Function(String)? onChanged;
   final bool isPassword;
@@ -52,9 +51,9 @@ class CustomRequestTextField extends StatelessWidget {
                 )
               : (isDate
                     ? Padding(
-                      padding: EdgeInsets.all(10.r),
-                      child: SvgPicture.asset(Assets.imagesDate),
-                    )
+                        padding: EdgeInsets.all(10.r),
+                        child: SvgPicture.asset(Assets.imagesDate),
+                      )
                     : null),
         ),
       ),

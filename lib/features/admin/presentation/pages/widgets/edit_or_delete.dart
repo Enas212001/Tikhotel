@@ -11,7 +11,7 @@ class EditOrDelete extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned(
       top: 12.h,
-      right: 16.w,
+      right: 8.w,
       child: Row(
         children: [
           GestureDetector(

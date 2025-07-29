@@ -11,7 +11,7 @@ import 'package:ticket_flow/generated/l10n.dart';
 
 class FeedbackCard extends StatelessWidget {
   const FeedbackCard({super.key, required this.ticket});
-  final Datum ticket;
+  final TicketItem ticket;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,7 +31,7 @@ class FeedbackCard extends StatelessWidget {
                 DetailItem(
                   hasIcon: true,
                   title: S.of(context).departmentColon,
-                  value: ticket.departmentId.toString(),
+                  value: ticket.departmentName ?? '',
                   image: Assets.imagesDepartment,
                 ),
               ],

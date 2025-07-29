@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class Datum extends Equatable {
+class TicketItem extends Equatable {
   final int? id;
   final String? ticketId;
   final dynamic clientId;
@@ -11,6 +11,7 @@ class Datum extends Equatable {
   final int? locationId;
   final String? locationName;
   final int? departmentId;
+  final String? departmentName;
   final dynamic message;
   final dynamic notes;
   final String? created;
@@ -19,7 +20,7 @@ class Datum extends Equatable {
   final dynamic phone;
   final String? requestedBy;
 
-  const Datum({
+  const TicketItem({
     this.id,
     this.ticketId,
     this.clientId,
@@ -30,6 +31,7 @@ class Datum extends Equatable {
     this.locationId,
     this.locationName,
     this.departmentId,
+    this.departmentName,
     this.message,
     this.notes,
     this.created,
@@ -39,7 +41,7 @@ class Datum extends Equatable {
     this.requestedBy,
   });
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory TicketItem.fromJson(Map<String, dynamic> json) => TicketItem(
     id: json['id'] as int?,
     ticketId: json['ticket_id'] as String?,
     clientId: json['client_id'] as dynamic,
@@ -50,6 +52,7 @@ class Datum extends Equatable {
     locationId: json['location_id'] as int?,
     locationName: json['location_name'] as String?,
     departmentId: json['department_id'] as int?,
+    departmentName: json['department_name'] as String?,
     message: json['message'] as dynamic,
     notes: json['notes'] as dynamic,
     created: json['created'] as String?,
@@ -70,6 +73,7 @@ class Datum extends Equatable {
     'location_id': locationId,
     'location_name': locationName,
     'department_id': departmentId,
+    'department_name': departmentName,
     'message': message,
     'notes': notes,
     'created': created,
@@ -92,6 +96,7 @@ class Datum extends Equatable {
       locationId,
       locationName,
       departmentId,
+      departmentName,
       message,
       notes,
       created,

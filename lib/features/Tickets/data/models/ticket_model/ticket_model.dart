@@ -6,7 +6,7 @@ import 'pagination.dart';
 class TicketModel extends Equatable {
   final bool? status;
   final String? message;
-  final List<Datum>? data;
+  final List<TicketItem>? data;
   final Pagination? pagination;
 
   const TicketModel({this.status, this.message, this.data, this.pagination});
@@ -15,7 +15,7 @@ class TicketModel extends Equatable {
     status: json['status'] as bool?,
     message: json['message'] as String?,
     data: (json['data'] as List<dynamic>?)
-        ?.map((e) => Datum.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => TicketItem.fromJson(e as Map<String, dynamic>))
         .toList(),
     pagination: json['pagination'] == null
         ? null

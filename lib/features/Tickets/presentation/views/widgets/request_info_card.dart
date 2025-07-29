@@ -13,7 +13,7 @@ import 'top_request_text.dart';
 
 class RequestInfoCard extends StatelessWidget {
   const RequestInfoCard({super.key, required this.ticket});
-  final Datum ticket;
+  final TicketItem ticket;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +77,7 @@ class RequestInfoCard extends StatelessWidget {
                   children: [
                     DetailItem(
                       title: S.of(context).department,
-                      value: ticket.departmentId.toString(),
+                      value: ticket.departmentName ?? '',
                     ),
                     DetailItem(
                       title: S.of(context).worker,

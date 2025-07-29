@@ -17,7 +17,7 @@ class DeleteProblemDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return DeleteWidget(
       onDelete: () {
-        parentContext.read<ProblemCubit>().deleteTopic(id: id);
+        parentContext.read<ProblemCubit>().deleteProblem(id: id);
       },
       title: S.of(context).problem,
     );

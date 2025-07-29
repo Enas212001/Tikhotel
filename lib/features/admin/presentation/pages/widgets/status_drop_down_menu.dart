@@ -4,14 +4,8 @@ import 'package:ticket_flow/generated/l10n.dart';
 import 'drop_down_user.dart';
 
 class StatusDropDown extends StatelessWidget {
-  const StatusDropDown({
-    super.key,
-    this.isEdit = false,
-    this.value,
-    this.onChanged,
-  });
+  const StatusDropDown({super.key, this.value, this.onChanged});
 
-  final bool isEdit;
   final String? value;
   final void Function(String?)? onChanged;
   @override

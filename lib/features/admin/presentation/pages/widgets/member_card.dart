@@ -40,7 +40,9 @@ class MemberCard extends StatelessWidget {
           ),
           DetailItem(
             title: S.of(context).statusColon,
-            value: member.status ?? '',
+            value: member.status!.contains('T')
+                ? S.of(context).active
+                : S.of(context).inactive,
             hasIcon: true,
             image: Assets.imagesLocation,
           ),

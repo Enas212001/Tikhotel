@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:ticket_flow/core/api/dio_consumer.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
 import 'package:ticket_flow/features/admin/data/models/member_model/member_model.dart';
-import 'package:ticket_flow/features/admin/data/repo/admin_repo.dart';
-import 'package:ticket_flow/features/admin/data/repo/admin_repo_impl.dart';
+import 'package:ticket_flow/features/admin/data/repo/member_repo/member_repo.dart';
+import 'package:ticket_flow/features/admin/data/repo/member_repo/member_repo_impl.dart';
 
 part 'member_state.dart';
 
 class MemberCubit extends Cubit<MemberState> {
   MemberCubit() : super(MemberInitial());
 
-  final AdminRepo repo = AdminRepoImpl(api: getIt.get<DioConsumer>());
+  final MemberRepo repo = MemberRepoImpl(api: getIt.get<DioConsumer>());
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();

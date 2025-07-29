@@ -40,13 +40,15 @@ class TopicDetailCard extends StatelessWidget {
           ),
           DetailItem(
             title: S.of(context).statusColon,
-            value: topic.status ?? '',
+            value: topic.status!.contains('T')
+                ? S.of(context).active
+                : S.of(context).inactive,
             hasIcon: true,
             image: Assets.imagesFname,
           ),
           DetailItem(
             title: S.of(context).departmentColon,
-            value: topic.departmentId.toString(),
+            value: topic.departmentName ?? '',
             hasIcon: true,
             image: Assets.imagesDepartment,
           ),

@@ -7,7 +7,7 @@ class TopicItem extends Equatable {
   final int? departmentId;
   final String? status;
   final String? ts;
-
+  final String? departmentName;
   const TopicItem({
     this.id,
     this.topic,
@@ -15,6 +15,7 @@ class TopicItem extends Equatable {
     this.departmentId,
     this.status,
     this.ts,
+    this.departmentName,
   });
 
   factory TopicItem.fromJson(Map<String, dynamic> json) => TopicItem(
@@ -24,6 +25,7 @@ class TopicItem extends Equatable {
     departmentId: json['department_id'] as int?,
     status: json['status'] as String?,
     ts: json['ts'] as String?,
+    departmentName: json['department_name'] as String?,
   );
 
   Map<String, dynamic> toJson() => {
@@ -33,8 +35,17 @@ class TopicItem extends Equatable {
     'department_id': departmentId,
     'status': status,
     'ts': ts,
+    'department_name': departmentName,
   };
 
   @override
-  List<Object?> get props => [id, topic, sla, departmentId, status, ts];
+  List<Object?> get props => [
+    id,
+    topic,
+    sla,
+    departmentId,
+    status,
+    ts,
+    departmentName,
+  ];
 }

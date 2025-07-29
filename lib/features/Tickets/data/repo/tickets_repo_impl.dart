@@ -11,12 +11,12 @@ class TicketsRepoImpl implements TicketsRepo {
 
   TicketsRepoImpl({required this.api});
   @override
-  Future<Either<ServerFailure, List<Datum>>> getTickets() async {
+  Future<Either<ServerFailure, List<TicketItem>>> getTickets() async {
     try {
       final response = await api.get(EndPoints.tickets);
       if (response is Map<String, dynamic>) {
         final tickets = (response['data'] as List)
-            .map((e) => Datum.fromJson(e))
+            .map((e) => TicketItem.fromJson(e))
             .toList();
         return right(tickets);
       } else {
@@ -39,7 +39,8 @@ class TicketsRepoImpl implements TicketsRepo {
   }
 
   @override
-  Future<Either<ServerFailure, List<Datum>>> getFeedbackTicketsData() async {
+  Future<Either<ServerFailure, List<TicketItem>>>
+  getFeedbackTicketsData() async {
     final result = await getTickets();
     return result.map(
       (allTickets) => allTickets
@@ -49,7 +50,7 @@ class TicketsRepoImpl implements TicketsRepo {
   }
 
   @override
-  Future<Either<ServerFailure, List<Datum>>>
+  Future<Either<ServerFailure, List<TicketItem>>>
   getClosedFeedbackTicketsData() async {
     final result = await getTickets();
     return result.map(
@@ -67,7 +68,7 @@ class TicketsRepoImpl implements TicketsRepo {
   }
 
   @override
-  Future<Either<ServerFailure, List<Datum>>>
+  Future<Either<ServerFailure, List<TicketItem>>>
   getClosedWorkOrderTicketsData() async {
     final result = await getTickets();
     return result.map(
@@ -85,7 +86,7 @@ class TicketsRepoImpl implements TicketsRepo {
   }
 
   @override
-  Future<Either<ServerFailure, List<Datum>>> getRequests() async {
+  Future<Either<ServerFailure, List<TicketItem>>> getRequests() async {
     final result = await getTickets();
     return result.map(
       (allTickets) => allTickets

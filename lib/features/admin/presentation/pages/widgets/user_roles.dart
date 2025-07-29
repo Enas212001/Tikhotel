@@ -15,9 +15,6 @@ class UserRoles extends StatelessWidget {
     final cubit = context.read<UserCubit>();
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
-        // if (state is RolesLoading) {
-        //   return const Center(child: CircularProgressIndicator());
-        // }
         if (state is RolesFailure) {
           return Center(child: Text(state.message));
         }
@@ -27,7 +24,7 @@ class UserRoles extends StatelessWidget {
             child: DropdownButtonFormField<RoleModel>(
               value: isEdit
                   ? cubit.selectedRoleEdit ?? cubit.selectedRole
-                  : cubit.selectedRole ?? state.roles.first,
+                  : cubit.selectedRole,
               style: TextStyles.text12LightGrey,
               decoration: InputDecoration(
                 labelText: S.of(context).role,

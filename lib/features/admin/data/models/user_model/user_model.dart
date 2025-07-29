@@ -12,6 +12,7 @@ class UserModel extends Equatable {
   final String? ip;
   final String? role;
   final String? password;
+  final String? departments;
 
   const UserModel({
     this.id,
@@ -25,6 +26,7 @@ class UserModel extends Equatable {
     this.ip,
     this.role,
     this.password,
+    this.departments,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -34,11 +36,12 @@ class UserModel extends Equatable {
     phone: json['phone'] as dynamic,
     created: json['created'] as String?,
     lastLogin: json['last_login'] as String?,
-    status: json['status'] as String?,
+    status: json['status']?.toString(),
     isActive: json['is_active'] as String?,
     ip: json['ip'] as String?,
     role: json['role'] as String?,
     password: json['password'] ?? '********',
+    departments: json['departments'] as String?,
   );
 
   Map<String, dynamic> toJson() => {
@@ -53,6 +56,7 @@ class UserModel extends Equatable {
     'ip': ip,
     'role': role,
     'password': password,
+    'departments': departments,
   };
 
   @override
@@ -69,6 +73,7 @@ class UserModel extends Equatable {
       ip,
       role,
       password,
+      departments,
     ];
   }
 }

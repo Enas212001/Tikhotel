@@ -4,14 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:ticket_flow/core/api/dio_consumer.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
 import 'package:ticket_flow/features/admin/data/models/request_type_model/request_type_model.dart';
-import 'package:ticket_flow/features/admin/data/repo/admin_repo.dart';
-import 'package:ticket_flow/features/admin/data/repo/admin_repo_impl.dart';
+import 'package:ticket_flow/features/admin/data/repo/request_type_repo/request_type_repo.dart';
+import 'package:ticket_flow/features/admin/data/repo/request_type_repo/request_type_repo_impl.dart';
 
 part 'request_type_state.dart';
 
 class RequestTypeCubit extends Cubit<RequestTypeState> {
   RequestTypeCubit() : super(RequestTypeInitial());
-  final AdminRepo adminRepo = AdminRepoImpl(api: getIt.get<DioConsumer>());
+  final RequestTypeRepo adminRepo = RequestTypeRepoImpl(
+    api: getIt.get<DioConsumer>(),
+  );
   final TextEditingController requestTypeControllerEdit =
       TextEditingController();
   final TextEditingController requestTypeControllerAdd =

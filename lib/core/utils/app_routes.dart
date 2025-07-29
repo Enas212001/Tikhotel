@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ticket_flow/features/admin/data/models/department_model/department_model.dart';
 import 'package:ticket_flow/features/admin/data/models/member_model/member_model.dart';
 import 'package:ticket_flow/features/admin/data/models/problem_model/problem_item.dart';
 import 'package:ticket_flow/features/admin/data/models/topic_model/topic_item.dart';
@@ -133,7 +134,10 @@ class AppRoutes {
       ),
       GoRoute(
         path: updateDepartment,
-        builder: (context, state) => const UpdateDepPage(),
+        builder: (context, state) {
+          final department = state.extra as DepartmentModel;
+          return UpdateDepPage(department: department);
+        },
       ),
       GoRoute(
         path: dashboard,

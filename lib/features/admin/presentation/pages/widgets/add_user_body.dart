@@ -9,6 +9,7 @@ import 'package:ticket_flow/features/admin/presentation/manager/user_cubit/user_
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/add_update_page.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
+import 'department_drop_down_menu.dart';
 import 'drop_down_user.dart';
 import 'status_drop_down_menu.dart';
 import 'user_roles.dart';
@@ -50,8 +51,14 @@ class AddUserBody extends StatelessWidget {
                   isReadOnly: false,
                   controller: cubit.firstNameController,
                 ),
-                DepartmentDropDown(),
-                StatusDropDown(),
+                DepartmentDropDown(
+                  onChanged: (value) => cubit.selectedDepartment = value,
+                  value: cubit.selectedDepartment,
+                ),
+                StatusDropDown(
+                  onChanged: (value) => cubit.selectedStatus = value,
+                  value: cubit.selectedStatus,
+                ),
                 OperationalDropDown(),
               ],
             ),
@@ -78,28 +85,6 @@ class OperationalDropDown extends StatelessWidget {
       items: [S.of(context).active, S.of(context).inactive],
       label: S.of(context).operational,
       onChanged: (value) => cubit.setOperational(value),
-    );
-  }
-}
-
-class DepartmentDropDown extends StatelessWidget {
-  const DepartmentDropDown({super.key, this.isEdit = false});
-
-  final bool isEdit;
-  @override
-  Widget build(BuildContext context) {
-    final cubit = context.read<UserCubit>();
-    return DropDownUser(
-      items: [
-        S.of(context).generic,
-        S.of(context).engineering,
-        S.of(context).frontOffice,
-        S.of(context).housekeeping,
-      ],
-      label: S.of(context).department,
-      value: isEdit ? cubit.selectedDepartmentEdit : cubit.selectedDepartment,
-      onChanged: (value) =>
-          isEdit ? cubit.setDepartmentEdit(value) : cubit.setDepartment(value),
     );
   }
 }

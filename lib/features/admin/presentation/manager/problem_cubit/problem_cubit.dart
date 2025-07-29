@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:ticket_flow/core/api/dio_consumer.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
 import 'package:ticket_flow/features/admin/data/models/problem_model/problem_item.dart';
-import 'package:ticket_flow/features/admin/data/repo/admin_repo.dart';
-import 'package:ticket_flow/features/admin/data/repo/admin_repo_impl.dart';
+import 'package:ticket_flow/features/admin/data/repo/problem_repo/problem_repo.dart';
+import 'package:ticket_flow/features/admin/data/repo/problem_repo/problem_repo_impl.dart';
 
 part 'problem_state.dart';
 
 class ProblemCubit extends Cubit<ProblemState> {
   ProblemCubit() : super(ProblemInitial());
-  final AdminRepo repo = AdminRepoImpl(api: getIt.get<DioConsumer>());
+  final ProblemRepo repo = ProblemRepoImpl(api: getIt.get<DioConsumer>());
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController topicController = TextEditingController();
   TextEditingController departmentController = TextEditingController();
@@ -61,9 +61,9 @@ class ProblemCubit extends Cubit<ProblemState> {
     );
   }
 
-  Future<void> deleteTopic({required String id}) async {
+  Future<void> deleteProblem({required String id}) async {
     emit(ProblemDeleting());
-    final result = await repo.deleteTopic(id);
+    final result = await repo.deleteProblem(id);
     result.fold(
       (l) => emit(ProblemDeletingError(error: l.failure.errorMessage)),
       (r) => emit(ProblemDeleted(message: r)),

@@ -9,7 +9,7 @@ import 'package:ticket_flow/generated/l10n.dart';
 
 class ClosedFeedbackCard extends StatelessWidget {
   const ClosedFeedbackCard({super.key, required this.ticket});
-  final Datum ticket;
+  final TicketItem ticket;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -27,7 +27,7 @@ class ClosedFeedbackCard extends StatelessWidget {
             DetailItem(
               hasIcon: true,
               title: S.of(context).departmentColon,
-              value: ticket.departmentId.toString(),
+              value: ticket.departmentName ?? '',
               image: Assets.imagesDepartment,
             ),
           ],
@@ -40,7 +40,7 @@ class ClosedFeedbackCard extends StatelessWidget {
             ),
             DetailItem(
               title: S.of(context).workerColon,
-              value: ticket.workerFname,
+              value: ticket.workerFname ?? '',
             ),
             DetailItem(
               title: S.of(context).closeTimeColon,

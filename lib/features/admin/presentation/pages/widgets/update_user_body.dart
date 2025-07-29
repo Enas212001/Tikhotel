@@ -7,11 +7,11 @@ import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/request_text_field.dart';
 import 'package:ticket_flow/features/admin/data/models/user_model/user_model.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/user_cubit/user_cubit.dart';
-import 'package:ticket_flow/features/admin/presentation/pages/widgets/add_user_body.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/user_roles.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'add_update_page.dart';
+import 'department_drop_down_menu.dart';
 import 'status_drop_down_menu.dart';
 
 class UpdateUserBody extends StatelessWidget {
@@ -61,9 +61,12 @@ class UpdateUserBody extends StatelessWidget {
                   cubit.firstNameControllerEdit.text = value;
                 },
               ),
-              DepartmentDropDown(isEdit: true),
+              DepartmentDropDown(
+                onChanged: (value) => cubit.selectedDepartmentEdit = value,
+                value: cubit.selectedDepartmentEdit ?? cubit.selectedDepartment,
+              ),
               StatusDropDown(
-                onChanged: (value) => cubit.setStatusEdit(value),
+                onChanged: (value) => cubit.selectedStatusEdit = (value),
                 value: cubit.selectedStatusEdit ?? cubit.selectedStatus,
               ),
               CustomRequestTextField(

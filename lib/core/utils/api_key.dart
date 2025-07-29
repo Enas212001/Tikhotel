@@ -16,6 +16,9 @@ class ApiKey {
   static const String limit = 'limit';
   static const String id = 'id';
   static const String title = 'title';
+  static const String location = 'location';
+  static const String roomStatus = 'room_status';
+  static const String message = 'message';
 }
 
 class EndPoints {
@@ -56,6 +59,20 @@ class EndPoints {
       '$baseUrl/problems/update_problem.php?id=$id';
   static String deleteProblem(String id) =>
       '$baseUrl/problems/delete_problem.php?id=$id';
+  static const String addDepartment =
+      '$baseUrl/departments/create_department.php';
+  static const String departments =
+      '$baseUrl/departments/get_all_departments.php';
+  static String editDepartment(String id) =>
+      '$baseUrl/departments/update_department.php?id=$id';
+  static String deleteDepartment(String id) =>
+      '$baseUrl/departments/delete_department.php?id=$id';
+  static const String addLocation = '$baseUrl/locations/create_location.php';
+  static const String locations = '$baseUrl/locations/get_all_locations.php';
+  static String editLocation(String id) =>
+      '$baseUrl/locations/update_location.php?id=$id';
+  static String deleteLocation(String id) =>
+      '$baseUrl/locations/delete_location.php?id=$id';
 }
 
 class CacheKey {
