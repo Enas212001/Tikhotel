@@ -101,6 +101,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "enterYourRoomNumber": MessageLookupByLibrary.simpleMessage(
       "Enter your Room number",
     ),
+    "error": MessageLookupByLibrary.simpleMessage("Error"),
     "feedback": MessageLookupByLibrary.simpleMessage("Feedback"),
     "file": MessageLookupByLibrary.simpleMessage("File"),
     "filter": MessageLookupByLibrary.simpleMessage("Filter"),
@@ -117,9 +118,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "hideDetails": MessageLookupByLibrary.simpleMessage("Hide Details"),
     "housekeeping": MessageLookupByLibrary.simpleMessage("Housekeeping"),
     "inactive": MessageLookupByLibrary.simpleMessage("Inactive"),
+    "info": MessageLookupByLibrary.simpleMessage("Info"),
     "ipAddress": MessageLookupByLibrary.simpleMessage("IP Address"),
     "lastName": MessageLookupByLibrary.simpleMessage("Last Name"),
     "lastNameColon": MessageLookupByLibrary.simpleMessage("Last Name:"),
+    "loading": MessageLookupByLibrary.simpleMessage("Loading"),
     "location": MessageLookupByLibrary.simpleMessage("Location"),
     "locationAdded": MessageLookupByLibrary.simpleMessage("Location added"),
     "locationColon": MessageLookupByLibrary.simpleMessage("Location:"),
@@ -141,6 +144,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "nameColon": MessageLookupByLibrary.simpleMessage("Name:"),
     "newRequest": MessageLookupByLibrary.simpleMessage("New Request"),
     "newRequests": MessageLookupByLibrary.simpleMessage("New Requests"),
+    "noDataAvailable": MessageLookupByLibrary.simpleMessage(
+      "No data available",
+    ),
     "noInternetConnection": MessageLookupByLibrary.simpleMessage(
       "No internet connection. Please check your internet.",
     ),
@@ -226,11 +232,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "search": MessageLookupByLibrary.simpleMessage("Search"),
     "searchForAny": m4,
     "send": MessageLookupByLibrary.simpleMessage("Send"),
+    "serverError": MessageLookupByLibrary.simpleMessage("Server error"),
     "sla": MessageLookupByLibrary.simpleMessage("SLA"),
     "startTime": MessageLookupByLibrary.simpleMessage("Start Time"),
     "status": MessageLookupByLibrary.simpleMessage("Status"),
     "statusColon": MessageLookupByLibrary.simpleMessage("Status:"),
     "submit": MessageLookupByLibrary.simpleMessage("Submit"),
+    "success": MessageLookupByLibrary.simpleMessage("Success"),
     "successMessage": MessageLookupByLibrary.simpleMessage(
       "Request added successfully!",
     ),
@@ -269,6 +277,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "vacant": MessageLookupByLibrary.simpleMessage("Vacant"),
     "viewDetails": MessageLookupByLibrary.simpleMessage("View Details"),
     "viewRequest": MessageLookupByLibrary.simpleMessage("View Request"),
+    "warning": MessageLookupByLibrary.simpleMessage("Warning"),
     "welcomeToTicketelApp": MessageLookupByLibrary.simpleMessage(
       "Welcome to Ticketel app",
     ),

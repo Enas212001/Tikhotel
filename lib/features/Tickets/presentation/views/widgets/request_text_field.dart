@@ -13,7 +13,7 @@ class CustomRequestTextField extends StatelessWidget {
     this.value,
     this.isDate = false,
     this.isList = false,
-
+    this.onTap,
     this.isReadOnly = true,
     this.controller,
     this.onChanged,
@@ -25,6 +25,7 @@ class CustomRequestTextField extends StatelessWidget {
   final TextEditingController? controller;
   final Function(String)? onChanged;
   final bool isPassword;
+  final VoidCallback? onTap;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -36,6 +37,7 @@ class CustomRequestTextField extends StatelessWidget {
         cursorColor: AppColors.primary,
         readOnly: isReadOnly,
         onChanged: onChanged,
+        onTap: onTap,
         obscureText: isPassword,
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,

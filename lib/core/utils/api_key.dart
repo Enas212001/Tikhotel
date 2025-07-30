@@ -19,6 +19,12 @@ class ApiKey {
   static const String location = 'location';
   static const String roomStatus = 'room_status';
   static const String message = 'message';
+  static const String phone = 'phone';
+  static const String statusWhatsapp = 'st_whatsapp';
+  static const String dateFrom = 'date_from';
+  static const String dateTo = 'date_to';
+  static const String locationId = 'location_id';
+
 }
 
 class EndPoints {
@@ -73,6 +79,14 @@ class EndPoints {
       '$baseUrl/locations/update_location.php?id=$id';
   static String deleteLocation(String id) =>
       '$baseUrl/locations/delete_location.php?id=$id';
+  static const String addWorker = '$baseUrl/workers/create_worker.php';
+  static const String workers = '$baseUrl/workers/get_all_workers.php';
+  static String editWorker(String id) =>
+      '$baseUrl/workers/update_worker.php?id=$id';
+  static String deleteWorker(String id) =>
+      '$baseUrl/workers/delete_worker.php?id=$id';
+  static const String reportByDate = '$baseUrl/report/report_by_date.php';
+  static const String reportByRoom = '$baseUrl/report/report_by_room.php';
 }
 
 class CacheKey {

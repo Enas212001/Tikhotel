@@ -6,6 +6,7 @@ import 'package:ticket_flow/features/admin/data/models/problem_model/problem_ite
 import 'package:ticket_flow/features/admin/data/models/topic_model/topic_item.dart';
 import 'package:ticket_flow/features/admin/data/models/request_type_model/request_type_model.dart';
 import 'package:ticket_flow/features/admin/data/models/user_model/user_model.dart';
+import 'package:ticket_flow/features/admin/data/models/worker_model/worker_item.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/add_department_page.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/add_location_page.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/add_member_page.dart';
@@ -160,7 +161,10 @@ class AppRoutes {
       ),
       GoRoute(
         path: updateWorker,
-        builder: (context, state) => const UpdateWorkerPage(),
+        builder: (context, state) {
+          final workerItem = state.extra as WorkerItem;
+          return UpdateWorkerPage(workerItem: workerItem);
+        },
       ),
       GoRoute(
         path: addLocation,

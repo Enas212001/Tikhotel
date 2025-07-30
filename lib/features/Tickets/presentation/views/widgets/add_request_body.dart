@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_flow/core/func/container_decoration.dart';
 import 'package:ticket_flow/core/utils/widgets/down_arrow.dart';
+import 'package:ticket_flow/features/Tickets/presentation/views/widgets/request_type_drop_down.dart';
+import 'package:ticket_flow/features/Tickets/presentation/views/widgets/topics_drop_down.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/widgets/department_drop_down_menu.dart';
+import 'package:ticket_flow/features/home/presentation/pages/widget/location_drop_down.dart';
 import 'package:ticket_flow/features/onboarding/widget/custom_button.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/file_upload.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/message_text_field.dart';
@@ -22,32 +26,20 @@ class AddRequestBody extends StatelessWidget {
         decoration: containerDecoration(),
         child: Column(
           children: [
-            TitleOnBorder(
-              onUpload: () {},
-              title: S.of(context).room,
-              child: DownArrow(),
-            ),
-            TitleOnBorder(
-              onUpload: () {},
-              title: S.of(context).requestType,
-              child: DownArrow(),
-            ),
+            LocationDropDown(),
+            RequestTypeDropDown(),
             TitleOnBorder(
               onUpload: () {},
               title: S.of(context).quantity,
               child: DownArrow(),
             ),
-            TitleOnBorder(
-              onUpload: () {},
-              title: S.of(context).department,
-              child: DownArrow(),
-            ),
+            DepartmentDropDown(),
             CustomRequestTextField(
               label: S.of(context).compensation,
               isReadOnly: false,
             ),
             CustomRequestTextField(label: S.of(context).amount, isList: true),
-            CustomRequestTextField(label: S.of(context).problem, isList: true),
+            TopicsDropDown(),
             MessageTextField(value: '', label: S.of(context).message),
             SizedBox(height: 16.h),
             TitleOnBorder(

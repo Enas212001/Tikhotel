@@ -1508,6 +1508,51 @@ class S {
       args: [],
     );
   }
+
+  /// `Server error`
+  String get serverError {
+    return Intl.message(
+      'Server error',
+      name: 'serverError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error`
+  String get error {
+    return Intl.message('Error', name: 'error', desc: '', args: []);
+  }
+
+  /// `Warning`
+  String get warning {
+    return Intl.message('Warning', name: 'warning', desc: '', args: []);
+  }
+
+  /// `Info`
+  String get info {
+    return Intl.message('Info', name: 'info', desc: '', args: []);
+  }
+
+  /// `Success`
+  String get success {
+    return Intl.message('Success', name: 'success', desc: '', args: []);
+  }
+
+  /// `Loading`
+  String get loading {
+    return Intl.message('Loading', name: 'loading', desc: '', args: []);
+  }
+
+  /// `No data available`
+  String get noDataAvailable {
+    return Intl.message(
+      'No data available',
+      name: 'noDataAvailable',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

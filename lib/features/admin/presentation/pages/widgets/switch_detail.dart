@@ -11,10 +11,13 @@ class SwitchDetail extends StatelessWidget {
     required this.title,
     this.hasIcon = false,
     this.image,
+    required this.value,
+    this.onChanged,
   });
   final String title;
-  final bool hasIcon;
+  final bool hasIcon, value;
   final String? image;
+  final void Function(bool)? onChanged;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -37,9 +40,9 @@ class SwitchDetail extends StatelessWidget {
         Transform.scale(
           scale: 0.8,
           child: CupertinoSwitch(
-            value: true,
+            value: value,
             activeColor: AppColors.primary,
-            onChanged: (value) {},
+            onChanged: onChanged,
           ),
         ),
       ],

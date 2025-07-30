@@ -9,6 +9,7 @@ import 'package:ticket_flow/features/admin/presentation/manager/member_cubit/mem
 import 'package:ticket_flow/features/admin/presentation/manager/problem_cubit/problem_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/request_type_cubit/request_type_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/topic_cubit/topic_cubit.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/worker_cubit/worker_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/admin_list_view.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/location_body.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/member_body.dart';
@@ -81,7 +82,10 @@ class _AdminPageState extends State<AdminPage> {
           child: const TopicBody(),
         );
       case 3:
-        return const WorkerBody();
+        return BlocProvider(
+          create: (context) => WorkerCubit()..getWorkers(),
+          child: const WorkerBody(),
+        );
       case 4:
         return BlocProvider(
           create: (context) => LocationCubit()..getLocations(),
