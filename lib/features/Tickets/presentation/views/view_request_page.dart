@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ticket_flow/features/Tickets/data/models/ticket_model/datum.dart';
+import 'package:ticket_flow/features/Tickets/presentation/manager/cubit/ticket_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'widgets/edit_request.dart';
@@ -6,8 +9,8 @@ import 'widgets/replay_message.dart';
 import '../../../../core/utils/widgets/custom_app_bar.dart';
 
 class ViewRequestPage extends StatefulWidget {
-  const ViewRequestPage({super.key});
-
+  const ViewRequestPage({super.key, required this.ticket});
+  final TicketItem ticket;
   @override
   State<ViewRequestPage> createState() => _ViewRequestPageState();
 }
@@ -17,14 +20,20 @@ class _ViewRequestPageState extends State<ViewRequestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        controller: scrollController,
-        child: Column(
-          children: [
-            CustomAppBar(text: S.of(context).viewRequest),
-            EditRequest(scrollController: scrollController),
-            ReplayMessage(),
-          ],
+      body: BlocProvider(
+        create: (context) => TicketCubit(),
+        child: SingleChildScrollView(
+          controller: scrollController,
+          child: Column(
+            children: [
+              CustomAppBar(text: S.of(context).viewRequest),
+              EditRequest(
+                scrollController: scrollController,
+                ticket: widget.ticket,
+              ),
+              ReplayMessage(),
+            ],
+          ),
         ),
       ),
     );

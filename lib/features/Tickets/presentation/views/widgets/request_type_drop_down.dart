@@ -25,7 +25,7 @@ class RequestTypeDropDown extends StatelessWidget {
                 value: value,
                 style: TextStyles.text12LightGrey,
                 decoration: InputDecoration(
-                  labelText: S.of(context).location,
+                  labelText: S.of(context).requestType,
                   border: borderTextField(),
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                   labelStyle: TextStyles.text14RegularGrey,

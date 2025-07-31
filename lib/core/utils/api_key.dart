@@ -24,7 +24,15 @@ class ApiKey {
   static const String dateFrom = 'date_from';
   static const String dateTo = 'date_to';
   static const String locationId = 'location_id';
-
+  static const String userId = 'user_id';
+  static const String problemId = 'problem_id';
+  static const String compensation = 'compensation';
+  static const String requestedBy = 'requested_by';
+  static const String requestedUser = 'requestedUser';
+  static const String amountEgp = 'amount_EGP';
+  static const String workerId = 'worker_id';
+  static const String quantity = 'qty';
+  static const String replay = 'reply_text';
 }
 
 class EndPoints {
@@ -35,6 +43,11 @@ class EndPoints {
   static const String dashboard = '$baseUrl/tickets/dashboard.php';
   static const String guests = '$baseUrl/clients/get_all_clients.php';
   static const String tickets = '$baseUrl/tickets/get_all_tickets.php';
+  static const String addTicket = '$baseUrl/tickets/create_ticket.php';
+  static String editTicket(String id) =>
+      '$baseUrl/tickets/update_ticket.php?id=$id';
+  static String deleteTicket(String id) =>
+      '$baseUrl/tickets/delete_ticket.php?id=$id';
   static const String users = '$baseUrl/users/get_users.php';
   static const String addUser = '$baseUrl/users/create_user.php';
   static const String roles = '$baseUrl/roles/get_roles.php';
@@ -87,8 +100,12 @@ class EndPoints {
       '$baseUrl/workers/delete_worker.php?id=$id';
   static const String reportByDate = '$baseUrl/report/report_by_date.php';
   static const String reportByRoom = '$baseUrl/report/report_by_room.php';
+  static String replyMessage(String id) =>
+      '$baseUrl/replies/create_reply.php?ticket_id=$id';
 }
 
 class CacheKey {
   static const String adminLoggedIn = 'admin_logged_in';
+  static const String guestLoggedIn = 'guest_logged_in';
+  static const String requestedBy = 'requested_by';
 }

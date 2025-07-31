@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_flow/core/func/container_decoration.dart';
+import 'package:ticket_flow/features/Tickets/data/models/ticket_model/datum.dart';
 import 'package:ticket_flow/features/onboarding/widget/custom_button.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
@@ -8,9 +9,13 @@ import 'message_replay.dart';
 import 'request_text_field.dart';
 
 class EditRequest extends StatelessWidget {
-  const EditRequest({super.key, required this.scrollController});
+  const EditRequest({
+    super.key,
+    required this.scrollController,
+    required this.ticket,
+  });
   final ScrollController scrollController;
-
+  final TicketItem ticket;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -25,38 +30,38 @@ class EditRequest extends StatelessWidget {
               children: [
                 CustomRequestTextField(
                   label: S.of(context).requestId,
-                  value: '1324434',
+                  value: ticket.id.toString(),
                 ),
                 CustomRequestTextField(
                   label: S.of(context).startTime,
-                  value: '7-7-2025',
+                  value: ticket.created,
                   isDate: true,
                 ),
                 CustomRequestTextField(
                   label: S.of(context).depTime,
-                  value: '12-7-2025',
+                  value: ticket.closed,
                   isDate: true,
                 ),
                 CustomRequestTextField(
                   label: S.of(context).department,
-                  value: 'Housekeeping',
+                  value: ticket.departmentName,
                 ),
                 CustomRequestTextField(
                   label: S.of(context).vacant,
-                  value: '5005',
+                  value: ticket.status,
                 ),
                 CustomRequestTextField(
                   label: S.of(context).problem,
-                  value: 'T.V Remote',
+                  value: ticket.problemTopic,
                 ),
                 CustomRequestTextField(
                   label: S.of(context).status,
-                  value: 'Accepted',
+                  value: ticket.status,
                   isList: true,
                 ),
                 CustomRequestTextField(
                   label: S.of(context).worker,
-                  value: 'Mohamed ahmed',
+                  value: ticket.workerFname,
                   isList: true,
                 ),
                 CustomButton(
@@ -68,7 +73,7 @@ class EditRequest extends StatelessWidget {
             ),
           ),
           SizedBox(height: 16.h),
-          MessageReplay(scrollController: scrollController),
+          MessageReplay(scrollController: scrollController, ticket: ticket),
         ],
       ),
     );

@@ -1,7 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:ticket_flow/core/api/api_consumer.dart';
+import 'package:ticket_flow/core/cache/cache_helper.dart';
 import 'package:ticket_flow/core/error/server_failure.dart';
 import 'package:ticket_flow/core/utils/api_key.dart';
+import 'package:ticket_flow/core/utils/service_locator.dart';
 import 'package:ticket_flow/features/auth/data/models/guset_login/guset_login.dart';
 import 'package:ticket_flow/features/auth/data/models/login_model/login_model.dart';
 import 'package:ticket_flow/features/auth/data/repo/auth_repo.dart';
@@ -25,6 +27,10 @@ class AuthRepoImpl extends AuthRepo {
 
       if (response is Map<String, dynamic>) {
         final user = LoginModel.fromJson(response);
+        getIt.get<CacheHelper>().saveData(
+          key: ApiKey.userId,
+          value: user.user!.id,
+        );
         return right(user);
       } else {
         return left(

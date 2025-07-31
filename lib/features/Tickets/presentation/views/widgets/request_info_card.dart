@@ -19,7 +19,7 @@ class RequestInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.push(AppRoutes.requestDetails);
+        context.push(AppRoutes.requestDetails, extra: ticket);
       },
       child: Padding(
         padding:
@@ -35,7 +35,6 @@ class RequestInfoCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Top bar
               Container(
                 height: 40.h,
                 padding: EdgeInsets.only(top: 6.h),

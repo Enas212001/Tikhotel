@@ -49,10 +49,10 @@ class ReportByRoom extends StatelessWidget {
               title: S.of(context).reportByRoom,
               child: Column(
                 children: [
-                  /// Date From
                   CustomRequestTextField(
                     label: S.of(context).dateFrom,
                     controller: cubit.dateFromController,
+                    isDate: true,
                     onTap: () async {
                       final picked = await showDatePicker(
                         context: context,
@@ -66,11 +66,10 @@ class ReportByRoom extends StatelessWidget {
                       }
                     },
                   ),
-
-                  /// Date To
                   CustomRequestTextField(
                     label: S.of(context).dateTo,
                     controller: cubit.dateToController,
+                    isDate: true,
                     onTap: () async {
                       final picked = await showDatePicker(
                         context: context,

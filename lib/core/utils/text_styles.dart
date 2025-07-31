@@ -40,6 +40,11 @@ class TextStyles {
     fontSize: 12.sp,
     color: AppColors.grey,
   );
+  static TextStyle text12MeduimGrey = TextStyle(
+    fontSize: 12.sp,
+    color: AppColors.grey,
+    fontWeight: FontWeight.w500,
+  );
 
   static TextStyle text12RegularDarkGrey = TextStyle(
     fontSize: 12.sp,

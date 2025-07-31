@@ -44,7 +44,7 @@ class NewRequestBody extends StatelessWidget {
                 return SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {
                     return ShimmerCard();
-                  }, childCount: 7),
+                  }, childCount: 4),
                 );
               }
               if (state is RequestSuccess) {

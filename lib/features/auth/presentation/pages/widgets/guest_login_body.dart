@@ -23,8 +23,8 @@ class GuestLoginBody extends StatelessWidget {
       listener: (context, state) async {
         if (state is GuestLoginSuccess) {
           final cache = getIt<CacheHelper>();
-          await cache.saveData(key: CacheKey.adminLoggedIn, value: true);
-          context.go(AppRoutes.dashboard);
+          await cache.saveData(key: CacheKey.guestLoggedIn, value: true);
+          context.go(AppRoutes.requestsGuestPage);
         } else if (state is GuestLoginFailure) {
           showToast(state.message);
         }

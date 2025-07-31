@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ticket_flow/core/cache/cache_helper.dart';
+import 'package:ticket_flow/core/utils/api_key.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
+import 'package:ticket_flow/core/utils/service_locator.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'requested_by.dart';
@@ -41,12 +44,15 @@ class RequestTypeSelectionDialog extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Guest option
                   RequestTypeCheckbox(
                     title: S.of(context).guest,
                     onTap: () {
                       Navigator.of(context).pop();
                       GoRouter.of(context).push(AppRoutes.addRequest);
+                      getIt.get<CacheHelper>().saveData(
+                        key: CacheKey.requestedBy,
+                        value: 'Guest',
+                      );
                     },
                   ),
                   RequestTypeCheckbox(
@@ -54,6 +60,10 @@ class RequestTypeSelectionDialog extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).pop();
                       GoRouter.of(context).push(AppRoutes.addRequest);
+                      getIt.get<CacheHelper>().saveData(
+                        key: CacheKey.requestedBy,
+                        value: 'Work Order',
+                      );
                     },
                   ),
                 ],

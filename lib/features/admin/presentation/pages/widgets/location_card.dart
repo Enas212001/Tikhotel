@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/core/utils/widgets/detail_item.dart';
 import 'package:ticket_flow/features/admin/data/models/location_model/location_item.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/location_cubit/location_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/admin_card.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
@@ -24,8 +26,9 @@ class LocationCard extends StatelessWidget {
           ),
         );
       },
-      onEdit: () {
-        context.push(AppRoutes.updateLocation);
+      onEdit: () async {
+        await context.push(AppRoutes.updateLocation, extra: location);
+        context.read<LocationCubit>().getLocations();
       },
       child: Column(
         children: [

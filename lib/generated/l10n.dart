@@ -1553,6 +1553,81 @@ class S {
       args: [],
     );
   }
+
+  /// `TicketAdded`
+  String get ticketAdded {
+    return Intl.message('TicketAdded', name: 'ticketAdded', desc: '', args: []);
+  }
+
+  /// `Closed Work Order`
+  String get closedWorkOrder {
+    return Intl.message(
+      'Closed Work Order',
+      name: 'closedWorkOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open Work Order`
+  String get openWorkOrder {
+    return Intl.message(
+      'Open Work Order',
+      name: 'openWorkOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profile`
+  String get profile {
+    return Intl.message('Profile', name: 'profile', desc: '', args: []);
+  }
+
+  /// `Rating`
+  String get rating {
+    return Intl.message('Rating', name: 'rating', desc: '', args: []);
+  }
+
+  /// `By`
+  String get by {
+    return Intl.message('By', name: 'by', desc: '', args: []);
+  }
+
+  /// `Send Request`
+  String get sendRequest {
+    return Intl.message(
+      'Send Request',
+      name: 'sendRequest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verfication Code`
+  String get verficationCode {
+    return Intl.message(
+      'Verfication Code',
+      name: 'verficationCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone`
+  String get phone {
+    return Intl.message('Phone', name: 'phone', desc: '', args: []);
+  }
+
+  /// `Cell Phone`
+  String get cellPhone {
+    return Intl.message('Cell Phone', name: 'cellPhone', desc: '', args: []);
+  }
+
+  /// `Country`
+  String get country {
+    return Intl.message('Country', name: 'country', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

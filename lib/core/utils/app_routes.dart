@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ticket_flow/features/Tickets/data/models/ticket_model/datum.dart';
 import 'package:ticket_flow/features/admin/data/models/department_model/department_model.dart';
+import 'package:ticket_flow/features/admin/data/models/location_model/location_item.dart';
 import 'package:ticket_flow/features/admin/data/models/member_model/member_model.dart';
 import 'package:ticket_flow/features/admin/data/models/problem_model/problem_item.dart';
 import 'package:ticket_flow/features/admin/data/models/topic_model/topic_item.dart';
@@ -31,6 +33,10 @@ import 'package:ticket_flow/features/dashboard/presentation/pages/dashboard_page
 import 'package:ticket_flow/features/Tickets/presentation/views/closed_feedback_page.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/feedback_page.dart';
 import 'package:ticket_flow/features/guest/presentation/views/guest_page.dart';
+import 'package:ticket_flow/features/guestFlow/presentation/views/new_guest_request_page.dart';
+import 'package:ticket_flow/features/guestFlow/presentation/views/profile_page.dart';
+import 'package:ticket_flow/features/guestFlow/presentation/views/requests_page.dart';
+import 'package:ticket_flow/features/guestFlow/presentation/views/view_guest_request_page.dart';
 import 'package:ticket_flow/features/home/presentation/pages/report_page.dart';
 import 'package:ticket_flow/features/onboarding/onboarding_page.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/add_request_page.dart';
@@ -74,6 +80,10 @@ class AppRoutes {
   static const String updateProblem = '/updateProblem';
   static const String addRequestType = '/addRequestType';
   static const String updateRequestType = '/updateRequestType';
+  static const String requestsGuestPage = '/requestsGuestPage';
+  static const String viewRequestGuestPage = '/viewRequestGuestPage';
+  static const String newRequestGuestPage = '/newRequestGuestPage';
+  static const String profilePage = '/profilePage';
   static final router = GoRouter(
     routes: [
       GoRoute(path: splash, builder: (context, state) => const SplashPage()),
@@ -99,7 +109,10 @@ class AppRoutes {
       ),
       GoRoute(
         path: requestDetails,
-        builder: (context, state) => const ViewRequestPage(),
+        builder: (context, state) {
+          final request = state.extra as TicketItem;
+          return ViewRequestPage(ticket: request);
+        },
       ),
       GoRoute(
         path: addRequest,
@@ -172,7 +185,10 @@ class AppRoutes {
       ),
       GoRoute(
         path: updateLocation,
-        builder: (context, state) => const UpdateLocationPage(),
+        builder: (context, state) {
+          final location = state.extra as LocationItem;
+          return UpdateLocationPage(location: location);
+        },
       ),
       GoRoute(
         path: addMember,
@@ -211,6 +227,22 @@ class AppRoutes {
           }
           return UpdateTypePage(requestType: requestType);
         },
+      ),
+      GoRoute(
+        path: requestsGuestPage,
+        builder: (context, state) => const RequestsPage(),
+      ),
+      GoRoute(
+        path: viewRequestGuestPage,
+        builder: (context, state) => const ViewGuestRequestPage(),
+      ),
+      GoRoute(
+        path: newRequestGuestPage,
+        builder: (context, state) => const NewGuestRequestPage(),
+      ),
+      GoRoute(
+        path: profilePage,
+        builder: (context, state) => const ProfilePage(),
       ),
     ],
   );

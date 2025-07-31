@@ -2,18 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
+import 'package:ticket_flow/features/Tickets/data/models/ticket_model/datum.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 import 'message_text_field.dart';
 
 class MessageReplay extends StatelessWidget {
   final ScrollController scrollController;
-  const MessageReplay({super.key, required this.scrollController});
+  final TicketItem ticket;
+  const MessageReplay({
+    super.key,
+    required this.scrollController,
+    required this.ticket,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        MessageTextField(value: 'test', label: 'Message', isReadOnly: true),
+        MessageTextField(
+          value: ticket.message,
+          label: S.of(context).message,
+          isReadOnly: true,
+        ),
         Positioned(
           top: 16.r,
           right: 16.r,

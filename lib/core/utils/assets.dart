@@ -90,9 +90,14 @@ class Assets {
 
   static const String imagesNewRequest = "assets/images/newRequest.svg";
 
+  static const String imagesNewRequestGuest =
+      "assets/images/newRequestGuest.svg";
+
   static const String imagesPendingRequest = "assets/images/pendingRequest.svg";
 
   static const String imagesProblem = "assets/images/problem.svg";
+
+  static const String imagesProfile = "assets/images/profile.svg";
 
   static const String imagesReply = "assets/images/reply.svg";
 
@@ -105,6 +110,8 @@ class Assets {
   static const String imagesRoom = "assets/images/room.svg";
 
   static const String imagesSetting = "assets/images/setting.svg";
+
+  static const String imagesStatus = "assets/images/status.svg";
 
   static const String imagesTopDelete = "assets/images/topDelete.png";
 

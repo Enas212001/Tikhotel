@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
-import 'package:ticket_flow/core/utils/text_styles.dart';
+import 'package:ticket_flow/generated/l10n.dart';
+
+import 'drawer.item.dart';
 
 class MyAppDrawer extends StatelessWidget {
   const MyAppDrawer({super.key});
@@ -18,82 +19,67 @@ class MyAppDrawer extends StatelessWidget {
           DrawerHeader(child: Image.asset(Assets.imagesLogo)),
           DrawerItem(
             image: Assets.imagesDashboard,
-            title: 'Dashboard',
+            title: S.of(context).dashboard,
             onTap: () {
               GoRouter.of(context).pushReplacement(AppRoutes.dashboard);
             },
           ),
           DrawerItem(
             image: Assets.imagesGuests,
-            title: 'Guests',
+            title: S.of(context).guests,
             onTap: () {
               GoRouter.of(context).pushReplacement(AppRoutes.guest);
             },
           ),
           DrawerItem(
             image: Assets.imagesRequest,
-            title: 'New Requests',
+            title: S.of(context).newRequest,
             onTap: () {
               GoRouter.of(context).pushReplacement(AppRoutes.newRequest);
             },
           ),
           DrawerItem(
             image: Assets.imagesFeedback,
-            title: 'Feedback',
+            title: S.of(context).feedback,
             onTap: () {
               GoRouter.of(context).pushReplacement(AppRoutes.feedback);
             },
           ),
           DrawerItem(
             image: Assets.imagesClosedFeedback,
-            title: 'Closed Feedback',
+            title: S.of(context).closedFeedback,
             onTap: () {
               GoRouter.of(context).pushReplacement(AppRoutes.closedFeedback);
             },
           ),
           DrawerItem(
             image: Assets.imagesClosedWorkOrder,
-            title: 'Closed Work Orders',
+            title: S.of(context).closedWorkOrder,
             onTap: () {
               GoRouter.of(context).pushReplacement(AppRoutes.closedWorkOrder);
             },
           ),
           DrawerItem(
             image: Assets.imagesReport,
-            title: 'Reports',
+            title: S.of(context).reports,
             onTap: () {
               GoRouter.of(context).pushReplacement(AppRoutes.report);
             },
           ),
           DrawerItem(
             image: Assets.imagesAdmin,
-            title: 'Administration',
+            title: S.of(context).administration,
             onTap: () {
               GoRouter.of(context).pushReplacement(AppRoutes.admin);
             },
           ),
-          DrawerItem(image: Assets.imagesLogout, title: 'Logout', onTap: () {}),
+          DrawerItem(
+            image: Assets.imagesLogout,
+            title: S.of(context).logout,
+            onTap: () {},
+          ),
         ],
       ),
-    );
-  }
-}
-
-class DrawerItem extends StatelessWidget {
-  const DrawerItem({
-    super.key,
-    required this.title,
-    required this.image,
-    required this.onTap,
-  });
-  final String title, image;
-  final VoidCallback onTap;
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: SvgPicture.asset(image),
-      title: Text(title, style: TextStyles.text14RegularGrey),
-      onTap: onTap,
     );
   }
 }
