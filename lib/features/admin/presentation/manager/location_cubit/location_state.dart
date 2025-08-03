@@ -14,6 +14,9 @@ final class LocationsLoading extends LocationState {}
 final class LocationsLoaded extends LocationState {
   final List<LocationItem> locations;
   const LocationsLoaded({required this.locations});
+
+  @override
+  List<Object> get props => [locations];
 }
 
 final class LocationsLoadingError extends LocationState {

@@ -50,6 +50,7 @@
         }
     },
     "search": "Search",
+    "lastReplay": "Last Replay",
     "filter": "Filter",
     "location": "Location",
     "department": "Department",
@@ -154,6 +155,14 @@
             }
         }
     },
+    "noRequestsFound": "No requests found for Room {roomNumber}",
+    "@noRequestsFound": {
+        "placeholders": {
+            "roomNumber": {
+                "type": "String"
+            }
+        }
+    },
     "replayMessage": "Replay Message",
     "theReplayHasBeenAddedSuccessfully": "The replay has been added successfully",
     "requestId": "Request ID",
@@ -236,5 +245,16 @@
     "verficationCode": "Verfication Code",
     "phone": "Phone",
     "cellPhone": "Cell Phone",
-    "country": "Country"
+    "country": "Country",
+    "somethingWentWrong": "Something went wrong",
+    "reportFetchedSuccessfully": "Report fetched successfully",
+    "report": "Report",
+    "reportAddedSuccessfully": "Report added successfully",
+    "reportUpdatedSuccessfully": "Report updated successfully",
+    "reportDeletedSuccessfully": "Report deleted successfully",
+    "reportDeleted": "Report deleted",
+    "createdAt": "Created at",
+    "fixedAt": "Fixed at",
+    "depTimeAt": "Dep Time at",
+    "duration": "Duration"
 }

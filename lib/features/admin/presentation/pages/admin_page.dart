@@ -10,13 +10,13 @@ import 'package:ticket_flow/features/admin/presentation/manager/problem_cubit/pr
 import 'package:ticket_flow/features/admin/presentation/manager/request_type_cubit/request_type_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/topic_cubit/topic_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/worker_cubit/worker_cubit.dart';
-import 'package:ticket_flow/features/admin/presentation/pages/widgets/admin_list_view.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/location_body.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/member_body.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/porblems_body.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/report_schedule_body.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/request_types_body.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/user_body.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/widgets/admin_list_view.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/worker_body.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
@@ -33,6 +33,12 @@ class AdminPage extends StatefulWidget {
 
 class _AdminPageState extends State<AdminPage> {
   int selectedIndex = 0;
+  final TextEditingController searchController = TextEditingController();
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +47,38 @@ class _AdminPageState extends State<AdminPage> {
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: TopWidget(search: '', title: S.of(context).administration),
+            child: TopWidget(
+              controller: searchController,
+              title: S.of(context).administration,
+              onChanged: (query) {
+                switch (selectedIndex) {
+                  case 0:
+                    context.read<UserCubit>().searchUsers(query);
+                    break;
+                  case 1:
+                    context.read<DepartmentCubit>().searchDepartments(query);
+                    break;
+                  case 2:
+                    context.read<TopicCubit>().searchTopics(query);
+                    break;
+                  case 3:
+                    context.read<WorkerCubit>().searchWorker(query);
+                    break;
+                  case 4:
+                    context.read<LocationCubit>().searchLocation(query);
+                    break;
+                  case 5:
+                    context.read<MemberCubit>().searchMember(query);
+                    break;
+                  case 6:
+                    context.read<RequestTypeCubit>().searchRequestType(query);
+                    break;
+                  case 7:
+                    context.read<ProblemCubit>().searchProblem(query);
+                    break;
+                }
+              },
+            ),
           ),
           SliverToBoxAdapter(
             child: AdminListView(
@@ -49,6 +86,7 @@ class _AdminPageState extends State<AdminPage> {
               onIndexChanged: (index) {
                 setState(() {
                   selectedIndex = index;
+                  searchController.clear();
                 });
               },
             ),
@@ -67,45 +105,21 @@ class _AdminPageState extends State<AdminPage> {
   Widget _buildSelectedContent(int index) {
     switch (index) {
       case 0:
-        return BlocProvider(
-          create: (context) => UserCubit()..getUsers(),
-          child: const UsersBody(),
-        );
+        return const UsersBody();
       case 1:
-        return BlocProvider(
-          create: (context) => DepartmentCubit()..fetchDepartments(),
-          child: const DepartmentBody(),
-        );
+        return const DepartmentBody();
       case 2:
-        return BlocProvider(
-          create: (context) => TopicCubit()..getTopics(),
-          child: const TopicBody(),
-        );
+        return const TopicBody();
       case 3:
-        return BlocProvider(
-          create: (context) => WorkerCubit()..getWorkers(),
-          child: const WorkerBody(),
-        );
+        return const WorkerBody();
       case 4:
-        return BlocProvider(
-          create: (context) => LocationCubit()..getLocations(),
-          child: const LocationBody(),
-        );
+        return const LocationBody();
       case 5:
-        return BlocProvider(
-          create: (context) => MemberCubit()..getMembers(),
-          child: const MemberBody(),
-        );
+        return const MemberBody();
       case 6:
-        return BlocProvider(
-          create: (context) => RequestTypeCubit()..getRequestTypes(),
-          child: const RequestTypesBody(),
-        );
+        return const RequestTypesBody();
       case 7:
-        return BlocProvider(
-          create: (context) => ProblemCubit()..getProblems(),
-          child: const ProblemsBody(),
-        );
+        return const ProblemsBody();
       case 8:
         return const ReportScheduleBody();
       default:

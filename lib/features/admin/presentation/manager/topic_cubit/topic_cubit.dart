@@ -30,8 +30,28 @@ class TopicCubit extends Cubit<TopicState> {
     final result = await repo.getTopics();
     result.fold(
       (l) => emit(TopicFetchingError(error: l.failure.errorMessage)),
-      (r) => emit(TopicFetched(topics: r)),
+      (r) {
+        allTopics = r;
+        emit(TopicFetched(topics: r));
+      },
     );
+  }
+
+  List<TopicItem> allTopics = [];
+  void searchTopics(String query) {
+    if (state is! TopicFetched) return;
+
+    if (query.isEmpty) {
+      emit(TopicFetched(topics: allTopics));
+      return;
+    }
+
+    final filtered = allTopics.where((topic) {
+      final name = topic.topic?.toLowerCase() ?? '';
+      return name.contains(query.toLowerCase());
+    }).toList();
+
+    emit(TopicFetched(topics: filtered));
   }
 
   Future<void> addTopic() async {

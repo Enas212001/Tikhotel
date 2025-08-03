@@ -1,13 +1,18 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:ticket_flow/core/api/dio_consumer.dart';
+import 'package:ticket_flow/core/cache/cache_helper.dart';
 import 'package:ticket_flow/core/error/server_failure.dart';
+import 'package:ticket_flow/core/utils/api_key.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
-import 'package:ticket_flow/features/auth/data/models/guset_login/guset_login.dart';
+import 'package:ticket_flow/features/auth/data/models/guset_login/guest_login_model.dart';
 import 'package:ticket_flow/features/auth/data/models/login_model/login_model.dart';
 import 'package:ticket_flow/features/auth/data/repo/auth_repo.dart';
 import 'package:ticket_flow/features/auth/data/repo/auth_repo_impl.dart';
+import 'package:ticket_flow/features/guest/data/models/guest_model/guest_model.dart';
 
 part 'auth_state.dart';
 
@@ -51,17 +56,49 @@ class AuthCubit extends Cubit<AuthState> {
         (failure) =>
             emit(GuestLoginFailure(message: failure.failure.errorMessage)),
         (guestLogin) {
-          if (guestLogin.status == true) {
-            emit(GuestLoginSuccess(gusetLogin: guestLogin));
-          } else {
-            emit(GuestLoginFailure(message: guestLogin.message ?? ''));
-          }
+          emit(GuestLoginSuccess(gusetLogin: guestLogin));
         },
       );
     } on ServerFailure catch (e) {
       emit(GuestLoginFailure(message: e.failure.errorMessage));
     } catch (e) {
       emit(GuestLoginFailure(message: e.toString()));
+    }
+  }
+
+  // In AuthCubit
+  GuestModel? loggedInGuest;
+
+  void setLoggedInGuest(GuestModel guest) {
+    loggedInGuest = guest;
+  }
+
+  void loadCachedGuest() {
+    final cache = getIt<CacheHelper>();
+    final jsonData = cache.getData(key: CacheKey.guestData);
+
+    if (jsonData != null) {
+      try {
+        final Map<String, dynamic> map = jsonDecode(jsonData);
+        loggedInGuest = GuestModel.fromJson(map);
+      } catch (e) {
+        loggedInGuest = null;
+      }
+    }
+  }
+
+  Future<void> logout() async {
+    emit(LogoutLoading());
+    try {
+      final result = await authRepo.logout();
+      result.fold(
+        (failure) => emit(LogoutFailure(message: failure.failure.errorMessage)),
+        (success) => emit(LogoutSuccess(sucess: success)),
+      );
+    } on ServerFailure catch (e) {
+      emit(LogoutFailure(message: e.failure.errorMessage));
+    } catch (e) {
+      emit(LogoutFailure(message: e.toString()));
     }
   }
 }

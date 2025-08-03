@@ -14,6 +14,9 @@ final class MemberLoading extends MemberState {}
 final class MemberLoaded extends MemberState {
   final List<MemberModel> members;
   const MemberLoaded({required this.members});
+
+  @override
+  List<Object> get props => [members];
 }
 
 final class MemberError extends MemberState {

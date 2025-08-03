@@ -19,7 +19,7 @@ class NewRequestGuestBody extends StatelessWidget {
         TopWidget(
           search: '',
           title: S.of(context).newRequest,
-          isDashboard: true,
+          noSearchBar: true,
         ),
         Padding(
           padding:

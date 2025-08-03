@@ -27,8 +27,30 @@ class MemberCubit extends Cubit<MemberState> {
     final response = await repo.getMembers();
     response.fold(
       (failure) => emit(MemberError(message: failure.failure.errorMessage)),
-      (members) => emit(MemberLoaded(members: members)),
+      (members) {
+        allMembers = members;
+        emit(MemberLoaded(members: members));
+      },
     );
+  }
+
+  List<MemberModel> allMembers = [];
+  void searchMember(String query) {
+    if (state is! MemberLoaded) return;
+
+    if (query.isEmpty) {
+      emit(MemberLoaded(members: allMembers));
+      return;
+    }
+
+    final filtered = allMembers.where((member) {
+      final name =
+          '${member.title ?? ''} ${member.name ?? ''}${member.email ?? ''}'
+              .toLowerCase();
+      return name.contains(query.toLowerCase());
+    }).toList();
+
+    emit(MemberLoaded(members: filtered));
   }
 
   Future<void> deleteMember({required String id}) async {

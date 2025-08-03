@@ -32,7 +32,7 @@ final class AdminLoginFailure extends AuthState {
 final class GuestLoginLoading extends AuthState {}
 
 final class GuestLoginSuccess extends AuthState {
-  final GuestLogin gusetLogin;
+  final GuestLoginModel gusetLogin;
 
   const GuestLoginSuccess({required this.gusetLogin});
 
@@ -47,4 +47,18 @@ final class GuestLoginFailure extends AuthState {
 
   @override
   List<Object> get props => [message];
+}
+
+final class LogoutSuccess extends AuthState {
+  final bool sucess;
+
+  const LogoutSuccess({required this.sucess});
+}
+
+final class LogoutLoading extends AuthState {}
+
+final class LogoutFailure extends AuthState {
+  final String message;
+
+  const LogoutFailure({required this.message});
 }

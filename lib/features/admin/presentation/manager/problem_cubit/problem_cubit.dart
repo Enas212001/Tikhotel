@@ -24,8 +24,28 @@ class ProblemCubit extends Cubit<ProblemState> {
     final result = await repo.getProblems();
     result.fold(
       (l) => emit(ProblemFetchingError(error: l.failure.errorMessage)),
-      (r) => emit(ProblemFetched(problems: r)),
+      (r) {
+        allProblems = r;
+        emit(ProblemFetched(problems: r));
+      },
     );
+  }
+
+  List<ProblemItem> allProblems = [];
+  void searchProblem(String query) {
+    if (state is! ProblemFetched) return;
+
+    if (query.isEmpty) {
+      emit(ProblemFetched(problems: allProblems));
+      return;
+    }
+
+    final filtered = allProblems.where((type) {
+      final name = type.topic?.toLowerCase() ?? '';
+      return name.contains(query.toLowerCase());
+    }).toList();
+
+    emit(ProblemFetched(problems: filtered));
   }
 
   Future<void> addProblem() async {

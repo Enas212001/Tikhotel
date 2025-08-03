@@ -22,6 +22,8 @@ final class FetchWorkerLoading extends WorkerState {}
 final class FetchWorkerSuccess extends WorkerState {
   final List<WorkerItem> workers;
   const FetchWorkerSuccess({required this.workers});
+  @override
+  List<Object> get props => [workers];
 }
 
 final class FetchWorkerFailure extends WorkerState {

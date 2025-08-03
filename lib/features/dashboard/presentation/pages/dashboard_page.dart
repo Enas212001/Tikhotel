@@ -32,7 +32,7 @@ class DashboardRefresh extends StatelessWidget {
       color: AppColors.primary,
       child: Column(
         children: [
-          TopWidget(search: '', title: 'Dashboard', isDashboard: true),
+          TopWidget(search: '', title: 'Dashboard', noSearchBar: true),
           DashboardGridView(),
         ],
       ),

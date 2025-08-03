@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/core/utils/widgets/form_with_title.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/request_text_field.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/department_drop_down_menu.dart';
@@ -17,6 +18,7 @@ class ReportByRoom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<ReportCubit>();
     return BlocProvider(
       create: (_) => ReportCubit(),
       child: BlocConsumer<ReportCubit, ReportState>(
@@ -27,15 +29,14 @@ class ReportByRoom extends StatelessWidget {
             ).showSnackBar(SnackBar(content: Text(state.message)));
             log(state.message);
           } else if (state is FetchReportByRoomSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text("Room report fetched successfully!"),
-              ),
-            );
-            context.read<ReportCubit>().generatePdfByRoom(
-              state.reports,
-              context.read<ReportCubit>().selectedLocation?.location ??
-                  'Unknown',
+            showToast(S.of(context).reportFetchedSuccessfully);
+            cubit.generatePdfByRoom(
+              reports: state.reports,
+              roomNumber: cubit.selectedLocation?.location ?? '',
+              startDate: cubit.dateFromController.text,
+              endDate: cubit.dateToController.text,
+              totalRequests: cubit.selectedLocation?.id ?? 0,
+              totalInSLA: cubit.selectedLocation?.id ?? 0,
             );
           }
         },

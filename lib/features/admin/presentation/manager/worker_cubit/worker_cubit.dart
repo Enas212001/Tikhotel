@@ -19,8 +19,28 @@ class WorkerCubit extends Cubit<WorkerState> {
     response.fold(
       (failure) =>
           emit(FetchWorkerFailure(message: failure.failure.errorMessage)),
-      (workers) => emit(FetchWorkerSuccess(workers: workers)),
+      (workers) {
+        allWorkers = workers;
+        emit(FetchWorkerSuccess(workers: workers));
+      },
     );
+  }
+
+  List<WorkerItem> allWorkers = [];
+  void searchWorker(String query) {
+    if (state is! FetchWorkerSuccess) return;
+
+    if (query.isEmpty) {
+      emit(FetchWorkerSuccess(workers: allWorkers));
+      return;
+    }
+
+    final filtered = allWorkers.where((worker) {
+      final name = worker.fname?.toLowerCase() ?? '';
+      return name.contains(query.toLowerCase());
+    }).toList();
+
+    emit(FetchWorkerSuccess(workers: filtered));
   }
 
   Future<void> deleteWorker({required String id}) async {

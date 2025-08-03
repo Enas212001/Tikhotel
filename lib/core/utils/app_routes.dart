@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/features/Tickets/data/models/ticket_model/datum.dart';
 import 'package:ticket_flow/features/admin/data/models/department_model/department_model.dart';
@@ -9,6 +10,14 @@ import 'package:ticket_flow/features/admin/data/models/topic_model/topic_item.da
 import 'package:ticket_flow/features/admin/data/models/request_type_model/request_type_model.dart';
 import 'package:ticket_flow/features/admin/data/models/user_model/user_model.dart';
 import 'package:ticket_flow/features/admin/data/models/worker_model/worker_item.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/department_cubit/department_cubit.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/location_cubit/location_cubit.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/member_cubit/member_cubit.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/problem_cubit/problem_cubit.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/request_type_cubit/request_type_cubit.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/topic_cubit/topic_cubit.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/user_cubit/user_cubit.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/worker_cubit/worker_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/add_department_page.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/add_location_page.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/add_member_page.dart';
@@ -26,6 +35,7 @@ import 'package:ticket_flow/features/admin/presentation/pages/update_worker_page
 import 'package:ticket_flow/features/admin/presentation/pages/update_type_page.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/update_topic.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/update_user_page.dart';
+import 'package:ticket_flow/features/auth/presentation/manager/cubit/auth_cubit.dart';
 import 'package:ticket_flow/features/auth/presentation/pages/admin_login_page.dart';
 import 'package:ticket_flow/features/auth/presentation/pages/forget_pass_page.dart';
 import 'package:ticket_flow/features/auth/presentation/pages/guest_login_page.dart';
@@ -60,7 +70,6 @@ class AppRoutes {
   static const String closedFeedback = '/closedFeedback';
   static const String closedWorkOrder = '/closedWorkOrder';
   static const String report = '/report';
-  static const String user = '/user';
   static const String addTopic = '/addTopic';
   static const String reportSchedule = '/reportSchedule';
   static const String admin = '/admin';
@@ -132,8 +141,22 @@ class AppRoutes {
         builder: (context, state) => const ClosedWorkOrderPage(),
       ),
       GoRoute(path: report, builder: (context, state) => const ReportPage()),
-      GoRoute(path: user, builder: (context, state) => const AdminPage()),
-      GoRoute(path: admin, builder: (context, state) => const AdminPage()),
+      GoRoute(
+        path: admin,
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => UserCubit()..getUsers()),
+            BlocProvider(create: (_) => DepartmentCubit()..fetchDepartments()),
+            BlocProvider(create: (_) => TopicCubit()..getTopics()),
+            BlocProvider(create: (_) => WorkerCubit()..getWorkers()),
+            BlocProvider(create: (_) => LocationCubit()..getLocations()),
+            BlocProvider(create: (_) => MemberCubit()..getMembers()),
+            BlocProvider(create: (_) => RequestTypeCubit()..getRequestTypes()),
+            BlocProvider(create: (_) => ProblemCubit()..getProblems()),
+          ],
+          child: const AdminPage(),
+        ),
+      ),
       GoRoute(path: addUser, builder: (context, state) => const AddUserPage()),
       GoRoute(
         path: updateUser,
@@ -242,7 +265,13 @@ class AppRoutes {
       ),
       GoRoute(
         path: profilePage,
-        builder: (context, state) => const ProfilePage(),
+        builder: (context, state) {
+          final authCubit = context.read<AuthCubit>(); // use existing
+          return BlocProvider.value(
+            value: authCubit, // ✅ reuse, don’t create a new one
+            child: const ProfilePage(),
+          );
+        },
       ),
     ],
   );

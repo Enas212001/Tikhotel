@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/core/utils/widgets/form_with_title.dart';
@@ -26,9 +27,7 @@ class ReportByDate extends StatelessWidget {
           ).showSnackBar(SnackBar(content: Text(state.message)));
           log(state.message);
         } else if (state is FetchReportByDateSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Report fetched successfully!")),
-          );
+          showToast(S.of(context).reportFetchedSuccessfully);
           context.read<ReportCubit>().generatePdf(state.reports);
         }
       },

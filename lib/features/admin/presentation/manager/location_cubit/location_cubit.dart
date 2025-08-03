@@ -28,11 +28,31 @@ class LocationCubit extends Cubit<LocationState> {
       final locations = await locationRepo.getLocations();
       locations.fold(
         (l) => emit(LocationsLoadingError(message: l.failure.errorMessage)),
-        (r) => emit(LocationsLoaded(locations: r)),
+        (r) {
+          allLocations = r;
+          emit(LocationsLoaded(locations: r));
+        },
       );
     } catch (e) {
       emit(LocationsLoadingError(message: e.toString()));
     }
+  }
+
+  List<LocationItem> allLocations = [];
+  void searchLocation(String query) {
+    if (state is! LocationsLoaded) return;
+
+    if (query.isEmpty) {
+      emit(LocationsLoaded(locations: allLocations));
+      return;
+    }
+
+    final filtered = allLocations.where((location) {
+      final name = '${location.location ?? ''} '.toLowerCase();
+      return name.contains(query.toLowerCase());
+    }).toList();
+
+    emit(LocationsLoaded(locations: filtered));
   }
 
   Future<void> addLocation() async {

@@ -4,7 +4,7 @@ import 'package:ticket_flow/core/cache/cache_helper.dart';
 import 'package:ticket_flow/core/error/server_failure.dart';
 import 'package:ticket_flow/core/utils/api_key.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
-import 'package:ticket_flow/features/auth/data/models/guset_login/guset_login.dart';
+import 'package:ticket_flow/features/auth/data/models/guset_login/guest_login_model.dart';
 import 'package:ticket_flow/features/auth/data/models/login_model/login_model.dart';
 import 'package:ticket_flow/features/auth/data/repo/auth_repo.dart';
 import 'package:ticket_flow/generated/l10n.dart';
@@ -48,7 +48,7 @@ class AuthRepoImpl extends AuthRepo {
   }
 
   @override
-  Future<Either<ServerFailure, GuestLogin>> guestLogin({
+  Future<Either<ServerFailure, GuestLoginModel>> guestLogin({
     required String roomNumber,
     required String firstName,
   }) async {
@@ -57,11 +57,29 @@ class AuthRepoImpl extends AuthRepo {
         EndPoints.guestLogin,
         data: {ApiKey.roomNumber: roomNumber, ApiKey.firstName: firstName},
       );
-      final user = GuestLogin.fromJson(response);
-
+      final user = GuestLoginModel.fromJson(response['data']);
       return right(user);
     } on ServerFailure catch (e) {
       return left(e);
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, bool>> logout() async {
+    try {
+      await getIt
+          .get<CacheHelper>()
+          .clearData(); // or removeData(key: ApiKey.userId)
+      return right(true);
+    } catch (e) {
+      return left(
+        ServerFailure(
+          failure: FailureModel(
+            status: false,
+            errorMessage: S.current.somethingWentWrong,
+          ),
+        ),
+      );
     }
   }
 }

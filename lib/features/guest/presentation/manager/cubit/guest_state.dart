@@ -14,6 +14,8 @@ final class GuestLoading extends GuestState {}
 final class GuestSuccess extends GuestState {
   final List<GuestModel> guests;
   const GuestSuccess({required this.guests});
+  @override
+  List<Object> get props => [guests];
 }
 
 final class GuestFailure extends GuestState {

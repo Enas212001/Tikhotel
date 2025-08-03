@@ -18,34 +18,34 @@ class GuestBody extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: () => context.read<GuestCubit>().fetchGuests(),
       color: AppColors.primary,
-      child: BlocBuilder<GuestCubit, GuestState>(
-        builder: (context, state) {
-          if (state is GuestLoading) {
-            return GuestsLoadingShimmer();
-          }
-          if (state is GuestFailure) {
-            log(state.message);
-            return CommonPageWidget(
-              title: S.of(context).guests,
-              search: S.of(context).forAnyGuest,
-              listView: SliverFillRemaining(
+      child: CommonPageWidget(
+        title: S.of(context).guests,
+        search: S.of(context).forAnyGuest,
+        onChanged: (value) {
+          log(value);
+          context.read<GuestCubit>().searchGuests(value);
+        },
+        listView: BlocBuilder<GuestCubit, GuestState>(
+          builder: (context, state) {
+            if (state is GuestLoading) {
+              return GuestsLoadingShimmer();
+            }
+            if (state is GuestFailure) {
+              log(state.message);
+              return SliverFillRemaining(
                 child: Center(child: Text(state.message)),
-              ),
-            );
-          }
-          if (state is GuestSuccess) {
-            return CommonPageWidget(
-              title: S.of(context).guests,
-              search: S.of(context).forAnyGuest,
-              listView: SliverList(
+              );
+            }
+            if (state is GuestSuccess) {
+              return SliverList(
                 delegate: SliverChildBuilderDelegate((context, index) {
                   return GuestCard(guest: state.guests[index]);
                 }, childCount: state.guests.length),
-              ),
-            );
-          }
-          return const SizedBox.shrink();
-        },
+              );
+            }
+            return const SizedBox.shrink();
+          },
+        ),
       ),
     );
   }

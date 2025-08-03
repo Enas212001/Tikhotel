@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 
-import 'data.dart';
+import 'guest_login_model.dart';
 
 class GuestLogin extends Equatable {
   final bool? status;
   final String? message;
-  final Data? data;
+  final GuestLoginModel? data;
 
   const GuestLogin({this.status, this.message, this.data});
 
@@ -14,7 +14,7 @@ class GuestLogin extends Equatable {
     message: json['message'] as String?,
     data: json['data'] == null
         ? null
-        : Data.fromJson(json['data'] as Map<String, dynamic>),
+        : GuestLoginModel.fromJson(json['data'] as Map<String, dynamic>),
   );
 
   Map<String, dynamic> toJson() => {

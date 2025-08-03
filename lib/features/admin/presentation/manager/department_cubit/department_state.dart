@@ -14,6 +14,8 @@ final class DepartmentFetchLoading extends DepartmentState {}
 final class DepartmentFetchSuccess extends DepartmentState {
   final List<DepartmentModel> departments;
   const DepartmentFetchSuccess({required this.departments});
+  @override
+  List<Object> get props => [departments];
 }
 
 final class DepartmentFetchFailure extends DepartmentState {

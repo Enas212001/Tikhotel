@@ -22,9 +22,27 @@ class UserCubit extends Cubit<UserState> {
         emit(GetUsersFailure(message: failure.failure.errorMessage));
       },
       (users) {
+        allUsers = users;
         emit(GetUsersSuccess(users: users));
       },
     );
+  }
+
+  List<UserModel> allUsers = [];
+  void searchUsers(String query) {
+    if (state is! GetUsersSuccess) return;
+
+    if (query.isEmpty) {
+      emit(GetUsersSuccess(users: allUsers));
+      return;
+    }
+
+    final filtered = allUsers.where((user) {
+      final name = user.name?.toLowerCase() ?? '';
+      return name.contains(query.toLowerCase());
+    }).toList();
+
+    emit(GetUsersSuccess(users: filtered));
   }
 
   final GlobalKey<FormState> formAddUserKey = GlobalKey<FormState>();

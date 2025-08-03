@@ -25,8 +25,28 @@ class DepartmentCubit extends Cubit<DepartmentState> {
     final result = await departmentRepo.getDepartments();
     result.fold(
       (l) => emit(DepartmentFetchFailure(message: l.failure.errorMessage)),
-      (r) => emit(DepartmentFetchSuccess(departments: r)),
+      (r) {
+        allDepartments = r;
+        emit(DepartmentFetchSuccess(departments: r));
+      },
     );
+  }
+
+  List<DepartmentModel> allDepartments = [];
+  void searchDepartments(String query) {
+    if (state is! DepartmentFetchSuccess) return;
+
+    if (query.isEmpty) {
+      emit(DepartmentFetchSuccess(departments: allDepartments));
+      return;
+    }
+
+    final filtered = allDepartments.where((user) {
+      final name = user.name?.toLowerCase() ?? '';
+      return name.contains(query.toLowerCase());
+    }).toList();
+
+    emit(DepartmentFetchSuccess(departments: filtered));
   }
 
   Future<void> addDepartment() async {

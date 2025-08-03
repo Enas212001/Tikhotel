@@ -13,6 +13,7 @@ import 'package:ticket_flow/features/home/data/repo/report_repo_impl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 part 'report_state.dart';
 
 class ReportCubit extends Cubit<ReportState> {
@@ -110,20 +111,25 @@ extension ReportPdfGenerator on ReportCubit {
 }
 
 extension ReportPdfGeneratorByRoom on ReportCubit {
-  /// ✅ Generate PDF for reports by room
-  Future<void> generatePdfByRoom(
-    List<ReportItem> reports,
-    String roomNumber,
-  ) async {
+  /// ✅ Generate PDF for reports by room with custom header
+  Future<void> generatePdfByRoom({
+    required List<ReportItem> reports,
+    required String roomNumber,
+    required String startDate,
+    required String endDate,
+    required int totalRequests,
+    required int totalInSLA,
+  }) async {
     final pdf = pw.Document();
-    // ✅ If no data, show a single message page
+
+    // ✅ Handle empty report case
     if (reports.isEmpty) {
       pdf.addPage(
         pw.Page(
           pageFormat: PdfPageFormat.a4,
           build: (pw.Context context) => pw.Center(
             child: pw.Text(
-              'No requests found for Room $roomNumber',
+              S.current.noRequestsFound(roomNumber),
               style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold),
               textAlign: pw.TextAlign.center,
             ),
@@ -134,8 +140,18 @@ extension ReportPdfGeneratorByRoom on ReportCubit {
       await Printing.layoutPdf(onLayout: (format) async => pdf.save());
       return;
     }
+
     const int rowsPerPage = 40;
-    final headers = ['ID', 'Message', 'Status', 'Date'];
+    final headers = [
+      S.current.room,
+      S.current.createdAt,
+      S.current.depTimeAt,
+      S.current.fixedAt,
+      S.current.problem,
+      S.current.worker,
+      S.current.sla,
+      S.current.duration,
+    ];
 
     for (int i = 0; i < reports.length; i += rowsPerPage) {
       final chunk = reports.skip(i).take(rowsPerPage).toList();
@@ -144,13 +160,35 @@ extension ReportPdfGeneratorByRoom on ReportCubit {
         pw.MultiPage(
           pageFormat: PdfPageFormat.a4,
           build: (pw.Context context) => [
-            pw.Header(
-              level: 0,
-              text:
-                  'Report by Room $roomNumber (Page ${(i ~/ rowsPerPage) + 1})',
+            // ✅ Custom PDF Header
+            pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.center,
+              children: [
+                pw.Text(
+                  'Steigenberger El Tahrir Hotel Services',
+                  style: pw.TextStyle(
+                    fontSize: 16,
+                    fontWeight: pw.FontWeight.bold,
+                  ),
+                ),
+                pw.SizedBox(height: 4),
+                pw.Text(
+                  'HGS Report From Room $roomNumber from $startDate to $endDate',
+                  style: pw.TextStyle(fontSize: 12),
+                ),
+                pw.SizedBox(height: 2),
+                pw.Text(
+                  'Total Daily Requests: $totalRequests   Total Housekeeping Requests In SLA: $totalInSLA',
+                  style: pw.TextStyle(fontSize: 12),
+                ),
+                pw.SizedBox(height: 10), // spacing before table
+              ],
             ),
+
+            // ✅ Table with report data
             pw.Table.fromTextArray(
               headers: headers,
+              headerStyle: pw.TextStyle(fontWeight: pw.FontWeight.bold),
               data: chunk
                   .map(
                     (r) => [

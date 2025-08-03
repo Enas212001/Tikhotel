@@ -9,12 +9,16 @@ import 'package:ticket_flow/generated/l10n.dart';
 class TopWidget extends StatelessWidget {
   const TopWidget({
     super.key,
-    required this.search,
+    this.search = '',
     required this.title,
-    this.isDashboard = false,
+    this.noSearchBar = false,
+    this.onChanged,
+    this.controller,
   });
   final String title, search;
-  final bool isDashboard;
+  final bool noSearchBar;
+  final ValueChanged<String>? onChanged;
+  final TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,11 +50,13 @@ class TopWidget extends StatelessWidget {
             ],
           ),
           SizedBox(height: 10.h),
-          isDashboard
+          noSearchBar
               ? SizedBox()
               : SizedBox(
                   height: 40.h,
                   child: TextField(
+                    controller: controller,
+                    onChanged: onChanged,
                     decoration: InputDecoration(
                       prefixIcon: Icon(
                         Icons.search,
@@ -68,7 +74,7 @@ class TopWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-          SizedBox(height: isDashboard ? 0 : 10.h),
+          SizedBox(height: noSearchBar ? 0 : 10.h),
         ],
       ),
     );

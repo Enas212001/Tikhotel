@@ -26,8 +26,28 @@ class RequestTypeCubit extends Cubit<RequestTypeState> {
     result.fold(
       (failure) =>
           emit(RequestTypeFailure(error: failure.failure.errorMessage)),
-      (requestTypes) => emit(RequestTypeLoaded(requestTypes: requestTypes)),
+      (requestTypes) {
+        allTypes = requestTypes;
+        emit(RequestTypeLoaded(requestTypes: requestTypes));
+      },
     );
+  }
+
+  List<RequestTypeModel> allTypes = [];
+  void searchRequestType(String query) {
+    if (state is! RequestTypeLoaded) return;
+
+    if (query.isEmpty) {
+      emit(RequestTypeLoaded(requestTypes: allTypes));
+      return;
+    }
+
+    final filtered = allTypes.where((type) {
+      final name = type.requestType?.toLowerCase() ?? '';
+      return name.contains(query.toLowerCase());
+    }).toList();
+
+    emit(RequestTypeLoaded(requestTypes: filtered));
   }
 
   Future<void> addRequestType() async {

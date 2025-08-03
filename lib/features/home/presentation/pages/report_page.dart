@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_flow/app/my_app_drawer.dart';
 import 'package:ticket_flow/core/utils/widgets/top_widget.dart';
 import 'package:ticket_flow/features/home/presentation/manager/cubit/report_cubit.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 import 'widget/report_by_date.dart';
 import 'widget/report_by_room.dart';
@@ -20,7 +21,7 @@ class ReportPage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              TopWidget(search: '', title: 'Reports', isDashboard: true),
+              TopWidget(title: S.of(context).reports, noSearchBar: true),
               SizedBox(height: 16.h),
               ReportByDate(),
               SizedBox(height: 16.h),

@@ -15,6 +15,9 @@ final class TicketSuccess extends TicketState {
   final List<TicketItem> tickets;
 
   const TicketSuccess({required this.tickets});
+
+  @override
+  List<Object> get props => [tickets];
 }
 
 final class TicketFailure extends TicketState {
@@ -67,6 +70,8 @@ final class TicketFeedbackSuccess extends TicketState {
   final List<TicketItem> tickets;
 
   const TicketFeedbackSuccess({required this.tickets});
+  @override
+  List<Object> get props => [tickets];
 }
 
 final class TicketFeedbackFailure extends TicketState {
@@ -81,6 +86,8 @@ final class TicketClosedFeedbackSuccess extends TicketState {
   final List<TicketItem> tickets;
 
   const TicketClosedFeedbackSuccess({required this.tickets});
+  @override
+  List<Object> get props => [tickets];
 }
 
 final class TicketClosedFeedbackFailure extends TicketState {
@@ -96,6 +103,9 @@ final class RequestLoading extends TicketState {}
 final class RequestSuccess extends TicketState {
   final List<TicketItem> tickets;
   const RequestSuccess({required this.tickets});
+
+  @override
+  List<Object> get props => [tickets];
 }
 
 final class RequestFailure extends TicketState {
@@ -107,6 +117,8 @@ final class TicketClosedWorkOrderSuccess extends TicketState {
   final List<TicketItem> tickets;
 
   const TicketClosedWorkOrderSuccess({required this.tickets});
+  @override
+  List<Object> get props => [tickets];
 }
 
 final class TicketClosedWorkOrderFailure extends TicketState {

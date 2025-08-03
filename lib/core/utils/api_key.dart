@@ -20,6 +20,7 @@ class ApiKey {
   static const String roomStatus = 'room_status';
   static const String message = 'message';
   static const String phone = 'phone';
+  static const String cellPhone = 'cell_phone';
   static const String statusWhatsapp = 'st_whatsapp';
   static const String dateFrom = 'date_from';
   static const String dateTo = 'date_to';
@@ -42,6 +43,8 @@ class EndPoints {
   static const String guestLogin = '$baseUrl/clients/guest_login.php';
   static const String dashboard = '$baseUrl/tickets/dashboard.php';
   static const String guests = '$baseUrl/clients/get_all_clients.php';
+  static String updateGuest(String id) =>
+      '$baseUrl/clients/update_client.php?id=$id';
   static const String tickets = '$baseUrl/tickets/get_all_tickets.php';
   static const String addTicket = '$baseUrl/tickets/create_ticket.php';
   static String editTicket(String id) =>
@@ -108,4 +111,5 @@ class CacheKey {
   static const String adminLoggedIn = 'admin_logged_in';
   static const String guestLoggedIn = 'guest_logged_in';
   static const String requestedBy = 'requested_by';
+  static const String guestData = 'guestData';
 }

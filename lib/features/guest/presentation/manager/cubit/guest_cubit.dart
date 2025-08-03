@@ -12,18 +12,41 @@ part 'guest_state.dart';
 class GuestCubit extends Cubit<GuestState> {
   GuestCubit() : super(GuestInitial());
   final GuestRepo repo = GuestRepoImpl(api: getIt.get<DioConsumer>());
+  List<GuestModel> _allGuests = [];
   Future<void> fetchGuests() async {
     emit(GuestLoading());
     try {
       final result = await repo.fetchGuests();
       result.fold(
         (failure) => emit(GuestFailure(message: failure.failure.errorMessage)),
-        (guests) => emit(GuestSuccess(guests: guests)),
+        (guests) {
+          _allGuests = guests;
+          emit(GuestSuccess(guests: guests));
+        },
       );
     } on ServerFailure catch (e) {
       emit(GuestFailure(message: e.failure.errorMessage));
     } catch (e) {
       emit(GuestFailure(message: e.toString()));
     }
+  }
+
+  void searchGuests(String query) {
+    if (state is! GuestSuccess) return;
+
+    if (query.trim().isEmpty) {
+      emit(GuestSuccess(guests: _allGuests));
+      return;
+    }
+
+    final lowerQuery = query.toLowerCase();
+    final filtered = _allGuests.where((guest) {
+      final fullName =
+          '${guest.fname ?? ''} ${guest.name ?? ''}${guest.room ?? ''}'
+              .toLowerCase();
+      return fullName.contains(lowerQuery);
+    }).toList();
+
+    emit(GuestSuccess(guests: filtered));
   }
 }

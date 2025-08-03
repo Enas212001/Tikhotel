@@ -7,6 +7,7 @@ import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/core/utils/api_key.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
+import 'package:ticket_flow/features/auth/data/models/guset_login/guest_login_model.dart';
 import 'package:ticket_flow/features/auth/presentation/manager/cubit/auth_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
@@ -24,6 +25,10 @@ class GuestLoginBody extends StatelessWidget {
         if (state is GuestLoginSuccess) {
           final cache = getIt<CacheHelper>();
           await cache.saveData(key: CacheKey.guestLoggedIn, value: true);
+          final guest = state.gusetLogin.toGuestModel();
+          // ✅ Save as JSON
+          // await cache.saveData(key: CacheKey.guestData, value: guest.toJson());
+          context.read<AuthCubit>().setLoggedInGuest(guest);
           context.go(AppRoutes.requestsGuestPage);
         } else if (state is GuestLoginFailure) {
           showToast(state.message);

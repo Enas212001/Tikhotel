@@ -14,6 +14,9 @@ final class RequestTypeLoading extends RequestTypeState {}
 final class RequestTypeLoaded extends RequestTypeState {
   final List<RequestTypeModel> requestTypes;
   const RequestTypeLoaded({required this.requestTypes});
+
+  @override
+  List<Object> get props => [requestTypes];
 }
 
 final class RequestTypeFailure extends RequestTypeState {

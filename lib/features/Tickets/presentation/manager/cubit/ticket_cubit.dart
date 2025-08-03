@@ -32,6 +32,26 @@ class TicketCubit extends Cubit<TicketState> {
     );
   }
 
+  final List<TicketItem> allTickets = [];
+  void searchTickets(String query) {
+    if (state is! TicketSuccess) return;
+
+    if (query.trim().isEmpty) {
+      emit(TicketSuccess(tickets: allTickets));
+      return;
+    }
+
+    final lowerQuery = query.toLowerCase();
+    final filtered = allTickets.where((ticket) {
+      final fullName =
+          '${ticket.locationName ?? ''} ${ticket.status ?? ''}${ticket.message ?? ''}'
+              .toLowerCase();
+      return fullName.contains(lowerQuery);
+    }).toList();
+
+    emit(TicketSuccess(tickets: filtered));
+  }
+
   Future<void> fetchFeedbackTickets() async {
     emit(TicketFeedbackLoading());
     final result = await ticketsRepo.getFeedbackTicketsData();

@@ -40,7 +40,6 @@ class ReplayMessage extends StatelessWidget {
             child: Column(
               children: [
                 MessageTextField(
-                  value: '',
                   label: S.of(context).replayMessage,
                   onChanged: (value) => cubit.replayController.text = value,
                 ),
