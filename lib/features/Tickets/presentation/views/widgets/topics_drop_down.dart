@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_flow/core/func/border_text_field.dart';
 import 'package:ticket_flow/core/utils/text_styles.dart';
+import 'package:ticket_flow/core/utils/widgets/shimmer_loading.dart';
 import 'package:ticket_flow/features/admin/data/models/topic_model/topic_item.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/topic_cubit/topic_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
@@ -46,6 +47,8 @@ class TopicsDropDown extends StatelessWidget {
             );
           } else if (state is TopicFetchingError) {
             return Center(child: Text(state.error));
+          } else if (state is TopicFetching) {
+            return ShimmerCard(height: 40.h);
           }
           return SizedBox.shrink();
         },

@@ -5,7 +5,7 @@ import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
-import 'package:ticket_flow/features/auth/presentation/manager/cubit/auth_cubit.dart';
+import 'package:ticket_flow/features/guestFlow/presentation/manager/cubit/guest_flow_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'drawer.item.dart';
@@ -44,14 +44,14 @@ class GuestDrawer extends StatelessWidget {
             },
           ),
           BlocProvider(
-            create: (context) => AuthCubit(),
+            create: (context) => GuestFlowCubit(),
             child: Builder(
               builder: (blocContext) {
-                return BlocConsumer<AuthCubit, AuthState>(
+                return BlocConsumer<GuestFlowCubit, GuestFlowState>(
                   listener: (context, state) {
-                    if (state is LogoutSuccess) {
+                    if (state is LogoutSuccessGuest) {
                       context.go(AppRoutes.onboarding);
-                    } else if (state is LogoutFailure) {
+                    } else if (state is LogoutFailureGuest) {
                       showToast(state.message);
                     }
                   },
@@ -60,7 +60,9 @@ class GuestDrawer extends StatelessWidget {
                       image: Assets.imagesLogout,
                       title: S.of(blocContext).logout,
                       onTap: () {
-                        BlocProvider.of<AuthCubit>(blocContext).logout();
+                        BlocProvider.of<GuestFlowCubit>(
+                          blocContext,
+                        ).logoutGuest();
                       },
                     );
                   },

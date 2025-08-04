@@ -8,10 +8,10 @@ import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/request_text_field.dart';
 import 'package:ticket_flow/features/admin/data/models/worker_model/worker_item.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/worker_cubit/worker_cubit.dart';
-import 'package:ticket_flow/features/admin/presentation/pages/widgets/add_worker_body.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'add_update_page.dart';
+import 'allow_whatsapp.dart';
 import 'department_drop_down_menu.dart';
 import 'status_drop_down_menu.dart';
 
@@ -34,6 +34,9 @@ class UpdateWorkerBody extends StatelessWidget {
       },
       builder: (context, state) {
         final cubit = context.read<WorkerCubit>();
+        if (state is! WorkerWhatsappToggled) {
+          cubit.allowWhatsappEdit = workerItem.stWhatsapp == 1;
+        }
         return AddOrUpdatePage(
           child: Column(
             children: [
@@ -57,7 +60,10 @@ class UpdateWorkerBody extends StatelessWidget {
                 onChanged: (value) => cubit.selectedEditedStatus = value,
                 value: cubit.selectedEditedStatus,
               ),
-              AllowWhatsApp(cubit: cubit, value: cubit.allowWhatsapp),
+              AllowWhatsApp(
+                value: cubit.allowWhatsappEdit,
+                onChanged: (value) => cubit.toggleWhatsappEdit(value),
+              ),
             ],
           ),
           onPressed: () {

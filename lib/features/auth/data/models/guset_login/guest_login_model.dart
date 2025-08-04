@@ -14,6 +14,7 @@ class GuestLoginModel extends Equatable {
   final dynamic countryId;
   final dynamic phone;
   final String? status;
+  final dynamic cellPhone;
 
   const GuestLoginModel({
     this.id,
@@ -28,6 +29,7 @@ class GuestLoginModel extends Equatable {
     this.countryId,
     this.phone,
     this.status,
+    this.cellPhone,
   });
 
   factory GuestLoginModel.fromJson(Map<String, dynamic> json) =>
@@ -44,6 +46,7 @@ class GuestLoginModel extends Equatable {
         countryId: json['country_id'] as dynamic,
         phone: json['phone'] as dynamic,
         status: json['status'] as String?,
+        cellPhone: json['cell_phone'] as dynamic,
       );
 
   Map<String, dynamic> toJson() => {
@@ -59,6 +62,7 @@ class GuestLoginModel extends Equatable {
     'country_id': countryId,
     'phone': phone,
     'status': status,
+    'cell_phone': cellPhone,
   };
 
   @override
@@ -76,6 +80,7 @@ class GuestLoginModel extends Equatable {
       countryId,
       phone,
       status,
+      cellPhone,
     ];
   }
 }
@@ -95,6 +100,7 @@ extension GuestLoginMapper on GuestLoginModel {
       countryId: countryId,
       phone: phone,
       status: status,
+      cellPhone: cellPhone,
       // Other fields not provided by GuestLoginModel remain null
     );
   }

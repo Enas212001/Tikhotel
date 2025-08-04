@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:ticket_flow/core/error/server_failure.dart';
-import 'package:ticket_flow/features/home/data/models/report_model/report_item.dart';
+import 'package:ticket_flow/features/report/data/models/report_model/report_item.dart';
 
 abstract class ReportRepo {
   Future<Either<ServerFailure, List<ReportItem>>> getReportByDate({

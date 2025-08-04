@@ -256,5 +256,8 @@
     "createdAt": "Created at",
     "fixedAt": "Fixed at",
     "depTimeAt": "Dep Time at",
-    "duration": "Duration"
+    "duration": "Duration",
+    "forAnyClosedFeedback": "for any closed feedback",
+    "forAnyClosedWorkOrder": "for any closed work order",
+    "forAnyFeedback": "for any feedback"
 }

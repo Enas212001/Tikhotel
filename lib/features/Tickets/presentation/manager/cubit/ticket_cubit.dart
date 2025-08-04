@@ -44,7 +44,7 @@ class TicketCubit extends Cubit<TicketState> {
     final lowerQuery = query.toLowerCase();
     final filtered = allTickets.where((ticket) {
       final fullName =
-          '${ticket.locationName ?? ''} ${ticket.status ?? ''}${ticket.message ?? ''}'
+          '${ticket.locationName ?? ''} ${ticket.problemTopic ?? ''}${ticket.departmentName ?? ''}${ticket.workerFname ?? ''}'
               .toLowerCase();
       return fullName.contains(lowerQuery);
     }).toList();
@@ -58,8 +58,31 @@ class TicketCubit extends Cubit<TicketState> {
     result.fold(
       (failure) =>
           emit(TicketFeedbackFailure(message: failure.failure.errorMessage)),
-      (tickets) => emit(TicketFeedbackSuccess(tickets: tickets)),
+      (tickets) {
+        allFeedBackTickets = tickets;
+        emit(TicketFeedbackSuccess(tickets: tickets));
+      },
     );
+  }
+
+  List<TicketItem> allFeedBackTickets = [];
+  void searchFeedBackTickets(String query) {
+    if (state is! TicketFeedbackSuccess) return;
+
+    if (query.trim().isEmpty) {
+      emit(TicketFeedbackSuccess(tickets: allFeedBackTickets));
+      return;
+    }
+
+    final lowerQuery = query.toLowerCase();
+    final filtered = allFeedBackTickets.where((ticket) {
+      final fullName =
+          '${ticket.locationName ?? ''} ${ticket.problemTopic ?? ''}${ticket.departmentName ?? ''}${ticket.workerFname ?? ''}'
+              .toLowerCase();
+      return fullName.contains(lowerQuery);
+    }).toList();
+
+    emit(TicketFeedbackSuccess(tickets: filtered));
   }
 
   Future<void> fetchClosedFeedbackTickets() async {
@@ -69,8 +92,31 @@ class TicketCubit extends Cubit<TicketState> {
       (failure) => emit(
         TicketClosedFeedbackFailure(message: failure.failure.errorMessage),
       ),
-      (tickets) => emit(TicketClosedFeedbackSuccess(tickets: tickets)),
+      (tickets) {
+        allClosedFeedbackTickets = tickets;
+        emit(TicketClosedFeedbackSuccess(tickets: tickets));
+      },
     );
+  }
+
+  List<TicketItem> allClosedFeedbackTickets = [];
+  void searchClosedFeedbackTickets(String query) {
+    if (state is! TicketClosedFeedbackSuccess) return;
+
+    if (query.trim().isEmpty) {
+      emit(TicketClosedFeedbackSuccess(tickets: allClosedFeedbackTickets));
+      return;
+    }
+
+    final lowerQuery = query.toLowerCase();
+    final filtered = allClosedFeedbackTickets.where((ticket) {
+      final fullName =
+          '${ticket.locationName ?? ''} ${ticket.problemTopic ?? ''}${ticket.departmentName ?? ''}${ticket.workerFname ?? ''}'
+              .toLowerCase();
+      return fullName.contains(lowerQuery);
+    }).toList();
+
+    emit(TicketClosedFeedbackSuccess(tickets: filtered));
   }
 
   Future<void> fetchClosedWorkOrderTickets() async {
@@ -80,8 +126,31 @@ class TicketCubit extends Cubit<TicketState> {
       (failure) => emit(
         TicketClosedWorkOrderFailure(message: failure.failure.errorMessage),
       ),
-      (tickets) => emit(TicketClosedWorkOrderSuccess(tickets: tickets)),
+      (tickets) {
+        allClosedWorkOrderTickets = tickets;
+        emit(TicketClosedWorkOrderSuccess(tickets: tickets));
+      },
     );
+  }
+
+  List<TicketItem> allClosedWorkOrderTickets = [];
+  void searchClosedWorkOrderTickets(String query) {
+    if (state is! TicketClosedWorkOrderSuccess) return;
+
+    if (query.trim().isEmpty) {
+      emit(TicketClosedWorkOrderSuccess(tickets: allClosedWorkOrderTickets));
+      return;
+    }
+
+    final lowerQuery = query.toLowerCase();
+    final filtered = allClosedWorkOrderTickets.where((ticket) {
+      final fullName =
+          '${ticket.locationName ?? ''} ${ticket.problemTopic ?? ''}${ticket.departmentName ?? ''}${ticket.workerFname ?? ''}'
+              .toLowerCase();
+      return fullName.contains(lowerQuery);
+    }).toList();
+
+    emit(TicketClosedWorkOrderSuccess(tickets: filtered));
   }
 
   Future<void> fetchRequests() async {
@@ -89,8 +158,31 @@ class TicketCubit extends Cubit<TicketState> {
     final result = await ticketsRepo.getRequests();
     result.fold(
       (failure) => emit(RequestFailure(message: failure.failure.errorMessage)),
-      (tickets) => emit(RequestSuccess(tickets: tickets)),
+      (tickets) {
+        allRequestsTickets = tickets;
+        emit(RequestSuccess(tickets: tickets));
+      },
     );
+  }
+
+  List<TicketItem> allRequestsTickets = [];
+  void searchRequestsTickets(String query) {
+    if (state is! RequestSuccess) return;
+
+    if (query.trim().isEmpty) {
+      emit(RequestSuccess(tickets: allRequestsTickets));
+      return;
+    }
+
+    final lowerQuery = query.toLowerCase();
+    final filtered = allRequestsTickets.where((ticket) {
+      final fullName =
+          '${ticket.locationName ?? ''} ${ticket.problemTopic ?? ''}${ticket.departmentName ?? ''}${ticket.workerFname ?? ''}'
+              .toLowerCase();
+      return fullName.contains(lowerQuery);
+    }).toList();
+
+    emit(RequestSuccess(tickets: filtered));
   }
 
   TextEditingController messageController = TextEditingController();

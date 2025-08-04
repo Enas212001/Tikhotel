@@ -21,3 +21,37 @@ final class UpdateGuestFailure extends GuestFlowState {
 
   const UpdateGuestFailure({required this.message});
 }
+
+final class GuestLoginLoading extends GuestFlowState {}
+
+final class GuestLoginSuccess extends GuestFlowState {
+  final GuestLoginModel gusetLogin;
+
+  const GuestLoginSuccess({required this.gusetLogin});
+
+  @override
+  List<Object> get props => [gusetLogin];
+}
+
+final class GuestLoginFailure extends GuestFlowState {
+  final String message;
+
+  const GuestLoginFailure({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}
+
+final class LogoutSuccessGuest extends GuestFlowState {
+  final bool sucess;
+
+  const LogoutSuccessGuest({required this.sucess});
+}
+
+final class LogoutLoadingGuest extends GuestFlowState {}
+
+final class LogoutFailureGuest extends GuestFlowState {
+  final String message;
+
+  const LogoutFailureGuest({required this.message});
+}

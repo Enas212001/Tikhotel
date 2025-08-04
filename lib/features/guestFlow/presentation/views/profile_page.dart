@@ -14,7 +14,27 @@ class ProfilePage extends StatelessWidget {
       drawer: GuestDrawer(),
       body: BlocProvider(
         create: (context) => GuestFlowCubit(),
-        child: ProfileBody(),
+        child: BlocBuilder<GuestFlowCubit, GuestFlowState>(
+          builder: (context, state) {
+            final cubit = context.read<GuestFlowCubit>();
+
+            // If guest data is not loaded yet, show loading
+            if (cubit.loggedInGuest == null && state is! GuestLoginLoading) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(height: 16),
+                    Text('Loading guest data...'),
+                  ],
+                ),
+              );
+            }
+
+            return ProfileBody();
+          },
+        ),
       ),
     );
   }

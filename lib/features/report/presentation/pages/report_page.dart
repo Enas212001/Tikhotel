@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_flow/app/my_app_drawer.dart';
 import 'package:ticket_flow/core/utils/widgets/top_widget.dart';
-import 'package:ticket_flow/features/home/presentation/manager/cubit/report_cubit.dart';
+import 'package:ticket_flow/features/report/presentation/manager/cubit/report_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'widget/report_by_date.dart';

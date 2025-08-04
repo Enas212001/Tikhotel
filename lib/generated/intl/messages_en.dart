@@ -117,6 +117,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "firstName": MessageLookupByLibrary.simpleMessage("First Name"),
         "firstNameColon": MessageLookupByLibrary.simpleMessage("First Name:"),
         "fixedAt": MessageLookupByLibrary.simpleMessage("Fixed at"),
+        "forAnyClosedFeedback":
+            MessageLookupByLibrary.simpleMessage("for any closed feedback"),
+        "forAnyClosedWorkOrder":
+            MessageLookupByLibrary.simpleMessage("for any closed work order"),
+        "forAnyFeedback":
+            MessageLookupByLibrary.simpleMessage("for any feedback"),
         "forAnyGuest": MessageLookupByLibrary.simpleMessage("for any guest"),
         "forAnyRequest":
             MessageLookupByLibrary.simpleMessage("for any request"),

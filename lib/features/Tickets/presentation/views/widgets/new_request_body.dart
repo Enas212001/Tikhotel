@@ -23,6 +23,8 @@ class NewRequestBody extends StatelessWidget {
             child: TopWidget(
               title: S.of(context).newRequest,
               search: S.of(context).forAnyRequest,
+              onChanged: (value) =>
+                  context.read<TicketCubit>().searchRequestsTickets(value),
             ),
           ),
           SliverToBoxAdapter(child: SizedBox(height: 16.h)),

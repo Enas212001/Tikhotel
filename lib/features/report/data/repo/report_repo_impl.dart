@@ -4,7 +4,7 @@ import 'package:ticket_flow/core/api/api_consumer.dart';
 import 'package:ticket_flow/core/error/server_failure.dart';
 import 'package:ticket_flow/core/utils/api_key.dart';
 
-import 'package:ticket_flow/features/home/data/models/report_model/report_item.dart';
+import 'package:ticket_flow/features/report/data/models/report_model/report_item.dart';
 
 import 'report_repo.dart';
 

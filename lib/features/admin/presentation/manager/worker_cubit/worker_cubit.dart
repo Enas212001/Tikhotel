@@ -54,10 +54,17 @@ class WorkerCubit extends Cubit<WorkerState> {
   }
 
   bool allowWhatsapp = false; // ✅ use bool instead of String
-
+  bool allowWhatsappEdit = false;
   void toggleWhatsapp(bool value) {
     allowWhatsapp = value;
     emit(WorkerWhatsappToggled(allowWhatsapp)); // emit a state to rebuild UI
+  }
+
+  void toggleWhatsappEdit(bool value) {
+    allowWhatsappEdit = value;
+    emit(
+      WorkerWhatsappToggled(allowWhatsappEdit),
+    ); // emit a state to rebuild UI
   }
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -86,7 +93,7 @@ class WorkerCubit extends Cubit<WorkerState> {
   final TextEditingController phoneEditController = TextEditingController();
   final TextEditingController nameEditController = TextEditingController();
   DepartmentModel? selectedEditedDepartment;
-  String? statusEditWhatsapp;
+
   Future<void> editWorker({required String id}) async {
     emit(EditWorkerLoading());
     final response = await workerRepo.updateWorker(
@@ -102,7 +109,7 @@ class WorkerCubit extends Cubit<WorkerState> {
           selectedEditedDepartment?.id.toString() ??
           selectedDepartment?.id.toString() ??
           '1',
-      statusWhatsapp: allowWhatsapp ? 1 : 0,
+      statusWhatsapp: allowWhatsappEdit ? 1 : 0,
     );
     response.fold(
       (failure) =>

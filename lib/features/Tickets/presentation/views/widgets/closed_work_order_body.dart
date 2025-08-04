@@ -2,51 +2,52 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/widgets/common_page_widget.dart';
+import 'package:ticket_flow/core/utils/widgets/shimmer_loading.dart';
 import 'package:ticket_flow/features/Tickets/presentation/manager/cubit/ticket_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
-import 'feedback_card.dart';
-import '../../../../../core/utils/widgets/shimmer_loading.dart';
+import 'closed_work_order_card.dart';
 
-class FeedbackBody extends StatelessWidget {
-  const FeedbackBody({super.key});
+class ClosedWorkOrderBody extends StatelessWidget {
+  const ClosedWorkOrderBody({super.key});
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () => context.read<TicketCubit>().fetchFeedbackTickets(),
+      onRefresh: () =>
+          context.read<TicketCubit>().fetchClosedWorkOrderTickets(),
       color: AppColors.newColor,
       child: BlocBuilder<TicketCubit, TicketState>(
         builder: (context, state) {
-          if (state is TicketFeedbackLoading) {
+          if (state is TicketClosedWorkOrderLoading) {
             return CommonPageWidget(
-              title: S.of(context).feedback,
-              search: S.of(context).forAnyFeedback,
+              title: S.of(context).closedWorkOrder,
+              search: S.of(context).forAnyClosedWorkOrder,
               listView: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) => const ShimmerCard(),
-                  childCount: 6,
-                ),
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  return ShimmerCard();
+                }, childCount: 7),
               ),
             );
           }
-          if (state is TicketFeedbackSuccess) {
+          if (state is TicketClosedWorkOrderSuccess) {
             return CommonPageWidget(
-              title: S.of(context).feedback,
-              search: S.of(context).forAnyFeedback,
-              onChanged: (value) =>
-                  context.read<TicketCubit>().searchFeedBackTickets(value),
+              title: S.of(context).closedWorkOrder,
+              search: S.of(context).forAnyClosedWorkOrder,
+              onChanged: (value) => context
+                  .read<TicketCubit>()
+                  .searchClosedWorkOrderTickets(value),
               listView: SliverList(
                 delegate: SliverChildBuilderDelegate((context, index) {
-                  return FeedbackCard(ticket: state.tickets[index]);
+                  return ClosedWorkOrderCard(ticket: state.tickets[index]);
                 }, childCount: state.tickets.length),
               ),
             );
           }
-          if (state is TicketFeedbackFailure) {
+          if (state is TicketClosedWorkOrderFailure) {
             return CommonPageWidget(
-              title: S.of(context).feedback,
-              search: S.of(context).forAnyFeedback,
+              title: S.of(context).closedWorkOrder,
+              search: S.of(context).forAnyClosedWorkOrder,
               listView: SliverFillRemaining(
                 child: Center(child: Text(state.message)),
               ),

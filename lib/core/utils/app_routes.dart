@@ -35,10 +35,9 @@ import 'package:ticket_flow/features/admin/presentation/pages/update_worker_page
 import 'package:ticket_flow/features/admin/presentation/pages/update_type_page.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/update_topic.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/update_user_page.dart';
-import 'package:ticket_flow/features/auth/presentation/manager/cubit/auth_cubit.dart';
 import 'package:ticket_flow/features/auth/presentation/pages/admin_login_page.dart';
 import 'package:ticket_flow/features/auth/presentation/pages/forget_pass_page.dart';
-import 'package:ticket_flow/features/auth/presentation/pages/guest_login_page.dart';
+import 'package:ticket_flow/features/guestFlow/presentation/views/guest_login_page.dart';
 import 'package:ticket_flow/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/closed_feedback_page.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/feedback_page.dart';
@@ -47,7 +46,7 @@ import 'package:ticket_flow/features/guestFlow/presentation/views/new_guest_requ
 import 'package:ticket_flow/features/guestFlow/presentation/views/profile_page.dart';
 import 'package:ticket_flow/features/guestFlow/presentation/views/requests_page.dart';
 import 'package:ticket_flow/features/guestFlow/presentation/views/view_guest_request_page.dart';
-import 'package:ticket_flow/features/home/presentation/pages/report_page.dart';
+import 'package:ticket_flow/features/report/presentation/pages/report_page.dart';
 import 'package:ticket_flow/features/onboarding/onboarding_page.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/add_request_page.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/new_request_page.dart';
@@ -266,11 +265,7 @@ class AppRoutes {
       GoRoute(
         path: profilePage,
         builder: (context, state) {
-          final authCubit = context.read<AuthCubit>(); // use existing
-          return BlocProvider.value(
-            value: authCubit, // ✅ reuse, don’t create a new one
-            child: const ProfilePage(),
-          );
+          return const ProfilePage();
         },
       ),
     ],

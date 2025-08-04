@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_flow/core/func/border_text_field.dart';
 import 'package:ticket_flow/core/utils/text_styles.dart';
+import 'package:ticket_flow/core/utils/widgets/shimmer_loading.dart';
 import 'package:ticket_flow/features/admin/data/models/department_model/department_model.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/department_cubit/department_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
@@ -46,6 +47,8 @@ class DepartmentDropDown extends StatelessWidget {
             );
           } else if (state is DepartmentFetchFailure) {
             return Center(child: Text(state.message));
+          } else if (state is DepartmentFetchLoading) {
+            return ShimmerCard(height: 40.h);
           }
           return SizedBox.shrink();
         },

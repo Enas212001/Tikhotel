@@ -2279,6 +2279,36 @@ class S {
       args: [],
     );
   }
+
+  /// `for any closed feedback`
+  String get forAnyClosedFeedback {
+    return Intl.message(
+      'for any closed feedback',
+      name: 'forAnyClosedFeedback',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `for any closed work order`
+  String get forAnyClosedWorkOrder {
+    return Intl.message(
+      'for any closed work order',
+      name: 'forAnyClosedWorkOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `for any feedback`
+  String get forAnyFeedback {
+    return Intl.message(
+      'for any feedback',
+      name: 'forAnyFeedback',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

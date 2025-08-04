@@ -29,26 +29,6 @@ final class AdminLoginFailure extends AuthState {
   List<Object> get props => [message];
 }
 
-final class GuestLoginLoading extends AuthState {}
-
-final class GuestLoginSuccess extends AuthState {
-  final GuestLoginModel gusetLogin;
-
-  const GuestLoginSuccess({required this.gusetLogin});
-
-  @override
-  List<Object> get props => [gusetLogin];
-}
-
-final class GuestLoginFailure extends AuthState {
-  final String message;
-
-  const GuestLoginFailure({required this.message});
-
-  @override
-  List<Object> get props => [message];
-}
-
 final class LogoutSuccess extends AuthState {
   final bool sucess;
 

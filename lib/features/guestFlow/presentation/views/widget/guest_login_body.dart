@@ -7,28 +7,23 @@ import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/core/utils/api_key.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
-import 'package:ticket_flow/features/auth/data/models/guset_login/guest_login_model.dart';
-import 'package:ticket_flow/features/auth/presentation/manager/cubit/auth_cubit.dart';
+import 'package:ticket_flow/features/guestFlow/presentation/manager/cubit/guest_flow_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
-import 'common_auth_widget.dart';
-import 'title_with_text_field.dart';
+import '../../../../auth/presentation/pages/widgets/common_auth_widget.dart';
+import '../../../../auth/presentation/pages/widgets/title_with_text_field.dart';
 
 class GuestLoginBody extends StatelessWidget {
   const GuestLoginBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<AuthCubit>();
-    return BlocConsumer<AuthCubit, AuthState>(
+    final cubit = context.read<GuestFlowCubit>();
+    return BlocConsumer<GuestFlowCubit, GuestFlowState>(
       listener: (context, state) async {
         if (state is GuestLoginSuccess) {
           final cache = getIt<CacheHelper>();
           await cache.saveData(key: CacheKey.guestLoggedIn, value: true);
-          final guest = state.gusetLogin.toGuestModel();
-          // ✅ Save as JSON
-          // await cache.saveData(key: CacheKey.guestData, value: guest.toJson());
-          context.read<AuthCubit>().setLoggedInGuest(guest);
           context.go(AppRoutes.requestsGuestPage);
         } else if (state is GuestLoginFailure) {
           showToast(state.message);

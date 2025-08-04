@@ -10,7 +10,7 @@ import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/core/utils/widgets/form_with_title.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/request_text_field.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/department_drop_down_menu.dart';
-import 'package:ticket_flow/features/home/presentation/manager/cubit/report_cubit.dart';
+import 'package:ticket_flow/features/report/presentation/manager/cubit/report_cubit.dart';
 import 'package:ticket_flow/features/onboarding/widget/custom_button.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
