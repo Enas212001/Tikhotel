@@ -70,7 +70,30 @@ extension ReportPdfGenerator on ReportCubit {
   Future<void> generatePdf(List<ReportItem> reports) async {
     final pdf = pw.Document();
 
-    const int rowsPerPage = 40; // ✅ safe limit per page
+    // ✅ Load hotel logo
+    final logo = pw.MemoryImage(
+      (await rootBundle.load('assets/images/hotel.png')).buffer.asUint8List(),
+    );
+
+    // ✅ Handle empty reports
+    if (reports.isEmpty) {
+      pdf.addPage(
+        pw.Page(
+          pageFormat: PdfPageFormat.a4,
+          build: (_) => pw.Center(
+            child: pw.Text(
+              S.current.noRequestsFound(''),
+              style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold),
+              textAlign: pw.TextAlign.center,
+            ),
+          ),
+        ),
+      );
+      await Printing.layoutPdf(onLayout: (_) async => pdf.save());
+      return;
+    }
+
+    const int rowsPerPage = 40;
     final headers = [
       S.current.room,
       S.current.createdAt,
@@ -81,44 +104,105 @@ extension ReportPdfGenerator on ReportCubit {
       S.current.duration,
     ];
 
-    // 🔹 Split the reports into chunks
+    // ✅ Define colors
+    const primaryColor = PdfColor.fromInt(0xFF57A2AD);
+    const greyColor = PdfColor.fromInt(0xFFd2f5ff);
+    const whiteColor = PdfColor.fromInt(0xFFF5F5F5);
+
+    // ✅ Generate paginated report
     for (int i = 0; i < reports.length; i += rowsPerPage) {
       final chunk = reports.skip(i).take(rowsPerPage).toList();
 
       pdf.addPage(
         pw.MultiPage(
           pageFormat: PdfPageFormat.a4,
-          build: (pw.Context context) => [
-            pw.Header(
-              level: 0,
-              text: 'Report by Date (Page ${(i ~/ rowsPerPage) + 1})',
+          build: (context) => [
+            // ✅ HEADER (Logo + Title)
+            pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.center,
+              crossAxisAlignment: pw.CrossAxisAlignment.center,
+              children: [
+                pw.Image(logo, width: 50, height: 50),
+                pw.SizedBox(width: 10),
+                pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.center,
+                  children: [
+                    pw.Text(
+                      'Steigenberger El Tahrir Hotel Services',
+                      style: pw.TextStyle(
+                        fontSize: 16,
+                        fontWeight: pw.FontWeight.bold,
+                      ),
+                    ),
+                    pw.Text(
+                      'HGS General Report - Page ${(i ~/ rowsPerPage) + 1}',
+                      style: pw.TextStyle(fontSize: 12),
+                      textAlign: pw.TextAlign.center,
+                    ),
+                  ],
+                ),
+              ],
             ),
-            pw.Table.fromTextArray(
-              headers: headers,
-              data: chunk
-                  .map(
-                    (r) => [
-                      r.room,
-                      r.createdAt,
-                      r.depTimeAt,
-                      r.problem,
-                      r.worker,
-                      r.sla.toString(),
-                      r.duration.toString(),
+            pw.SizedBox(height: 15),
+
+            // ✅ Custom table with alternating colors
+            pw.Table(
+              border: pw.TableBorder.all(width: 0.5, color: greyColor),
+              columnWidths: {
+                0: const pw.FlexColumnWidth(1),
+                1: const pw.FlexColumnWidth(2),
+                2: const pw.FlexColumnWidth(2),
+                3: const pw.FlexColumnWidth(3),
+                4: const pw.FlexColumnWidth(2),
+                5: const pw.FlexColumnWidth(1),
+                6: const pw.FlexColumnWidth(1),
+              },
+              children: [
+                // ✅ Header row with primary color
+                pw.TableRow(
+                  decoration: const pw.BoxDecoration(color: primaryColor),
+                  children: headers.map((h) {
+                    return pw.Padding(
+                      padding: const pw.EdgeInsets.all(4),
+                      child: pw.Text(
+                        h,
+                        style: pw.TextStyle(
+                          fontSize: 10,
+                          color: PdfColors.white,
+                          fontWeight: pw.FontWeight.bold,
+                        ),
+                        textAlign: pw.TextAlign.center,
+                      ),
+                    );
+                  }).toList(),
+                ),
+
+                // ✅ Data rows with alternating colors
+                ...chunk.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final r = entry.value;
+                  final rowColor = index.isEven ? greyColor : whiteColor;
+                  return pw.TableRow(
+                    decoration: pw.BoxDecoration(color: rowColor),
+                    children: [
+                      _cell(r.room ?? ''),
+                      _cell(r.createdAt ?? ''),
+                      _cell(r.depTimeAt ?? ''),
+                      _cell(r.problem ?? ''),
+                      _cell(r.worker ?? ''),
+                      _cell(r.sla.toString()),
+                      _cell(r.duration.toString()),
                     ],
-                  )
-                  .toList(),
-              cellAlignment: pw.Alignment.centerLeft,
+                  );
+                }),
+              ],
             ),
           ],
         ),
       );
     }
 
-    // ✅ Preview/Print
-    await Printing.layoutPdf(
-      onLayout: (PdfPageFormat format) async => pdf.save(),
-    );
+    await Printing.layoutPdf(onLayout: (_) async => pdf.save());
   }
 }
 
@@ -208,12 +292,11 @@ extension ReportPdfGeneratorByRoom on ReportCubit {
             ),
             pw.SizedBox(height: 5),
             pw.Text(
-              'Total Daily Requests: $totalRequests     Total Housekeeping Requests In SLA: $totalInSLA',
+              'Total Daily Requests: $totalRequests        Total Housekeeping Requests In SLA: $totalInSLA',
               style: pw.TextStyle(fontSize: 12),
               textAlign: pw.TextAlign.center,
             ),
             pw.SizedBox(height: 15),
-
             // ✅ Custom Table with alternating row colors
             pw.Table(
               border: pw.TableBorder.all(width: 0.5, color: greyColor),

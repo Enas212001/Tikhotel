@@ -1,6 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:ticket_flow/core/api/api_consumer.dart';
 import 'package:ticket_flow/core/error/server_failure.dart';
+import 'package:ticket_flow/core/models/pagination_model.dart';
+import 'package:ticket_flow/core/models/pagination_params.dart';
 import 'package:ticket_flow/core/utils/api_key.dart';
 import 'package:ticket_flow/features/Tickets/data/models/add_ticket_model/add_ticket_item.dart';
 import 'package:ticket_flow/features/Tickets/data/models/reply_model/replay_item.dart';
@@ -13,14 +15,27 @@ class TicketsRepoImpl implements TicketsRepo {
 
   TicketsRepoImpl({required this.api});
   @override
-  Future<Either<ServerFailure, List<TicketItem>>> getTickets() async {
+  Future<Either<ServerFailure, dynamic>> getTickets([PaginationParams? params]) async {
     try {
-      final response = await api.get(EndPoints.tickets);
+      final response = await api.get(
+        EndPoints.tickets,
+        queryParameters: params?.toQueryParams(),
+      );
       if (response is Map<String, dynamic>) {
-        final tickets = (response['data'] as List)
-            .map((e) => TicketItem.fromJson(e))
-            .toList();
-        return right(tickets);
+        if (params != null) {
+          // Return paginated response
+          final paginatedTickets = PaginationModel<TicketItem>.fromJson(
+            response,
+            (json) => TicketItem.fromJson(json),
+          );
+          return right(paginatedTickets);
+        } else {
+          // Return list for backward compatibility
+          final tickets = (response['data'] as List)
+              .map((e) => TicketItem.fromJson(e))
+              .toList();
+          return right(tickets);
+        }
       } else {
         return left(
           ServerFailure(
@@ -41,61 +56,133 @@ class TicketsRepoImpl implements TicketsRepo {
   }
 
   @override
-  Future<Either<ServerFailure, List<TicketItem>>>
-  getFeedbackTicketsData() async {
-    final result = await getTickets();
+  Future<Either<ServerFailure, dynamic>>
+  getFeedbackTicketsData([PaginationParams? params]) async {
+    final result = await getTickets(params);
     return result.map(
-      (allTickets) => allTickets
-          .where((ticket) => ['Closed'].contains(ticket.status))
-          .toList(),
+      (data) {
+        if (params != null && data is PaginationModel<TicketItem>) {
+          // Return paginated filtered data for open/active feedback tickets
+          return PaginationModel<TicketItem>(
+            data: data.data
+                .where((ticket) => !['Closed'].contains(ticket.status))
+                .toList(),
+            pagination: data.pagination,
+          );
+        } else if (data is List<TicketItem>) {
+          // Return filtered list for backward compatibility - open/active tickets
+          return data
+              .where((ticket) => !['Closed'].contains(ticket.status))
+              .toList();
+        }
+        return data;
+      },
     );
   }
 
   @override
-  Future<Either<ServerFailure, List<TicketItem>>>
-  getClosedFeedbackTicketsData() async {
-    final result = await getTickets();
+  Future<Either<ServerFailure, dynamic>>
+  getClosedFeedbackTicketsData([PaginationParams? params]) async {
+    final result = await getTickets(params);
     return result.map(
-      (allTickets) => allTickets
-          .where(
-            (ticket) => [
-              'New',
-              'InProgress',
-              'Closed',
-              'Closed with Feedback',
-            ].contains(ticket.status),
-          )
-          .toList(),
+      (data) {
+        if (params != null && data is PaginationModel<TicketItem>) {
+          // Return paginated filtered data
+          return PaginationModel<TicketItem>(
+            data: data.data
+                .where(
+                  (ticket) => [
+                    'New',
+                    'InProgress',
+                    'Closed',
+                    'Closed with Feedback',
+                  ].contains(ticket.status),
+                )
+                .toList(),
+            pagination: data.pagination,
+          );
+        } else if (data is List<TicketItem>) {
+          // Return filtered list for backward compatibility
+          return data
+              .where(
+                (ticket) => [
+                  'New',
+                  'InProgress',
+                  'Closed',
+                  'Closed with Feedback',
+                ].contains(ticket.status),
+              )
+              .toList();
+        }
+        return data;
+      },
     );
   }
 
   @override
-  Future<Either<ServerFailure, List<TicketItem>>>
-  getClosedWorkOrderTicketsData() async {
-    final result = await getTickets();
+  Future<Either<ServerFailure, dynamic>>
+  getClosedWorkOrderTicketsData([PaginationParams? params]) async {
+    final result = await getTickets(params);
     return result.map(
-      (allTickets) => allTickets
-          .where(
-            (ticket) => [
-              'New',
-              'InProgress',
-              'Closed',
-              'Closed with work order',
-            ].contains(ticket.status),
-          )
-          .toList(),
+      (data) {
+        if (params != null && data is PaginationModel<TicketItem>) {
+          // Return paginated filtered data
+          return PaginationModel<TicketItem>(
+            data: data.data
+                .where(
+                  (ticket) => [
+                    'New',
+                    'InProgress',
+                    'Closed',
+                    'Closed with work order',
+                  ].contains(ticket.status),
+                )
+                .toList(),
+            pagination: data.pagination,
+          );
+        } else if (data is List<TicketItem>) {
+          // Return filtered list for backward compatibility
+          return data
+              .where(
+                (ticket) => [
+                  'New',
+                  'InProgress',
+                  'Closed',
+                  'Closed with work order',
+                ].contains(ticket.status),
+              )
+              .toList();
+        }
+        return data;
+      },
     );
   }
 
   @override
-  Future<Either<ServerFailure, List<TicketItem>>> getRequests() async {
-    final result = await getTickets();
+  Future<Either<ServerFailure, dynamic>> getRequests([PaginationParams? params]) async {
+    final result = await getTickets(params);
     return result.map(
-      (allTickets) => allTickets
-          .where(
-            (ticket) => ['New', 'InProgress', 'Hold'].contains(ticket.status),
-          )
-          .toList(),
+      (data) {
+        if (params != null && data is PaginationModel<TicketItem>) {
+          // Return paginated filtered data
+          return PaginationModel<TicketItem>(
+            data: data.data
+                .where(
+                  (ticket) => ['New', 'InProgress', 'Hold'].contains(ticket.status),
+                )
+                .toList(),
+            pagination: data.pagination,
+          );
+        } else if (data is List<TicketItem>) {
+          // Return filtered list for backward compatibility
+          return data
+              .where(
+                (ticket) => ['New', 'InProgress', 'Hold'].contains(ticket.status),
+              )
+              .toList();
+        }
+        return data;
+      },
     );
   }
 

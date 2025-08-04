@@ -68,10 +68,33 @@ final class TicketFeedbackLoading extends TicketState {}
 
 final class TicketFeedbackSuccess extends TicketState {
   final List<TicketItem> tickets;
+  final int currentPage;
+  final int totalPages;
+  final int totalItems;
 
-  const TicketFeedbackSuccess({required this.tickets});
+  const TicketFeedbackSuccess({
+    required this.tickets,
+    this.currentPage = 1,
+    this.totalPages = 1,
+    this.totalItems = 0,
+  });
+
+  TicketFeedbackSuccess copyWith({
+    List<TicketItem>? tickets,
+    int? currentPage,
+    int? totalPages,
+    int? totalItems,
+  }) {
+    return TicketFeedbackSuccess(
+      tickets: tickets ?? this.tickets,
+      currentPage: currentPage ?? this.currentPage,
+      totalPages: totalPages ?? this.totalPages,
+      totalItems: totalItems ?? this.totalItems,
+    );
+  }
+
   @override
-  List<Object> get props => [tickets];
+  List<Object> get props => [tickets, currentPage, totalPages, totalItems];
 }
 
 final class TicketFeedbackFailure extends TicketState {
@@ -84,10 +107,33 @@ final class TicketClosedFeedbackLoading extends TicketState {}
 
 final class TicketClosedFeedbackSuccess extends TicketState {
   final List<TicketItem> tickets;
+  final int currentPage;
+  final int totalPages;
+  final int totalItems;
 
-  const TicketClosedFeedbackSuccess({required this.tickets});
+  const TicketClosedFeedbackSuccess({
+    required this.tickets,
+    this.currentPage = 1,
+    this.totalPages = 1,
+    this.totalItems = 0,
+  });
+
+  TicketClosedFeedbackSuccess copyWith({
+    List<TicketItem>? tickets,
+    int? currentPage,
+    int? totalPages,
+    int? totalItems,
+  }) {
+    return TicketClosedFeedbackSuccess(
+      tickets: tickets ?? this.tickets,
+      currentPage: currentPage ?? this.currentPage,
+      totalPages: totalPages ?? this.totalPages,
+      totalItems: totalItems ?? this.totalItems,
+    );
+  }
+
   @override
-  List<Object> get props => [tickets];
+  List<Object> get props => [tickets, currentPage, totalPages, totalItems];
 }
 
 final class TicketClosedFeedbackFailure extends TicketState {

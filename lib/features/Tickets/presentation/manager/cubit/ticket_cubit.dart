@@ -3,6 +3,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:ticket_flow/core/api/dio_consumer.dart';
 import 'package:ticket_flow/core/cache/cache_helper.dart';
+import 'package:ticket_flow/core/models/pagination_model.dart';
+import 'package:ticket_flow/core/models/pagination_params.dart';
 import 'package:ticket_flow/core/utils/api_key.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
 import 'package:ticket_flow/features/Tickets/data/models/add_ticket_model/add_ticket_item.dart';
@@ -52,71 +54,137 @@ class TicketCubit extends Cubit<TicketState> {
     emit(TicketSuccess(tickets: filtered));
   }
 
-  Future<void> fetchFeedbackTickets() async {
+  // Pagination variables for feedback tickets
+  int _currentFeedbackPage = 1;
+  int _totalFeedbackPages = 1;
+  String? _currentFeedbackSearch;
+  bool _isFeedbackLoading = false;
+
+  Future<void> fetchFeedbackTickets({String? search, int page = 1}) async {
+    if (_isFeedbackLoading) return;
+    
+    _isFeedbackLoading = true;
+    _currentFeedbackPage = page;
+    _currentFeedbackSearch = search;
+    
     emit(TicketFeedbackLoading());
-    final result = await ticketsRepo.getFeedbackTicketsData();
+    
+    final params = PaginationParams(
+      page: page,
+      limit: 20,
+      search: search,
+    );
+    
+    final result = await ticketsRepo.getFeedbackTicketsData(params);
     result.fold(
-      (failure) =>
-          emit(TicketFeedbackFailure(message: failure.failure.errorMessage)),
-      (tickets) {
-        allFeedBackTickets = tickets;
-        emit(TicketFeedbackSuccess(tickets: tickets));
+      (failure) {
+        _isFeedbackLoading = false;
+        emit(TicketFeedbackFailure(message: failure.failure.errorMessage));
       },
+      (data) {
+        _isFeedbackLoading = false;
+        if (data is PaginationModel<TicketItem>) {
+          // Calculate total pages
+          final total = data.pagination.total ?? 0;
+          final limit = data.pagination.limit ?? 20;
+          _totalFeedbackPages = (total / limit).ceil();
+          
+          emit(TicketFeedbackSuccess(
+            tickets: data.data,
+            currentPage: page,
+            totalPages: _totalFeedbackPages,
+            totalItems: total,
+          ));
+        } else if (data is List<TicketItem>) {
+          // Fallback for non-paginated response
+          _totalFeedbackPages = 1;
+          emit(TicketFeedbackSuccess(
+            tickets: data,
+            currentPage: 1,
+            totalPages: 1,
+            totalItems: data.length,
+          ));
+        }
+      },
+    );
+  }
+
+  Future<void> goToFeedbackPage(int page) async {
+    if (page < 1 || page > _totalFeedbackPages || page == _currentFeedbackPage) {
+      return;
+    }
+    
+    await fetchFeedbackTickets(
+      search: _currentFeedbackSearch,
+      page: page,
     );
   }
 
   List<TicketItem> allFeedBackTickets = [];
   void searchFeedBackTickets(String query) {
-    if (state is! TicketFeedbackSuccess) return;
-
-    if (query.trim().isEmpty) {
-      emit(TicketFeedbackSuccess(tickets: allFeedBackTickets));
-      return;
-    }
-
-    final lowerQuery = query.toLowerCase();
-    final filtered = allFeedBackTickets.where((ticket) {
-      final fullName =
-          '${ticket.locationName ?? ''} ${ticket.problemTopic ?? ''}${ticket.departmentName ?? ''}${ticket.workerFname ?? ''}'
-              .toLowerCase();
-      return fullName.contains(lowerQuery);
-    }).toList();
-
-    emit(TicketFeedbackSuccess(tickets: filtered));
+    // Use the paginated fetch method for search
+    fetchFeedbackTickets(search: query.trim().isEmpty ? null : query);
   }
 
-  Future<void> fetchClosedFeedbackTickets() async {
+  // Closed Feedback Pagination Variables
+  int _currentClosedFeedbackPage = 1;
+  int _totalClosedFeedbackPages = 1;
+  String? _currentClosedFeedbackSearch;
+  bool _isClosedFeedbackLoading = false;
+
+  Future<void> fetchClosedFeedbackTickets({String? search, int page = 1}) async {
+    if (_isClosedFeedbackLoading) return;
+    _isClosedFeedbackLoading = true;
+    _currentClosedFeedbackPage = page;
+    _currentClosedFeedbackSearch = search;
     emit(TicketClosedFeedbackLoading());
-    final result = await ticketsRepo.getClosedFeedbackTicketsData();
+    final params = PaginationParams(page: page, limit: 20, search: search);
+    final result = await ticketsRepo.getClosedFeedbackTicketsData(params);
     result.fold(
-      (failure) => emit(
-        TicketClosedFeedbackFailure(message: failure.failure.errorMessage),
-      ),
-      (tickets) {
-        allClosedFeedbackTickets = tickets;
-        emit(TicketClosedFeedbackSuccess(tickets: tickets));
+      (failure) {
+        _isClosedFeedbackLoading = false;
+        emit(TicketClosedFeedbackFailure(message: failure.failure.errorMessage));
       },
+      (data) {
+        _isClosedFeedbackLoading = false;
+        if (data is PaginationModel<TicketItem>) {
+          final total = data.pagination.total ?? 0;
+          final limit = data.pagination.limit ?? 20;
+          _totalClosedFeedbackPages = (total / limit).ceil();
+          emit(TicketClosedFeedbackSuccess(
+            tickets: data.data,
+            currentPage: page,
+            totalPages: _totalClosedFeedbackPages,
+            totalItems: total,
+          ));
+        } else if (data is List<TicketItem>) {
+          _totalClosedFeedbackPages = 1;
+          emit(TicketClosedFeedbackSuccess(
+            tickets: data,
+            currentPage: 1,
+            totalPages: 1,
+            totalItems: data.length,
+          ));
+        }
+      },
+    );
+  }
+
+  Future<void> goToClosedFeedbackPage(int page) async {
+    if (page < 1 || page > _totalClosedFeedbackPages || page == _currentClosedFeedbackPage) {
+      return;
+    }
+    
+    await fetchClosedFeedbackTickets(
+      search: _currentClosedFeedbackSearch,
+      page: page,
     );
   }
 
   List<TicketItem> allClosedFeedbackTickets = [];
   void searchClosedFeedbackTickets(String query) {
-    if (state is! TicketClosedFeedbackSuccess) return;
-
-    if (query.trim().isEmpty) {
-      emit(TicketClosedFeedbackSuccess(tickets: allClosedFeedbackTickets));
-      return;
-    }
-
-    final lowerQuery = query.toLowerCase();
-    final filtered = allClosedFeedbackTickets.where((ticket) {
-      final fullName =
-          '${ticket.locationName ?? ''} ${ticket.problemTopic ?? ''}${ticket.departmentName ?? ''}${ticket.workerFname ?? ''}'
-              .toLowerCase();
-      return fullName.contains(lowerQuery);
-    }).toList();
-
-    emit(TicketClosedFeedbackSuccess(tickets: filtered));
+    // Use the paginated fetch method for search
+    fetchClosedFeedbackTickets(search: query.trim().isEmpty ? null : query);
   }
 
   Future<void> fetchClosedWorkOrderTickets() async {

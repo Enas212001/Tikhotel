@@ -44,7 +44,7 @@ class FeedbackCard extends StatelessWidget {
                 ),
                 DetailItem(
                   title: S.of(context).workerColon,
-                  value: ticket.workerFname,
+                  value: ticket.workerFname ?? '',
                 ),
                 DetailItem(
                   title: S.of(context).closeTimeColon,
