@@ -4,6 +4,7 @@ import 'package:ticket_flow/core/error/server_failure.dart';
 import 'package:ticket_flow/core/utils/api_key.dart';
 
 import 'package:ticket_flow/features/admin/data/models/location_model/location_item.dart';
+import 'package:ticket_flow/features/admin/data/models/location_model/location_model.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'location_repo.dart';
@@ -122,13 +123,17 @@ class LocationRepoImpl extends LocationRepo {
   }
 
   @override
-  Future<Either<ServerFailure, List<LocationItem>>> getLocations() async {
+  Future<Either<ServerFailure, LocationModel>> getLocations({
+    int page = 1,
+    int limit = 20,
+  }) async {
     try {
-      final response = await api.get(EndPoints.locations);
+      final response = await api.get(
+        EndPoints.locations,
+        queryParameters: {ApiKey.page: page, ApiKey.limit: limit},
+      );
       if (response is Map<String, dynamic>) {
-        final locations = (response['data'] as List)
-            .map((e) => LocationItem.fromJson(e))
-            .toList();
+        final locations = LocationModel.fromJson(response);
         return right(locations);
       } else {
         return left(

@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/widgets/add_filter_widget.dart';
+import 'package:ticket_flow/core/utils/widgets/pagination_controller.dart';
 import 'package:ticket_flow/core/utils/widgets/shimmer_loading.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/location_cubit/location_cubit.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/widgets/generic_filter_dialog.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'widgets/common_admin_list_view.dart';
@@ -31,6 +33,28 @@ class LocationBody extends StatelessWidget {
                 await context.push(AppRoutes.addLocation);
                 context.read<LocationCubit>().getLocations();
               },
+              filterOnTap: () => showDialog(
+                context: context,
+                builder: (dialogContext) => GenericFilterDialog(
+                  filterOptions: [
+                    FilterOption(
+                      value: 'all',
+                      label: S.of(context).all,
+                      onTap: () => context.read<LocationCubit>().filterLocations('all'),
+                    ),
+                    FilterOption(
+                      value: 'active',
+                      label: S.of(context).active,
+                      onTap: () => context.read<LocationCubit>().filterLocations('active'),
+                    ),
+                    FilterOption(
+                      value: 'inactive',
+                      label: S.of(context).inactive,
+                      onTap: () => context.read<LocationCubit>().filterLocations('inactive'),
+                    ),
+                  ],
+                ),
+              ),
             ),
             BlocBuilder<LocationCubit, LocationState>(
               builder: (context, state) {
@@ -39,10 +63,28 @@ class LocationBody extends StatelessWidget {
                 } else if (state is LocationsLoadingError) {
                   return Center(child: Text(state.message));
                 } else if (state is LocationsLoaded) {
-                  return CommonAdminListView(
-                    item: (context, index) =>
-                        LocationCard(location: state.locations[index]),
-                    itemCount: state.locations.length,
+                  final totalPages =
+                      (state.locations.pagination!.total! /
+                              state.locations.pagination!.limit!)
+                          .ceil();
+                  return Column(
+                    children: [
+                      PaginationControls(
+                        currentPage: state.locations.pagination!.page!,
+                        totalPages: totalPages,
+                        onPageSelected: (page) {
+                          context.read<LocationCubit>().getLocations(
+                            page: page,
+                          );
+                        },
+                      ),
+                      CommonAdminListView(
+                        item: (context, index) => LocationCard(
+                          location: state.locations.data![index],
+                        ),
+                        itemCount: state.locations.data!.length,
+                      ),
+                    ],
                   );
                 }
                 return ShimmerLoadingList();

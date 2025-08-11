@@ -7,6 +7,7 @@ import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/widgets/add_filter_widget.dart';
 import 'package:ticket_flow/core/utils/widgets/shimmer_loading.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/user_cubit/user_cubit.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/widgets/generic_filter_dialog.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'widgets/common_admin_list_view.dart';
@@ -34,6 +35,28 @@ class UsersBody extends StatelessWidget {
               await context.push(AppRoutes.addUser);
               context.read<UserCubit>().getUsers();
             },
+            filterOnTap: () => showDialog(
+              context: context,
+              builder: (dialogContext) => GenericFilterDialog(
+                filterOptions: [
+                  FilterOption(
+                    value: 'all',
+                    label: S.of(context).all,
+                    onTap: () => context.read<UserCubit>().filterUsers('all'),
+                  ),
+                  FilterOption(
+                    value: 'active',
+                    label: S.of(context).active,
+                    onTap: () => context.read<UserCubit>().filterUsers('active'),
+                  ),
+                  FilterOption(
+                    value: 'inactive',
+                    label: S.of(context).inactive,
+                    onTap: () => context.read<UserCubit>().filterUsers('inactive'),
+                  ),
+                ],
+              ),
+            ),
           ),
           RefreshIndicator(
             onRefresh: () => context.read<UserCubit>().getUsers(),

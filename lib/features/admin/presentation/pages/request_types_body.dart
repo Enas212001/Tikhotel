@@ -3,12 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/func/custom_toast.dart';
+import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/widgets/add_filter_widget.dart';
 import 'package:ticket_flow/core/utils/widgets/shimmer_loading.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/request_type_cubit/request_type_cubit.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/widgets/generic_filter_dialog.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
-import '../../../../core/utils/app_routes.dart';
 import 'widgets/common_admin_list_view.dart';
 import 'widgets/request_type_card.dart';
 
@@ -36,6 +37,18 @@ class RequestTypesBody extends StatelessWidget {
                 await context.push(AppRoutes.addRequestType);
                 context.read<RequestTypeCubit>().getRequestTypes();
               },
+              filterOnTap: () => showDialog(
+                context: context,
+                builder: (dialogContext) => GenericFilterDialog(
+                  filterOptions: [
+                    FilterOption(
+                      value: 'all',
+                      label: S.of(context).all,
+                      onTap: () => context.read<RequestTypeCubit>().filterRequestTypes('all'),
+                    ),
+                  ],
+                ),
+              ),
             ),
             BlocBuilder<RequestTypeCubit, RequestTypeState>(
               builder: (context, state) {

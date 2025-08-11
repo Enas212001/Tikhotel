@@ -1,9 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:ticket_flow/core/error/server_failure.dart';
 import 'package:ticket_flow/features/admin/data/models/topic_model/topic_item.dart';
+import 'package:ticket_flow/features/admin/data/models/topic_model/topic_model.dart';
 
 abstract class TopicRepo {
-  Future<Either<ServerFailure, List<TopicItem>>> getTopics({
+  Future<Either<ServerFailure, TopicModel>> getTopics({
     int page = 1,
     int limit = 20,
   });

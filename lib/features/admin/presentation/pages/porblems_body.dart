@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/widgets/add_filter_widget.dart';
+import 'package:ticket_flow/core/utils/widgets/pagination_controller.dart';
 import 'package:ticket_flow/core/utils/widgets/shimmer_loading.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/problem_cubit/problem_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
@@ -48,10 +49,23 @@ class ProblemsBody extends StatelessWidget {
                 return Center(child: Text(state.error));
               }
               if (state is ProblemFetched) {
-                return CommonAdminListView(
-                  item: (context, index) =>
-                      ProblemCard(problem: state.problems[index]),
-                  itemCount: state.problems.length,
+                final totalPages =
+                    (state.problems.total! / state.problems.rowCount!).ceil();
+                return Column(
+                  children: [
+                    PaginationControls(
+                      currentPage: state.problems.page!,
+                      totalPages: totalPages,
+                      onPageSelected: (page) {
+                        context.read<ProblemCubit>().getProblems(page: page);
+                      },
+                    ),
+                    CommonAdminListView(
+                      item: (context, index) =>
+                          ProblemCard(problem: state.problems.data![index]),
+                      itemCount: state.problems.data?.length ?? 0,
+                    ),
+                  ],
                 );
               }
               return const SizedBox.shrink();

@@ -5,8 +5,10 @@ import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/widgets/add_filter_widget.dart';
+import 'package:ticket_flow/core/utils/widgets/pagination_controller.dart';
 import 'package:ticket_flow/core/utils/widgets/shimmer_loading.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/topic_cubit/topic_cubit.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/widgets/generic_filter_dialog.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'widgets/common_admin_list_view.dart';
@@ -38,6 +40,28 @@ class TopicBody extends StatelessWidget {
               await context.push(AppRoutes.addTopic);
               context.read<TopicCubit>().getTopics();
             },
+            filterOnTap: () => showDialog(
+              context: context,
+              builder: (dialogContext) => GenericFilterDialog(
+                filterOptions: [
+                  FilterOption(
+                    value: 'all',
+                    label: S.of(context).all,
+                    onTap: () => context.read<TopicCubit>().filterTopics('all'),
+                  ),
+                  FilterOption(
+                    value: 'active',
+                    label: S.of(context).active,
+                    onTap: () => context.read<TopicCubit>().filterTopics('active'),
+                  ),
+                  FilterOption(
+                    value: 'inactive',
+                    label: S.of(context).inactive,
+                    onTap: () => context.read<TopicCubit>().filterTopics('inactive'),
+                  ),
+                ],
+              ),
+            ),
           ),
           BlocBuilder<TopicCubit, TopicState>(
             builder: (context, state) {
@@ -46,10 +70,25 @@ class TopicBody extends StatelessWidget {
               } else if (state is TopicFetchingError) {
                 return Center(child: Text(state.error));
               } else if (state is TopicFetched) {
-                return CommonAdminListView(
-                  item: (context, index) =>
-                      TopicDetailCard(topic: state.topics[index]),
-                  itemCount: state.topics.length,
+                final totalPages =
+                    (state.topics.pagination!.total! /
+                            state.topics.pagination!.limit!)
+                        .ceil();
+                return Column(
+                  children: [
+                    PaginationControls(
+                      currentPage: state.topics.pagination!.page!,
+                      totalPages: totalPages,
+                      onPageSelected: (page) {
+                        context.read<TopicCubit>().getTopics(page: page);
+                      },
+                    ),
+                    CommonAdminListView(
+                      item: (context, index) =>
+                          TopicDetailCard(topic: state.topics.data![index]),
+                      itemCount: state.topics.data!.length,
+                    ),
+                  ],
                 );
               }
               return const ShimmerLoadingList();

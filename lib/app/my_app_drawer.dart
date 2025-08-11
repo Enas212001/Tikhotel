@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
@@ -19,7 +20,7 @@ class MyAppDrawer extends StatelessWidget {
       backgroundColor: AppColors.scaffoldBackgroundColor,
       child: ListView(
         children: [
-          DrawerHeader(child: Image.asset(Assets.imagesLogo)),
+          Image.asset(Assets.imagesLogo, height: 150.h),
           DrawerItem(
             image: Assets.imagesDashboard,
             title: S.of(context).dashboard,

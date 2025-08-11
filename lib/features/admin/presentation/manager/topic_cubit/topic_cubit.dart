@@ -5,12 +5,14 @@ import 'package:ticket_flow/core/api/dio_consumer.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
 import 'package:ticket_flow/features/admin/data/models/department_model/department_model.dart';
 import 'package:ticket_flow/features/admin/data/models/topic_model/topic_item.dart';
+import 'package:ticket_flow/features/admin/data/models/topic_model/topic_model.dart';
 import 'package:ticket_flow/features/admin/data/repo/topic_repo/topic_repo.dart';
 import 'package:ticket_flow/features/admin/data/repo/topic_repo/topic_repo_impl.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/mixins/filterable_mixin.dart';
 
 part 'topic_state.dart';
 
-class TopicCubit extends Cubit<TopicState> {
+class TopicCubit extends Cubit<TopicState> with FilterableMixin<TopicItem> {
   TopicCubit() : super(TopicInitial());
   final TopicRepo repo = TopicRepoImpl(api: getIt.get<DioConsumer>());
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -23,35 +25,72 @@ class TopicCubit extends Cubit<TopicState> {
   String? selectedEditedStatus;
   DepartmentModel? selectedDepartment;
   DepartmentModel? selectedEditedDepartment;
-
-  Future<void> getTopics() async {
+  int topicPage = 1;
+  final int limit = 20;
+  Future<void> getTopics({int? page}) async {
     emit(TopicFetching());
 
-    final result = await repo.getTopics();
+    final result = await repo.getTopics(page: page ?? topicPage, limit: limit);
     result.fold(
       (l) => emit(TopicFetchingError(error: l.failure.errorMessage)),
       (r) {
-        allTopics = r;
-        emit(TopicFetched(topics: r));
+        if (topicPage == 1) {
+          allTopics.clear();
+        }
+        allTopics.addAll(r.data!);
+        allItems = allTopics;
+        emit(
+          TopicFetched(
+            topics: TopicModel(
+              data: allTopics, pagination: r.pagination),
+          ),
+        );
       },
     );
   }
 
   List<TopicItem> allTopics = [];
-  void searchTopics(String query) {
-    if (state is! TopicFetched) return;
 
-    if (query.isEmpty) {
-      emit(TopicFetched(topics: allTopics));
-      return;
+  @override
+  bool filterItem(TopicItem topic, String filter) {
+    switch (filter) {
+      case 'active':
+        return topic.status == 'T';
+      case 'inactive':
+        return topic.status == 'F';
+      default:
+        return true;
     }
+  }
 
-    final filtered = allTopics.where((topic) {
-      final name = topic.topic?.toLowerCase() ?? '';
-      return name.contains(query.toLowerCase());
-    }).toList();
+  @override
+  bool searchItem(TopicItem topic, String query) {
+    final name = topic.topic?.toLowerCase() ?? '';
+    final queryLower = query.toLowerCase();
+    return name.contains(queryLower);
+  }
 
-    emit(TopicFetched(topics: filtered));
+  @override
+  void emitFilteredState(List<TopicItem> filteredItems) {
+    if (state is TopicFetched) {
+      final currentState = state as TopicFetched;
+      emit(
+        TopicFetched(
+          topics: TopicModel(
+            data: filteredItems,
+            pagination: currentState.topics.pagination,
+          ),
+        ),
+      );
+    }
+  }
+
+  void searchTopics(String query) {
+    searchItems(query);
+  }
+
+  void filterTopics(String filter) {
+    filterItems(filter);
   }
 
   Future<void> addTopic() async {

@@ -10,10 +10,12 @@ class CommonPageWidget extends StatelessWidget {
     required this.search,
     required this.listView,
     this.onChanged,
+    this.footer,
   });
   final String title, search;
   final Widget listView;
   final ValueChanged<String>? onChanged;
+  final Widget? footer;
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -23,6 +25,7 @@ class CommonPageWidget extends StatelessWidget {
         ),
         SliverToBoxAdapter(child: SizedBox(height: 16.h)),
         listView,
+        SliverToBoxAdapter(child: footer),
       ],
     );
   }

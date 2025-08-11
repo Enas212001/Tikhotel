@@ -12,7 +12,7 @@ final class LocationInitial extends LocationState {}
 final class LocationsLoading extends LocationState {}
 
 final class LocationsLoaded extends LocationState {
-  final List<LocationItem> locations;
+  final LocationModel locations;
   const LocationsLoaded({required this.locations});
 
   @override

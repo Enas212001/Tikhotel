@@ -3,12 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_flow/core/utils/widgets/add_filter_widget.dart';
 import 'package:ticket_flow/features/Tickets/presentation/manager/cubit/ticket_cubit.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/widgets/generic_filter_dialog.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
+import '../../../../../core/utils/widgets/shimmer_loading.dart';
 import '../../../../../core/utils/widgets/top_widget.dart';
 import 'request_info_card.dart';
 import 'request_type_selection_dialog.dart';
-import '../../../../../core/utils/widgets/shimmer_loading.dart';
 
 class NewRequestBody extends StatelessWidget {
   const NewRequestBody({super.key});
@@ -37,6 +38,31 @@ class NewRequestBody extends StatelessWidget {
                 );
               },
               title: S.of(context).newRequest,
+              filterOnTap: () => showDialog(
+                context: context,
+                builder: (dialogContext) => GenericFilterDialog(
+                  filterOptions: [
+                    FilterOption(
+                      value: 'all',
+                      label: S.of(context).all,
+                      onTap: () =>
+                          context.read<TicketCubit>().filterRequestsTickets('all'),
+                    ),
+                    FilterOption(
+                      value: 'new',
+                      label: S.of(context).neW,
+                      onTap: () =>
+                          context.read<TicketCubit>().filterRequestsTickets('new'),
+                    ),
+                    FilterOption(
+                      value: 'accepted',
+                      label: S.of(context).accepted,
+                      onTap: () =>
+                          context.read<TicketCubit>().filterRequestsTickets('accepted'),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
           SliverToBoxAdapter(child: SizedBox(height: 16.h)),

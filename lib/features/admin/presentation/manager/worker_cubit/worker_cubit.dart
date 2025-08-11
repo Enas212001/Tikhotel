@@ -7,10 +7,11 @@ import 'package:ticket_flow/features/admin/data/models/department_model/departme
 import 'package:ticket_flow/features/admin/data/models/worker_model/worker_item.dart';
 import 'package:ticket_flow/features/admin/data/repo/worker_repo/worker_repo.dart';
 import 'package:ticket_flow/features/admin/data/repo/worker_repo/worker_repo_impl.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/mixins/filterable_mixin.dart';
 
 part 'worker_state.dart';
 
-class WorkerCubit extends Cubit<WorkerState> {
+class WorkerCubit extends Cubit<WorkerState> with FilterableMixin<WorkerItem> {
   WorkerCubit() : super(WorkerInitial());
   final WorkerRepo workerRepo = WorkerRepoImpl(api: getIt.get<DioConsumer>());
   Future<void> getWorkers() async {
@@ -21,26 +22,45 @@ class WorkerCubit extends Cubit<WorkerState> {
           emit(FetchWorkerFailure(message: failure.failure.errorMessage)),
       (workers) {
         allWorkers = workers;
+        allItems = workers;
         emit(FetchWorkerSuccess(workers: workers));
       },
     );
   }
 
   List<WorkerItem> allWorkers = [];
-  void searchWorker(String query) {
-    if (state is! FetchWorkerSuccess) return;
 
-    if (query.isEmpty) {
-      emit(FetchWorkerSuccess(workers: allWorkers));
-      return;
+  @override
+  bool filterItem(WorkerItem worker, String filter) {
+    switch (filter) {
+      case 'active':
+        return worker.status == 'T';
+      case 'inactive':
+        return worker.status == 'F';
+      default:
+        return true;
     }
+  }
 
-    final filtered = allWorkers.where((worker) {
-      final name = worker.fname?.toLowerCase() ?? '';
-      return name.contains(query.toLowerCase());
-    }).toList();
+  @override
+  bool searchItem(WorkerItem worker, String query) {
+    final name = worker.fname?.toLowerCase() ?? '';
+    final lname = worker.lname?.toLowerCase() ?? '';
+    final queryLower = query.toLowerCase();
+    return name.contains(queryLower) || lname.contains(queryLower);
+  }
 
-    emit(FetchWorkerSuccess(workers: filtered));
+  @override
+  void emitFilteredState(List<WorkerItem> filteredItems) {
+    emit(FetchWorkerSuccess(workers: filteredItems));
+  }
+
+  void searchWorker(String query) {
+    searchItems(query);
+  }
+
+  void filterWorkers(String filter) {
+    filterItems(filter);
   }
 
   Future<void> deleteWorker({required String id}) async {
@@ -104,7 +124,11 @@ class WorkerCubit extends Cubit<WorkerState> {
       phone: phoneEditController.text.isEmpty
           ? phoneController.text
           : phoneEditController.text,
-      status: selectedEditedStatus ?? selectedStatus ?? 'T',
+      status: selectedEditedStatus == 'Inactive'
+          ? 'F'
+          : selectedEditedStatus == 'Active'
+          ? 'T'
+          : selectedStatus ?? 'T',
       department:
           selectedEditedDepartment?.id.toString() ??
           selectedDepartment?.id.toString() ??

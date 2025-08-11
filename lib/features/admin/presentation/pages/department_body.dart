@@ -8,6 +8,7 @@ import 'package:ticket_flow/core/utils/widgets/add_filter_widget.dart';
 import 'package:ticket_flow/core/utils/widgets/shimmer_loading.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/department_cubit/department_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/department_card.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/widgets/generic_filter_dialog.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'widgets/common_admin_list_view.dart';
@@ -32,6 +33,28 @@ class DepartmentBody extends StatelessWidget {
               await context.push(AppRoutes.addDepartment);
               context.read<DepartmentCubit>().fetchDepartments();
             },
+            filterOnTap: () => showDialog(
+              context: context,
+              builder: (dialogContext) => GenericFilterDialog(
+                filterOptions: [
+                  FilterOption(
+                    value: 'all',
+                    label: S.of(context).all,
+                    onTap: () => context.read<DepartmentCubit>().filterDepartments('all'),
+                  ),
+                  FilterOption(
+                    value: 'active',
+                    label: S.of(context).active,
+                    onTap: () => context.read<DepartmentCubit>().filterDepartments('active'),
+                  ),
+                  FilterOption(
+                    value: 'inactive',
+                    label: S.of(context).inactive,
+                    onTap: () => context.read<DepartmentCubit>().filterDepartments('inactive'),
+                  ),
+                ],
+              ),
+            ),
           ),
           BlocBuilder<DepartmentCubit, DepartmentState>(
             builder: (context, state) {

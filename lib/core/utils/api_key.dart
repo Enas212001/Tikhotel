@@ -14,6 +14,7 @@ class ApiKey {
   static const String sla = 'sla';
   static const String page = 'page';
   static const String limit = 'limit';
+  static const String rowCount = 'rowCount';
   static const String id = 'id';
   static const String title = 'title';
   static const String location = 'location';

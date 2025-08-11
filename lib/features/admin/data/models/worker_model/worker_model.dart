@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 
 import 'worker_item.dart';
-import 'pagination.dart';
+import 'worker_pagination.dart';
 
 class WorkerModel extends Equatable {
   final bool? status;
   final String? message;
   final List<WorkerItem>? data;
-  final Pagination? pagination;
+  final WorkerPagination? pagination;
 
   const WorkerModel({this.status, this.message, this.data, this.pagination});
 
@@ -19,7 +19,7 @@ class WorkerModel extends Equatable {
         .toList(),
     pagination: json['pagination'] == null
         ? null
-        : Pagination.fromJson(json['pagination'] as Map<String, dynamic>),
+        : WorkerPagination.fromJson(json['pagination'] as Map<String, dynamic>),
   );
 
   Map<String, dynamic> toJson() => {

@@ -6,10 +6,11 @@ import 'package:ticket_flow/core/utils/service_locator.dart';
 import 'package:ticket_flow/features/admin/data/models/request_type_model/request_type_model.dart';
 import 'package:ticket_flow/features/admin/data/repo/request_type_repo/request_type_repo.dart';
 import 'package:ticket_flow/features/admin/data/repo/request_type_repo/request_type_repo_impl.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/mixins/filterable_mixin.dart';
 
 part 'request_type_state.dart';
 
-class RequestTypeCubit extends Cubit<RequestTypeState> {
+class RequestTypeCubit extends Cubit<RequestTypeState> with FilterableMixin<RequestTypeModel> {
   RequestTypeCubit() : super(RequestTypeInitial());
   final RequestTypeRepo adminRepo = RequestTypeRepoImpl(
     api: getIt.get<DioConsumer>(),
@@ -28,26 +29,38 @@ class RequestTypeCubit extends Cubit<RequestTypeState> {
           emit(RequestTypeFailure(error: failure.failure.errorMessage)),
       (requestTypes) {
         allTypes = requestTypes;
+        allItems = requestTypes;
         emit(RequestTypeLoaded(requestTypes: requestTypes));
       },
     );
   }
 
   List<RequestTypeModel> allTypes = [];
+
+  @override
+  bool filterItem(RequestTypeModel requestType, String filter) {
+    // RequestTypeModel doesn't have status field, so show all items
+    return true;
+  }
+
+  @override
+  bool searchItem(RequestTypeModel requestType, String query) {
+    final name = requestType.requestType?.toLowerCase() ?? '';
+    final queryLower = query.toLowerCase();
+    return name.contains(queryLower);
+  }
+
+  @override
+  void emitFilteredState(List<RequestTypeModel> filteredItems) {
+    emit(RequestTypeLoaded(requestTypes: filteredItems));
+  }
+
   void searchRequestType(String query) {
-    if (state is! RequestTypeLoaded) return;
+    searchItems(query);
+  }
 
-    if (query.isEmpty) {
-      emit(RequestTypeLoaded(requestTypes: allTypes));
-      return;
-    }
-
-    final filtered = allTypes.where((type) {
-      final name = type.requestType?.toLowerCase() ?? '';
-      return name.contains(query.toLowerCase());
-    }).toList();
-
-    emit(RequestTypeLoaded(requestTypes: filtered));
+  void filterRequestTypes(String filter) {
+    filterItems(filter);
   }
 
   Future<void> addRequestType() async {

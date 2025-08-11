@@ -6,10 +6,12 @@ import 'package:ticket_flow/core/utils/service_locator.dart';
 import 'package:ticket_flow/features/admin/data/models/department_model/department_model.dart';
 import 'package:ticket_flow/features/admin/data/repo/department_repo/department_repo.dart';
 import 'package:ticket_flow/features/admin/data/repo/department_repo/department_repo_impl.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/mixins/filterable_mixin.dart';
 
 part 'department_state.dart';
 
-class DepartmentCubit extends Cubit<DepartmentState> {
+class DepartmentCubit extends Cubit<DepartmentState>
+    with FilterableMixin<DepartmentModel> {
   DepartmentCubit() : super(DepartmentInitial());
   final DepartmentRepo departmentRepo = DepartmentRepoImpl(
     api: getIt.get<DioConsumer>(),
@@ -26,27 +28,42 @@ class DepartmentCubit extends Cubit<DepartmentState> {
     result.fold(
       (l) => emit(DepartmentFetchFailure(message: l.failure.errorMessage)),
       (r) {
-        allDepartments = r;
+        allItems = r;
         emit(DepartmentFetchSuccess(departments: r));
       },
     );
   }
 
-  List<DepartmentModel> allDepartments = [];
-  void searchDepartments(String query) {
-    if (state is! DepartmentFetchSuccess) return;
-
-    if (query.isEmpty) {
-      emit(DepartmentFetchSuccess(departments: allDepartments));
-      return;
+  @override
+  bool filterItem(DepartmentModel department, String filter) {
+    switch (filter) {
+      case 'active':
+        return department.status == 'T';
+      case 'inactive':
+        return department.status == 'F';
+      default:
+        return true;
     }
+  }
 
-    final filtered = allDepartments.where((user) {
-      final name = user.name?.toLowerCase() ?? '';
-      return name.contains(query.toLowerCase());
-    }).toList();
+  @override
+  bool searchItem(DepartmentModel department, String query) {
+    final name = department.name?.toLowerCase() ?? '';
+    final queryLower = query.toLowerCase();
+    return name.contains(queryLower);
+  }
 
-    emit(DepartmentFetchSuccess(departments: filtered));
+  @override
+  void emitFilteredState(List<DepartmentModel> filteredItems) {
+    emit(DepartmentFetchSuccess(departments: filteredItems));
+  }
+
+  void searchDepartments(String query) {
+    searchItems(query);
+  }
+
+  void filterDepartments(String filter) {
+    filterItems(filter);
   }
 
   Future<void> addDepartment() async {

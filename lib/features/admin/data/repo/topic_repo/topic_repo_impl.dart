@@ -3,6 +3,7 @@ import 'package:ticket_flow/core/api/api_consumer.dart';
 import 'package:ticket_flow/core/error/server_failure.dart';
 import 'package:ticket_flow/core/utils/api_key.dart';
 import 'package:ticket_flow/features/admin/data/models/topic_model/topic_item.dart';
+import 'package:ticket_flow/features/admin/data/models/topic_model/topic_model.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'topic_repo.dart';
@@ -12,19 +13,19 @@ class TopicRepoImpl extends TopicRepo {
 
   TopicRepoImpl({required this.api});
   @override
-  Future<Either<ServerFailure, List<TopicItem>>> getTopics({
+  Future<Either<ServerFailure, TopicModel>> getTopics({
     int page = 1,
     int limit = 20,
   }) async {
     try {
       final response = await api.get(
-        "${EndPoints.topics}?page=$page&limit=$limit",
+        EndPoints.topics,
+        queryParameters: {ApiKey.page: page, ApiKey.limit: limit},
       );
-      if (response is Map<String, dynamic> && response['data'] != null) {
-        final problems = (response['data'] as List)
-            .map((e) => TopicItem.fromJson(e))
-            .toList();
-        return right(problems);
+
+      if (response is Map<String, dynamic>) {
+        final model = TopicModel.fromJson(response);
+        return right(model);
       } else {
         return left(
           ServerFailure(

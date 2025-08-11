@@ -9,7 +9,7 @@ import 'package:ticket_flow/features/Tickets/presentation/manager/cubit/ticket_c
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/quantity_drop_down.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/request_type_drop_down.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/topics_drop_down.dart';
-import 'package:ticket_flow/features/Tickets/presentation/views/widgets/worker_drop_down.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/widgets/worker_drop_down.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/department_drop_down_menu.dart';
 import 'package:ticket_flow/features/report/presentation/pages/widget/location_drop_down.dart';
 import 'package:ticket_flow/features/onboarding/widget/custom_button.dart';

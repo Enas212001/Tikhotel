@@ -15,7 +15,7 @@ class ClosedWorkOrderBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () =>
-          context.read<TicketCubit>().fetchClosedWorkOrderTickets(),
+          context.read<TicketCubit>().fetchClosedWorkOrderTickets(page: 1),
       color: AppColors.newColor,
       child: BlocBuilder<TicketCubit, TicketState>(
         builder: (context, state) {

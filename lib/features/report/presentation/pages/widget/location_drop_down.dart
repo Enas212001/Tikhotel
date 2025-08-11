@@ -31,7 +31,7 @@ class LocationDropDown extends StatelessWidget {
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                   labelStyle: TextStyles.text14RegularGrey,
                 ),
-                items: state.locations
+                items: state.locations.data!
                     .map(
                       (location) => DropdownMenuItem<LocationItem>(
                         value: location,

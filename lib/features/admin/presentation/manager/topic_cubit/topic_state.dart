@@ -12,7 +12,7 @@ final class TopicInitial extends TopicState {}
 final class TopicFetching extends TopicState {}
 
 final class TopicFetched extends TopicState {
-  final List<TopicItem> topics;
+  final TopicModel topics;
   const TopicFetched({required this.topics});
   @override
   List<Object> get props => [topics];

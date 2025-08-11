@@ -8,10 +8,11 @@ import 'package:ticket_flow/features/admin/data/models/role_model/role_model.dar
 import 'package:ticket_flow/features/admin/data/models/user_model/user_model.dart';
 import 'package:ticket_flow/features/admin/data/repo/user_repo/user_repo.dart';
 import 'package:ticket_flow/features/admin/data/repo/user_repo/user_repo_impl.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/mixins/filterable_mixin.dart';
 
 part 'user_state.dart';
 
-class UserCubit extends Cubit<UserState> {
+class UserCubit extends Cubit<UserState> with FilterableMixin<UserModel> {
   UserCubit() : super(UserInitial());
   final UserRepo repo = UserRepoImpl(api: getIt<DioConsumer>());
   Future<void> getUsers() async {
@@ -22,27 +23,49 @@ class UserCubit extends Cubit<UserState> {
         emit(GetUsersFailure(message: failure.failure.errorMessage));
       },
       (users) {
-        allUsers = users;
+        allItems = users;
         emit(GetUsersSuccess(users: users));
       },
     );
   }
 
-  List<UserModel> allUsers = [];
-  void searchUsers(String query) {
-    if (state is! GetUsersSuccess) return;
 
-    if (query.isEmpty) {
-      emit(GetUsersSuccess(users: allUsers));
-      return;
+
+  @override
+  bool filterItem(UserModel user, String filter) {
+    switch (filter) {
+      case 'active':
+        return user.isActive == 'active' || user.isActive == '1' || user.isActive == 'true';
+      case 'inactive':
+        return user.isActive == 'inactive' || user.isActive == '0' || user.isActive == 'false';
+      default:
+        return true;
     }
+  }
 
-    final filtered = allUsers.where((user) {
-      final name = user.name?.toLowerCase() ?? '';
-      return name.contains(query.toLowerCase());
-    }).toList();
+  @override
+  bool searchItem(UserModel user, String query) {
+    final name = user.name?.toLowerCase() ?? '';
+    final email = user.email?.toLowerCase() ?? '';
+    final role = user.role?.toLowerCase() ?? '';
+    final queryLower = query.toLowerCase();
+    
+    return name.contains(queryLower) || 
+           email.contains(queryLower) || 
+           role.contains(queryLower);
+  }
 
-    emit(GetUsersSuccess(users: filtered));
+  @override
+  void emitFilteredState(List<UserModel> filteredItems) {
+    emit(GetUsersSuccess(users: filteredItems));
+  }
+
+  void searchUsers(String query) {
+    searchItems(query);
+  }
+
+  void filterUsers(String filter) {
+    filterItems(filter);
   }
 
   final GlobalKey<FormState> formAddUserKey = GlobalKey<FormState>();

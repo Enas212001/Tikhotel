@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ticket_flow/core/api/dio_consumer.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
 import 'package:ticket_flow/features/admin/data/models/problem_model/problem_item.dart';
+import 'package:ticket_flow/features/admin/data/models/problem_model/problem_model.dart';
 import 'package:ticket_flow/features/admin/data/repo/problem_repo/problem_repo.dart';
 import 'package:ticket_flow/features/admin/data/repo/problem_repo/problem_repo_impl.dart';
 
@@ -19,14 +20,32 @@ class ProblemCubit extends Cubit<ProblemState> {
   TextEditingController topicEditController = TextEditingController();
   TextEditingController departmentEditController = TextEditingController();
   TextEditingController slaEditController = TextEditingController();
-
-  Future<void> getProblems() async {
-    final result = await repo.getProblems();
+  int problemPage = 1;
+  final int limit = 20;
+  Future<void> getProblems({int? page}) async {
+    emit(ProblemFetching());
+    final result = await repo.getProblems(
+      page: page ?? problemPage,
+      rowCount: limit,
+    );
     result.fold(
       (l) => emit(ProblemFetchingError(error: l.failure.errorMessage)),
       (r) {
-        allProblems = r;
-        emit(ProblemFetched(problems: r));
+        if (problemPage == 1) {
+          allProblems.clear();
+        }
+        allProblems.addAll(r.data!);
+        emit(
+          ProblemFetched(
+            problems: ProblemModel(
+              data: allProblems,
+              page: r.page,
+              rowCount: r.rowCount,
+              total: r.total,
+              status: r.status,
+            ),
+          ),
+        );
       },
     );
   }
@@ -34,9 +53,9 @@ class ProblemCubit extends Cubit<ProblemState> {
   List<ProblemItem> allProblems = [];
   void searchProblem(String query) {
     if (state is! ProblemFetched) return;
-
+    final currentState = state as ProblemFetched;
     if (query.isEmpty) {
-      emit(ProblemFetched(problems: allProblems));
+      emit(ProblemFetched(problems: currentState.problems));
       return;
     }
 
@@ -45,7 +64,15 @@ class ProblemCubit extends Cubit<ProblemState> {
       return name.contains(query.toLowerCase());
     }).toList();
 
-    emit(ProblemFetched(problems: filtered));
+    emit(
+      ProblemFetched(
+        problems: ProblemModel(
+          data: filtered,
+          page: currentState.problems.page,
+          rowCount: currentState.problems.rowCount,
+        ),
+      ),
+    );
   }
 
   Future<void> addProblem() async {

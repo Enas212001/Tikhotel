@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/features/dashboard/presentation/manager/cubit/dashboard_cubit.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 import 'dashboard_item.dart';
 import 'dashboard_loading.dart';
@@ -34,7 +35,7 @@ class DashboardGridView extends StatelessWidget {
               childAspectRatio: 1.3,
               children: [
                 DashboardItem(
-                  title: 'New Requests',
+                  title: S.of(context).newRequest,
                   asset: Assets.imagesNewRequest,
                   number: dashboard.data?.newR ?? 0,
                   percent: (dashboard.data?.total ?? 0) != 0
@@ -48,7 +49,7 @@ class DashboardGridView extends StatelessWidget {
                   isUp: true,
                 ),
                 DashboardItem(
-                  title: 'Pending Requests',
+                  title: S.of(context).pendingRequests,
                   asset: Assets.imagesPendingRequest,
                   number: dashboard.data?.pending ?? 0,
                   percent: (dashboard.data?.total ?? 0) != 0
@@ -62,7 +63,7 @@ class DashboardGridView extends StatelessWidget {
                   isUp: false,
                 ),
                 DashboardItem(
-                  title: 'Active Requests',
+                  title: S.of(context).activeRequests,
                   asset: Assets.imagesPendingRequest,
                   number: dashboard.data?.active ?? 0,
                   percent: (dashboard.data?.total ?? 0) != 0
@@ -76,7 +77,7 @@ class DashboardGridView extends StatelessWidget {
                   isUp: false,
                 ),
                 DashboardItem(
-                  title: 'Closed Requests',
+                  title: S.of(context).closedRequests,
                   asset: Assets.imagesNewRequest,
                   number: dashboard.data?.closed ?? 0,
                   percent: (dashboard.data?.total ?? 0) != 0

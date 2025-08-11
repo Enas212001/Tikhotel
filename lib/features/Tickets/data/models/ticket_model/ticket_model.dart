@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 
 import 'datum.dart';
-import 'pagination.dart';
+import 'ticket_pagination.dart';
 
 class TicketModel extends Equatable {
   final bool? status;
   final String? message;
   final List<TicketItem>? data;
-  final Pagination? pagination;
+  final TicketPagination? pagination;
 
   const TicketModel({this.status, this.message, this.data, this.pagination});
 
@@ -19,7 +19,7 @@ class TicketModel extends Equatable {
         .toList(),
     pagination: json['pagination'] == null
         ? null
-        : Pagination.fromJson(json['pagination'] as Map<String, dynamic>),
+        : TicketPagination.fromJson(json['pagination'] as Map<String, dynamic>),
   );
 
   Map<String, dynamic> toJson() => {

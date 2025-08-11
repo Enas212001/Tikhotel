@@ -3,6 +3,7 @@ import 'package:ticket_flow/core/api/api_consumer.dart';
 import 'package:ticket_flow/core/error/server_failure.dart';
 import 'package:ticket_flow/core/utils/api_key.dart';
 import 'package:ticket_flow/features/admin/data/models/problem_model/problem_item.dart';
+import 'package:ticket_flow/features/admin/data/models/problem_model/problem_model.dart';
 import 'package:ticket_flow/features/admin/data/repo/problem_repo/problem_repo.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
@@ -119,13 +120,17 @@ class ProblemRepoImpl extends ProblemRepo {
   }
 
   @override
-  Future<Either<ServerFailure, List<ProblemItem>>> getProblems() async {
+  Future<Either<ServerFailure, ProblemModel>> getProblems({
+    int page = 1,
+    int rowCount = 20,
+  }) async {
     try {
-      final response = await api.get(EndPoints.problems);
-      if (response is Map<String, dynamic> && response['data'] != null) {
-        final problems = (response['data'] as List)
-            .map((e) => ProblemItem.fromJson(e))
-            .toList();
+      final response = await api.get(
+        EndPoints.problems,
+        queryParameters: {ApiKey.page: page, ApiKey.rowCount: rowCount},
+      );
+      if (response is Map<String, dynamic> ) {
+        final problems = ProblemModel.fromJson(response);
         return right(problems);
       } else {
         return left(

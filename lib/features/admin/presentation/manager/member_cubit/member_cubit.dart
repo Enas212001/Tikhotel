@@ -6,10 +6,11 @@ import 'package:ticket_flow/core/utils/service_locator.dart';
 import 'package:ticket_flow/features/admin/data/models/member_model/member_model.dart';
 import 'package:ticket_flow/features/admin/data/repo/member_repo/member_repo.dart';
 import 'package:ticket_flow/features/admin/data/repo/member_repo/member_repo_impl.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/mixins/filterable_mixin.dart';
 
 part 'member_state.dart';
 
-class MemberCubit extends Cubit<MemberState> {
+class MemberCubit extends Cubit<MemberState> with FilterableMixin<MemberModel> {
   MemberCubit() : super(MemberInitial());
 
   final MemberRepo repo = MemberRepoImpl(api: getIt.get<DioConsumer>());
@@ -29,28 +30,45 @@ class MemberCubit extends Cubit<MemberState> {
       (failure) => emit(MemberError(message: failure.failure.errorMessage)),
       (members) {
         allMembers = members;
+        allItems = members;
         emit(MemberLoaded(members: members));
       },
     );
   }
 
   List<MemberModel> allMembers = [];
-  void searchMember(String query) {
-    if (state is! MemberLoaded) return;
 
-    if (query.isEmpty) {
-      emit(MemberLoaded(members: allMembers));
-      return;
+  @override
+  bool filterItem(MemberModel member, String filter) {
+    switch (filter) {
+      case 'active':
+        return member.status == 'T';
+      case 'inactive':
+        return member.status == 'F';
+      default:
+        return true;
     }
+  }
 
-    final filtered = allMembers.where((member) {
-      final name =
-          '${member.title ?? ''} ${member.name ?? ''}${member.email ?? ''}'
-              .toLowerCase();
-      return name.contains(query.toLowerCase());
-    }).toList();
+  @override
+  bool searchItem(MemberModel member, String query) {
+    final name = '${member.title ?? ''} ${member.name ?? ''} ${member.email ?? ''}'
+        .toLowerCase();
+    final queryLower = query.toLowerCase();
+    return name.contains(queryLower);
+  }
 
-    emit(MemberLoaded(members: filtered));
+  @override
+  void emitFilteredState(List<MemberModel> filteredItems) {
+    emit(MemberLoaded(members: filteredItems));
+  }
+
+  void searchMember(String query) {
+    searchItems(query);
+  }
+
+  void filterMembers(String filter) {
+    filterItems(filter);
   }
 
   Future<void> deleteMember({required String id}) async {

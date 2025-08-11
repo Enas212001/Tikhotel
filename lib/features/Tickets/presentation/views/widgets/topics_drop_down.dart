@@ -20,6 +20,9 @@ class TopicsDropDown extends StatelessWidget {
       child: BlocBuilder<TopicCubit, TopicState>(
         builder: (context, state) {
           if (state is TopicFetched) {
+            if (state.topics.data?.isEmpty ?? true) {
+              return const SizedBox.shrink();
+            }
             return Padding(
               padding: EdgeInsets.only(bottom: 14.h),
               child: DropdownButtonFormField<TopicItem>(
@@ -31,7 +34,7 @@ class TopicsDropDown extends StatelessWidget {
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                   labelStyle: TextStyles.text14RegularGrey,
                 ),
-                items: state.topics
+                items: state.topics.data!
                     .map(
                       (topic) => DropdownMenuItem<TopicItem>(
                         value: topic,

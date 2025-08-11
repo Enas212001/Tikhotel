@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:ticket_flow/core/api/dio_consumer.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
 import 'package:ticket_flow/features/admin/data/models/location_model/location_item.dart';
+import 'package:ticket_flow/features/admin/data/models/location_model/location_model.dart';
 import 'package:ticket_flow/features/admin/data/repo/locations_repo/location_repo.dart';
 import 'package:ticket_flow/features/admin/data/repo/locations_repo/location_repo_impl.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/mixins/filterable_mixin.dart';
 
 part 'location_state.dart';
 
-class LocationCubit extends Cubit<LocationState> {
+class LocationCubit extends Cubit<LocationState>
+    with FilterableMixin<LocationItem> {
   LocationCubit() : super(LocationInitial());
   final LocationRepo locationRepo = LocationRepoImpl(
     api: getIt.get<DioConsumer>(),
@@ -21,16 +24,31 @@ class LocationCubit extends Cubit<LocationState> {
   final TextEditingController locationEditedController =
       TextEditingController();
   String? selectedEditedStatus;
-
-  Future<void> getLocations() async {
+  final int limit = 20;
+  int locationPage = 1;
+  Future<void> getLocations({int? page}) async {
     emit(LocationsLoading());
     try {
-      final locations = await locationRepo.getLocations();
+      final locations = await locationRepo.getLocations(
+        page: page ?? locationPage,
+        limit: limit,
+      );
       locations.fold(
         (l) => emit(LocationsLoadingError(message: l.failure.errorMessage)),
         (r) {
-          allLocations = r;
-          emit(LocationsLoaded(locations: r));
+          if (locationPage == 1) {
+            allLocations.clear();
+          }
+          allLocations.addAll(r.data!);
+          allItems = allLocations;
+          emit(
+            LocationsLoaded(
+              locations: LocationModel(
+                data: allLocations,
+                pagination: r.pagination,
+              ),
+            ),
+          );
         },
       );
     } catch (e) {
@@ -39,20 +57,47 @@ class LocationCubit extends Cubit<LocationState> {
   }
 
   List<LocationItem> allLocations = [];
-  void searchLocation(String query) {
-    if (state is! LocationsLoaded) return;
 
-    if (query.isEmpty) {
-      emit(LocationsLoaded(locations: allLocations));
-      return;
+  @override
+  bool filterItem(LocationItem location, String filter) {
+    switch (filter) {
+      case 'active':
+        return location.status == 'T';
+      case 'inactive':
+        return location.status == 'F';
+      default:
+        return true;
     }
+  }
 
-    final filtered = allLocations.where((location) {
-      final name = '${location.location ?? ''} '.toLowerCase();
-      return name.contains(query.toLowerCase());
-    }).toList();
+  @override
+  bool searchItem(LocationItem location, String query) {
+    final name = location.location?.toLowerCase() ?? '';
+    final queryLower = query.toLowerCase();
+    return name.contains(queryLower);
+  }
 
-    emit(LocationsLoaded(locations: filtered));
+  @override
+  void emitFilteredState(List<LocationItem> filteredItems) {
+    if (state is LocationsLoaded) {
+      final currentState = state as LocationsLoaded;
+      emit(
+        LocationsLoaded(
+          locations: LocationModel(
+            data: filteredItems,
+            pagination: currentState.locations.pagination,
+          ),
+        ),
+      );
+    }
+  }
+
+  void searchLocation(String query) {
+    searchItems(query);
+  }
+
+  void filterLocations(String filter) {
+    filterItems(filter);
   }
 
   Future<void> addLocation() async {

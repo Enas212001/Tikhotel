@@ -12,7 +12,7 @@ final class ProblemInitial extends ProblemState {}
 final class ProblemFetching extends ProblemState {}
 
 final class ProblemFetched extends ProblemState {
-  final List<ProblemItem> problems;
+  final ProblemModel problems;
   const ProblemFetched({required this.problems});
   @override
   List<Object> get props => [problems];

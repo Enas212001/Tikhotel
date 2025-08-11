@@ -13,11 +13,12 @@ final class TicketLoading extends TicketState {}
 
 final class TicketSuccess extends TicketState {
   final List<TicketItem> tickets;
+  final TicketPagination pagination;
 
-  const TicketSuccess({required this.tickets});
+  const TicketSuccess({required this.tickets, required this.pagination});
 
   @override
-  List<Object> get props => [tickets];
+  List<Object> get props => [tickets, pagination];
 }
 
 final class TicketFailure extends TicketState {
@@ -68,33 +69,15 @@ final class TicketFeedbackLoading extends TicketState {}
 
 final class TicketFeedbackSuccess extends TicketState {
   final List<TicketItem> tickets;
-  final int currentPage;
-  final int totalPages;
-  final int totalItems;
+  final TicketPagination pagination;
 
   const TicketFeedbackSuccess({
     required this.tickets,
-    this.currentPage = 1,
-    this.totalPages = 1,
-    this.totalItems = 0,
+    required this.pagination,
   });
 
-  TicketFeedbackSuccess copyWith({
-    List<TicketItem>? tickets,
-    int? currentPage,
-    int? totalPages,
-    int? totalItems,
-  }) {
-    return TicketFeedbackSuccess(
-      tickets: tickets ?? this.tickets,
-      currentPage: currentPage ?? this.currentPage,
-      totalPages: totalPages ?? this.totalPages,
-      totalItems: totalItems ?? this.totalItems,
-    );
-  }
-
   @override
-  List<Object> get props => [tickets, currentPage, totalPages, totalItems];
+  List<Object> get props => [tickets, pagination];
 }
 
 final class TicketFeedbackFailure extends TicketState {
@@ -107,33 +90,15 @@ final class TicketClosedFeedbackLoading extends TicketState {}
 
 final class TicketClosedFeedbackSuccess extends TicketState {
   final List<TicketItem> tickets;
-  final int currentPage;
-  final int totalPages;
-  final int totalItems;
+  final TicketPagination pagination;
 
   const TicketClosedFeedbackSuccess({
     required this.tickets,
-    this.currentPage = 1,
-    this.totalPages = 1,
-    this.totalItems = 0,
+    required this.pagination,
   });
 
-  TicketClosedFeedbackSuccess copyWith({
-    List<TicketItem>? tickets,
-    int? currentPage,
-    int? totalPages,
-    int? totalItems,
-  }) {
-    return TicketClosedFeedbackSuccess(
-      tickets: tickets ?? this.tickets,
-      currentPage: currentPage ?? this.currentPage,
-      totalPages: totalPages ?? this.totalPages,
-      totalItems: totalItems ?? this.totalItems,
-    );
-  }
-
   @override
-  List<Object> get props => [tickets, currentPage, totalPages, totalItems];
+  List<Object> get props => [tickets, pagination];
 }
 
 final class TicketClosedFeedbackFailure extends TicketState {
@@ -148,10 +113,12 @@ final class RequestLoading extends TicketState {}
 
 final class RequestSuccess extends TicketState {
   final List<TicketItem> tickets;
-  const RequestSuccess({required this.tickets});
+  final   TicketPagination pagination;
+
+  const RequestSuccess({required this.tickets, required this.pagination});
 
   @override
-  List<Object> get props => [tickets];
+  List<Object> get props => [tickets, pagination];
 }
 
 final class RequestFailure extends TicketState {
@@ -161,10 +128,14 @@ final class RequestFailure extends TicketState {
 
 final class TicketClosedWorkOrderSuccess extends TicketState {
   final List<TicketItem> tickets;
+  final TicketPagination pagination;
 
-  const TicketClosedWorkOrderSuccess({required this.tickets});
+  const TicketClosedWorkOrderSuccess({
+    required this.tickets,
+    required this.pagination,
+  });
   @override
-  List<Object> get props => [tickets];
+  List<Object> get props => [tickets, pagination];
 }
 
 final class TicketClosedWorkOrderFailure extends TicketState {

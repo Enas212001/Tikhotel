@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 
 import 'location_item.dart';
-import 'pagination.dart';
+import 'location_pagination.dart';
 
 class LocationModel extends Equatable {
   final bool? status;
   final String? message;
   final List<LocationItem>? data;
-  final Pagination? pagination;
+  final LocationPagination? pagination;
 
   const LocationModel({this.status, this.message, this.data, this.pagination});
 
@@ -19,7 +19,9 @@ class LocationModel extends Equatable {
         .toList(),
     pagination: json['pagination'] == null
         ? null
-        : Pagination.fromJson(json['pagination'] as Map<String, dynamic>),
+        : LocationPagination.fromJson(
+            json['pagination'] as Map<String, dynamic>,
+          ),
   );
 
   Map<String, dynamic> toJson() => {

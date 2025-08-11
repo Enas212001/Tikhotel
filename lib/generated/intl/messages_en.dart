@@ -52,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "administration":
             MessageLookupByLibrary.simpleMessage("Administration"),
         "administrator": MessageLookupByLibrary.simpleMessage("Administrator"),
+        "all": MessageLookupByLibrary.simpleMessage("All"),
         "allowWhatsapp": MessageLookupByLibrary.simpleMessage("Allow Whatsapp"),
         "amount": MessageLookupByLibrary.simpleMessage("Amount"),
         "anUnexpectedErrorOccurred": MessageLookupByLibrary.simpleMessage(
@@ -163,6 +164,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "ms": MessageLookupByLibrary.simpleMessage("Ms."),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "nameColon": MessageLookupByLibrary.simpleMessage("Name:"),
+        "neW": MessageLookupByLibrary.simpleMessage("New"),
         "newRequest": MessageLookupByLibrary.simpleMessage("New Request"),
         "newRequests": MessageLookupByLibrary.simpleMessage("New Requests"),
         "noDataAvailable":

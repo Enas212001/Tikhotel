@@ -259,5 +259,7 @@
     "duration": "Duration",
     "forAnyClosedFeedback": "for any closed feedback",
     "forAnyClosedWorkOrder": "for any closed work order",
-    "forAnyFeedback": "for any feedback"
+    "forAnyFeedback": "for any feedback",
+    "all": "All",
+    "neW": "New"
 }
