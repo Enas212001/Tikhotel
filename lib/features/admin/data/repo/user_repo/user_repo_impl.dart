@@ -31,7 +31,7 @@ class UserRepoImpl extends UserRepo {
           ApiKey.name: firstName,
           ApiKey.roleId: roleId,
           ApiKey.department: department,
-          ApiKey.status: status,
+          ApiKey.isActive: status,
           ApiKey.operational: operational,
         },
       );
@@ -116,8 +116,8 @@ class UserRepoImpl extends UserRepo {
           ApiKey.password: password,
           ApiKey.name: firstName,
           ApiKey.roleId: roleId,
-          ApiKey.department: department,
-          ApiKey.status: status,
+          ApiKey.departmentId: department,
+          ApiKey.isActive: status,
         },
       );
       if (response is Map<String, dynamic> && response['user'] != null) {

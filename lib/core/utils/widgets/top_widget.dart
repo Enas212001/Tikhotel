@@ -57,6 +57,7 @@ class TopWidget extends StatelessWidget {
                   child: TextField(
                     controller: controller,
                     onChanged: onChanged,
+                    cursorColor: AppColors.primary,
                     decoration: InputDecoration(
                       prefixIcon: Icon(
                         Icons.search,
@@ -65,7 +66,7 @@ class TopWidget extends StatelessWidget {
                       ),
                       filled: true,
                       fillColor: AppColors.scaffoldBackgroundColor,
-                      hintText: S.of(context).searchForAny(search),
+                      hintText: S.of(context).search,
                       hintStyle: TextStyles.text12RegularLightGrey,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.r),

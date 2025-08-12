@@ -67,7 +67,7 @@ class UpdateWorkerBody extends StatelessWidget {
             ],
           ),
           onPressed: () {
-            cubit.editWorker(id: workerItem.id.toString());
+            cubit.editWorker(worker: workerItem);
           },
         );
       },

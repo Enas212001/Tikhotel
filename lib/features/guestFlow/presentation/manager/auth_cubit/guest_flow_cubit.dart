@@ -82,7 +82,6 @@ class GuestFlowCubit extends Cubit<GuestFlowState> {
       phoneNumberController.text = loggedInGuest!.phone?.toString() ?? '';
       cellPhoneController.text = loggedInGuest!.cellPhone?.toString() ?? '';
       _controllersInitialized = true;
-      log('Profile controllers initialized with guest data');
     }
   }
 
@@ -99,7 +98,6 @@ class GuestFlowCubit extends Cubit<GuestFlowState> {
         (guestLogin) async {
           loggedInGuest = guestLogin;
           await _saveGuestData(guestLogin);
-          log('loggedInGuest: ${loggedInGuest.toString()}');
           emit(GuestLoginSuccess(gusetLogin: guestLogin));
         },
       );
@@ -117,13 +115,6 @@ class GuestFlowCubit extends Cubit<GuestFlowState> {
   TextEditingController cellPhoneController = TextEditingController();
   String? country;
   Future<void> updateGuest(GuestModel guestModel) async {
-    log('Starting guest update with model: ${guestModel.toString()}');
-    log('Current controller values:');
-    log('  fName: ${fNameController.text}');
-    log('  lastName: ${lastNameController.text}');
-    log('  email: ${emailController.text}');
-    log('  phone: ${phoneNumberController.text}');
-    log('  cellPhone: ${cellPhoneController.text}');
 
     emit(UpdateGuestLoading());
     final result = await guestFlowRepo.updateGuest(

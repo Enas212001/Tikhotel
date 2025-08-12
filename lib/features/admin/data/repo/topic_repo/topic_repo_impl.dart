@@ -52,6 +52,7 @@ class TopicRepoImpl extends TopicRepo {
     required String topic,
     required String departmentId,
     required String sla,
+    required String status,
   }) async {
     try {
       final response = await api.post(
@@ -60,6 +61,7 @@ class TopicRepoImpl extends TopicRepo {
           ApiKey.topic: topic,
           ApiKey.departmentId: departmentId,
           ApiKey.sla: sla,
+          ApiKey.status: status,
         },
       );
       if (response is Map<String, dynamic> && response['data'] != null) {
@@ -92,6 +94,7 @@ class TopicRepoImpl extends TopicRepo {
     String? topic,
     String? departmentId,
     String? sla,
+    String? status,
   }) async {
     try {
       final response = await api.put(
@@ -100,6 +103,7 @@ class TopicRepoImpl extends TopicRepo {
           ApiKey.topic: topic,
           ApiKey.departmentId: departmentId,
           ApiKey.sla: sla,
+          ApiKey.status: status,
         },
       );
       if (response is Map<String, dynamic> && response['data'] != null) {

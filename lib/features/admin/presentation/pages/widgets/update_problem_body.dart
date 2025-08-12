@@ -73,7 +73,7 @@ class UpdateProblemBody extends StatelessWidget {
             ],
           ),
           onPressed: () {
-            cubit.editProblem(id: problem.id.toString());
+            cubit.editProblem(problem: problem);
           },
         );
       },

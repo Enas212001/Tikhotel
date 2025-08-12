@@ -261,5 +261,6 @@
     "forAnyClosedWorkOrder": "for any closed work order",
     "forAnyFeedback": "for any feedback",
     "all": "All",
-    "neW": "New"
+    "neW": "New",
+    "ticketUpdated": "Ticket updated"
 }

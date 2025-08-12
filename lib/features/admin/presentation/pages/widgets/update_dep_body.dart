@@ -44,7 +44,7 @@ class UpdateDepBody extends StatelessWidget {
             ],
           ),
           onPressed: () {
-            cubit.editDepartment(id: department.id.toString());
+            cubit.editDepartment(department: department);
           },
         );
       },

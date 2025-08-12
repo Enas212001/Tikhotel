@@ -75,11 +75,13 @@ class RequestTypeCubit extends Cubit<RequestTypeState> with FilterableMixin<Requ
     );
   }
 
-  Future<void> editRequestType(String id) async {
+  Future<void> editRequestType({required RequestTypeModel requestType}) async {
     emit(RequestTypeEditing());
     final result = await adminRepo.editRequestType(
-      id,
-      requestType: requestTypeControllerEdit.text,
+      requestType.newReqId.toString(),
+      requestType: requestTypeControllerEdit.text.isEmpty
+          ? requestType.requestType.toString()
+          : requestTypeControllerEdit.text,
     );
     result.fold(
       (failure) =>

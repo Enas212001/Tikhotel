@@ -41,13 +41,13 @@ class UpdateLocationBody extends StatelessWidget {
                     cubit.locationEditedController.text = value,
               ),
               StatusDropDown(
-                onChanged: (value) => cubit.selectedStatus = value,
-                value: cubit.selectedStatus,
+                onChanged: (value) => cubit.selectedEditedStatus = value,
+                value: cubit.selectedEditedStatus,
               ),
             ],
           ),
           onPressed: () {
-            cubit.updateLocation(id: location.id.toString());
+            cubit.updateLocation(location: location);
           },
         );
       },

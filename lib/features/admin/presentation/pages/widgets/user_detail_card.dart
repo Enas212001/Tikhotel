@@ -41,7 +41,7 @@ class UserDetailCard extends StatelessWidget {
           DetailItem(title: S.of(context).roleColon, value: user.role ?? ''),
           DetailItem(
             title: S.of(context).statusColon,
-            value: user.status ?? '',
+            value: user.isActive ?? '',
           ),
         ],
       ),

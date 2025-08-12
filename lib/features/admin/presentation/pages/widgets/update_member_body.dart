@@ -61,7 +61,7 @@ class UpdateMemberBody extends StatelessWidget {
             ],
           ),
           onPressed: () {
-            cubit.editMember(member.id.toString());
+            cubit.editMember(member: member);
           },
         );
       },

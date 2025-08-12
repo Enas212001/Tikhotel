@@ -105,7 +105,11 @@ class LocationCubit extends Cubit<LocationState>
     try {
       final location = await locationRepo.addLocation(
         name: locationController.text,
-        status: selectedStatus ?? 'T',
+        status: selectedStatus == 'Inactive'
+            ? 'F'
+            : selectedStatus == 'Active'
+            ? 'T'
+            : '',
       );
       location.fold(
         (l) => emit(AddLocationFailed(message: l.failure.errorMessage)),
@@ -129,17 +133,21 @@ class LocationCubit extends Cubit<LocationState>
     }
   }
 
-  Future<void> updateLocation({required String id}) async {
+  Future<void> updateLocation({required LocationItem location}) async {
     emit(EditLocationLoading());
     try {
-      final location = await locationRepo.editLocation(
-        id,
+      final result = await locationRepo.editLocation(
+        location.id.toString(),
         name: locationEditedController.text.isEmpty
-            ? locationController.text
+            ? location.location.toString()
             : locationEditedController.text,
-        status: selectedEditedStatus ?? selectedStatus ?? 'T',
+        status: selectedEditedStatus == 'Inactive'
+            ? 'F'
+            : selectedEditedStatus == 'Active'
+            ? 'T'
+            : location.status.toString(),
       );
-      location.fold(
+      result.fold(
         (l) => emit(EditLocationFailed(message: l.failure.errorMessage)),
         (r) => emit(EditLocationSuccess(location: r)),
       );

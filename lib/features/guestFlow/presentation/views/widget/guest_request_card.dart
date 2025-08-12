@@ -3,16 +3,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
+import 'package:ticket_flow/features/Tickets/data/models/ticket_model/datum.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/ticket_shape_border.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'doted_line_border.dart';
 import 'request_item_guest.dart';
 
-// ✅ Main Guest Request Card
 class GuestRequestCard extends StatelessWidget {
-  const GuestRequestCard({super.key});
-
+  const GuestRequestCard({super.key, required this.ticketModel});
+  final TicketItem ticketModel;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -35,7 +35,6 @@ class GuestRequestCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // 🔹 Row with partial dotted line
                   Stack(
                     alignment: Alignment.center,
                     children: [
@@ -55,12 +54,12 @@ class GuestRequestCard extends StatelessWidget {
                         children: [
                           RequestItemGuest(
                             title: S.of(context).requestId,
-                            data: '12128',
+                            data: ticketModel.id.toString(),
                             width: 100.w,
                           ),
                           RequestItemGuest(
                             title: S.of(context).status,
-                            data: 'new',
+                            data: ticketModel.status ?? '',
                             width: 100.w,
                           ),
                         ],
@@ -68,7 +67,6 @@ class GuestRequestCard extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 22.h),
-                  // 🔹 Full-width dotted divider
                   SizedBox(
                     height: 1,
                     child: CustomPaint(

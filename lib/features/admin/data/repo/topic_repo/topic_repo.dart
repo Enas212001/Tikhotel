@@ -12,12 +12,14 @@ abstract class TopicRepo {
     required String topic,
     required String departmentId,
     required String sla,
+    required String status,
   });
   Future<Either<ServerFailure, TopicItem>> editTopic(
     String id, {
     String topic,
     String departmentId,
     String sla,
+    String? status,
   });
   Future<Either<ServerFailure, String>> deleteTopic(String id);
 }

@@ -7,6 +7,7 @@ class ApiKey {
   static const String roleId = 'role_id';
   static const String department = 'department';
   static const String status = 'status';
+  static const String isActive = 'is_active';
   static const String operational = 'operational';
   static const String requestType = 'RequestType';
   static const String topic = 'topic';
@@ -35,6 +36,8 @@ class ApiKey {
   static const String workerId = 'worker_id';
   static const String quantity = 'qty';
   static const String replay = 'reply_text';
+  static const String rating = 'rating';
+  static const String clientFeedback = 'client_feedback';
 }
 
 class EndPoints {
@@ -106,6 +109,12 @@ class EndPoints {
   static const String reportByRoom = '$baseUrl/report/report_by_room.php';
   static String replyMessage(String id) =>
       '$baseUrl/replies/create_reply.php?ticket_id=$id';
+  static String addGuestTicket(String id) =>
+      '$baseUrl/clients/create_guest_ticket.php?client_id=$id';
+  static String addGuestReply(String id) =>
+      '$baseUrl/clients/add_replay.php?ticket_id=$id';
+  static String getGuestTicketsData(String id) =>
+      '$baseUrl/clients/get_guest_tickets.php?client_id=$id';
 }
 
 class CacheKey {

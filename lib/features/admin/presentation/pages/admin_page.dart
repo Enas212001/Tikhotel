@@ -44,60 +44,36 @@ class _AdminPageState extends State<AdminPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: MyAppDrawer(),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: TopWidget(
-              controller: searchController,
-              title: S.of(context).administration,
-              onChanged: (query) {
-                switch (selectedIndex) {
-                  case 0:
-                    context.read<UserCubit>().searchUsers(query);
-                    break;
-                  case 1:
-                    context.read<DepartmentCubit>().searchDepartments(query);
-                    break;
-                  case 2:
-                    context.read<TopicCubit>().searchTopics(query);
-                    break;
-                  case 3:
-                    context.read<WorkerCubit>().searchWorker(query);
-                    break;
-                  case 4:
-                    context.read<LocationCubit>().searchLocation(query);
-                    break;
-                  case 5:
-                    context.read<MemberCubit>().searchMember(query);
-                    break;
-                  case 6:
-                    context.read<RequestTypeCubit>().searchRequestType(query);
-                    break;
-                  case 7:
-                    context.read<ProblemCubit>().searchProblem(query);
-                    break;
-                }
-              },
+      body: RefreshIndicator(
+        onRefresh: _onRefresh,
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: TopWidget(
+                controller: searchController,
+                title: S.of(context).administration,
+                onChanged: (query) => onSearchChanged(query),
+              ),
             ),
-          ),
-          SliverToBoxAdapter(
-            child: AdminListView(
-              selectedIndex: selectedIndex,
-              onIndexChanged: (index) {
-                setState(() {
-                  selectedIndex = index;
-                  searchController.clear();
-                });
-              },
+            SliverToBoxAdapter(
+              child: AdminListView(
+                selectedIndex: selectedIndex,
+                onIndexChanged: (index) {
+                  setState(() {
+                    selectedIndex = index;
+                    searchController.clear();
+                  });
+                },
+              ),
             ),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 12.h),
-              child: Center(child: _buildSelectedContent(selectedIndex)),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 12.h),
+                child: Center(child: _buildSelectedContent(selectedIndex)),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -124,6 +100,64 @@ class _AdminPageState extends State<AdminPage> {
         return const ReportScheduleBody();
       default:
         return const SizedBox.shrink();
+    }
+  }
+
+  Future<void> _onRefresh() async {
+    switch (selectedIndex) {
+      case 0:
+        context.read<UserCubit>().getUsers();
+        break;
+      case 1:
+        context.read<DepartmentCubit>().fetchDepartments();
+        break;
+      case 2:
+        context.read<TopicCubit>().getTopics();
+        break;
+      case 3:
+        context.read<WorkerCubit>().getWorkers();
+        break;
+      case 4:
+        context.read<LocationCubit>().getLocations();
+        break;
+      case 5:
+        context.read<MemberCubit>().getMembers();
+        break;
+      case 6:
+        context.read<RequestTypeCubit>().getRequestTypes();
+        break;
+      case 7:
+        context.read<ProblemCubit>().getProblems();
+        break;
+    }
+  }
+
+  Future<void> onSearchChanged(String query) async {
+    switch (selectedIndex) {
+      case 0:
+        context.read<UserCubit>().searchUsers(query);
+        break;
+      case 1:
+        context.read<DepartmentCubit>().searchDepartments(query);
+        break;
+      case 2:
+        context.read<TopicCubit>().searchTopics(query);
+        break;
+      case 3:
+        context.read<WorkerCubit>().searchWorker(query);
+        break;
+      case 4:
+        context.read<LocationCubit>().searchLocation(query);
+        break;
+      case 5:
+        context.read<MemberCubit>().searchMember(query);
+        break;
+      case 6:
+        context.read<RequestTypeCubit>().searchRequestType(query);
+        break;
+      case 7:
+        context.read<ProblemCubit>().searchProblem(query);
+        break;
     }
   }
 }

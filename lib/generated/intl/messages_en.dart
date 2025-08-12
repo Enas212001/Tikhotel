@@ -283,6 +283,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "The replay has been added successfully"),
         "ticketAdded": MessageLookupByLibrary.simpleMessage("TicketAdded"),
+        "ticketUpdated": MessageLookupByLibrary.simpleMessage("Ticket updated"),
         "title": MessageLookupByLibrary.simpleMessage("Title"),
         "topic": MessageLookupByLibrary.simpleMessage("Topic"),
         "topicAdded": MessageLookupByLibrary.simpleMessage("Topic added"),

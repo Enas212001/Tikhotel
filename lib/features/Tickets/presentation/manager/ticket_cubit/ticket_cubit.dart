@@ -62,7 +62,7 @@ class TicketCubit extends Cubit<TicketState> with FilterableMixin<TicketItem> {
   bool filterItem(TicketItem ticket, String filter) {
     switch (filter) {
       case 'new':
-        return ticket.status == 'new';
+        return ticket.status == 'New';
       case 'accepted':
         return ticket.status == 'InProgress';
       default:
@@ -301,7 +301,7 @@ class TicketCubit extends Cubit<TicketState> with FilterableMixin<TicketItem> {
   }
 
   List<TicketItem> allRequestsTickets = [];
-  
+
   void searchRequestsTickets(String query) {
     if (state is! RequestSuccess) return;
     final currentState = state as RequestSuccess;
@@ -336,10 +336,14 @@ class TicketCubit extends Cubit<TicketState> with FilterableMixin<TicketItem> {
     List<TicketItem> filtered;
     switch (filter) {
       case 'new':
-        filtered = allRequestsTickets.where((ticket) => ticket.status == 'new').toList();
+        filtered = allRequestsTickets
+            .where((ticket) => ticket.status == 'New')
+            .toList();
         break;
       case 'accepted':
-        filtered = allRequestsTickets.where((ticket) => ticket.status == 'InProgress').toList();
+        filtered = allRequestsTickets
+            .where((ticket) => ticket.status == 'InProgress')
+            .toList();
         break;
       default:
         filtered = allRequestsTickets;
@@ -382,6 +386,24 @@ class TicketCubit extends Cubit<TicketState> with FilterableMixin<TicketItem> {
       (failure) =>
           emit(AddTicketFailure(message: failure.failure.errorMessage)),
       (message) => emit(AddTicketSuccess(ticket: message)),
+    );
+  }
+
+  String? selectedStatus;
+  WorkerItem? workerIdEdit;
+  TopicItem? problemIdEdit;
+  Future<void> editTicket(TicketItem ticket) async {
+    emit(EditTicketLoading());
+    final result = await ticketsRepo.editTicket(
+      ticket.id!.toString(),
+      status: selectedStatus ?? ticket.status,
+      problemId: problemIdEdit!.id ?? ticket.problemId,
+      workerId: workerIdEdit!.id ?? ticket.workerId,
+    );
+    result.fold(
+      (failure) =>
+          emit(EditTicketFailure(message: failure.failure.errorMessage)),
+      (message) => emit(EditTicketSuccess(ticket: message)),
     );
   }
 

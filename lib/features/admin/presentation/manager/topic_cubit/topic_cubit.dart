@@ -41,8 +41,7 @@ class TopicCubit extends Cubit<TopicState> with FilterableMixin<TopicItem> {
         allItems = allTopics;
         emit(
           TopicFetched(
-            topics: TopicModel(
-              data: allTopics, pagination: r.pagination),
+            topics: TopicModel(data: allTopics, pagination: r.pagination),
           ),
         );
       },
@@ -99,6 +98,11 @@ class TopicCubit extends Cubit<TopicState> with FilterableMixin<TopicItem> {
       topic: topicController.text,
       departmentId: selectedDepartment!.id!.toString(),
       sla: slaController.text,
+      status: selectedStatus == 'Inactive'
+          ? 'F'
+          : selectedStatus == 'Active'
+          ? 'T'
+          : '',
     );
     result.fold(
       (l) => emit(TopicAddingError(error: l.failure.errorMessage)),
@@ -106,19 +110,24 @@ class TopicCubit extends Cubit<TopicState> with FilterableMixin<TopicItem> {
     );
   }
 
-  Future<void> editTopic({required String id}) async {
+  Future<void> editTopic({required TopicItem topic}) async {
     emit(TopicEditing());
     final result = await repo.editTopic(
-      id,
+      topic.id.toString(),
       topic: topicEditController.text.isEmpty
-          ? topicController.text
+          ? topic.topic.toString()
           : topicEditController.text,
       departmentId:
-          selectedEditedDepartment?.id?.toString() ??
-          selectedDepartment!.id!.toString(),
+          selectedEditedDepartment?.id.toString() ??
+          topic.departmentId.toString(),
       sla: slaEditController.text.isEmpty
-          ? slaController.text
+          ? topic.sla.toString()
           : slaEditController.text,
+      status: selectedEditedStatus == 'Inactive'
+          ? 'F'
+          : selectedEditedStatus == 'Active'
+          ? 'T'
+          : topic.status,
     );
     result.fold(
       (l) => emit(TopicEditingError(error: l.failure.errorMessage)),

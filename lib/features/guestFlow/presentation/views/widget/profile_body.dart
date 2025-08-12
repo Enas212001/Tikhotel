@@ -7,7 +7,7 @@ import 'package:ticket_flow/core/func/container_decoration.dart';
 import 'package:ticket_flow/core/utils/widgets/top_widget.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/request_text_field.dart';
 import 'package:ticket_flow/features/auth/data/models/guset_login/guest_login_model.dart';
-import 'package:ticket_flow/features/guestFlow/presentation/manager/cubit/guest_flow_cubit.dart';
+import 'package:ticket_flow/features/guestFlow/presentation/manager/auth_cubit/guest_flow_cubit.dart';
 import 'package:ticket_flow/features/onboarding/widget/custom_button.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 

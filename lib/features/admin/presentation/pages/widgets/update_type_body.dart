@@ -44,7 +44,7 @@ class UpdateTypeBody extends StatelessWidget {
             ],
           ),
           onPressed: () {
-            cubit.editRequestType(requestType.newReqId.toString());
+            cubit.editRequestType(requestType: requestType);
           },
         );
       },

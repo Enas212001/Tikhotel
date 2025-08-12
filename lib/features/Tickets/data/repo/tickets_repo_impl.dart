@@ -192,15 +192,15 @@ class TicketsRepoImpl implements TicketsRepo {
   @override
   Future<Either<ServerFailure, AddTicketItem>> editTicket(
     String id, {
-    required String status,
-    required int departmentId,
-    required int workerId,
+    String? status,
+    int? problemId,
+    int? workerId,
   }) async {
     final response = await api.put(
       EndPoints.editTicket(id),
       data: {
         ApiKey.status: status,
-        ApiKey.departmentId: departmentId,
+        ApiKey.problemId: problemId,
         ApiKey.workerId: workerId,
       },
     );

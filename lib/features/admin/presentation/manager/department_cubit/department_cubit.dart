@@ -78,14 +78,14 @@ class DepartmentCubit extends Cubit<DepartmentState>
     );
   }
 
-  Future<void> editDepartment({required String id}) async {
+  Future<void> editDepartment({required DepartmentModel department}) async {
     emit(DepartmentEditing());
     final result = await departmentRepo.editDepartment(
-      id,
+      department.id.toString(),
       name: nameEditedController.text.isEmpty
-          ? nameController.text
+          ? department.name.toString()
           : nameEditedController.text,
-      status: selectedEditedStatus ?? selectedStatus ?? 'T',
+      status: selectedEditedStatus ?? department.status.toString(),
     );
     result.fold(
       (l) => emit(DepartmentEditFailure(message: l.failure.errorMessage)),

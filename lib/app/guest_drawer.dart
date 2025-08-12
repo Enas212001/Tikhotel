@@ -5,7 +5,7 @@ import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
-import 'package:ticket_flow/features/guestFlow/presentation/manager/cubit/guest_flow_cubit.dart';
+import 'package:ticket_flow/features/guestFlow/presentation/manager/auth_cubit/guest_flow_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'drawer.item.dart';

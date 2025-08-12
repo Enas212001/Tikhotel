@@ -49,9 +49,9 @@ abstract class TicketsRepo {
   });
   Future<Either<ServerFailure, AddTicketItem>> editTicket(
     String id, {
-    required String status,
-    required int departmentId,
-    required int workerId,
+    String? status,
+    int? problemId,
+    int? workerId,
   });
   Future<Either<ServerFailure, ReplyItem>> addReply(
     String id, {

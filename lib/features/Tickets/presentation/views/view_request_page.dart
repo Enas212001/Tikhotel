@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ticket_flow/features/Tickets/data/models/ticket_model/datum.dart';
-import 'package:ticket_flow/features/Tickets/presentation/manager/cubit/ticket_cubit.dart';
+import 'package:ticket_flow/features/Tickets/presentation/manager/ticket_cubit/ticket_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'widgets/edit_request.dart';

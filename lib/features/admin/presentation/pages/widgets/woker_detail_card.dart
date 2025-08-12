@@ -45,7 +45,9 @@ class WokerDetailCard extends StatelessWidget {
               children: [
                 DetailItem(
                   title: S.of(context).phoneNumberColon,
-                  value: worker.phone.toString(),
+                  value: worker.phone.toString() == 'null'
+                      ? ''
+                      : worker.phone.toString(),
                 ),
                 DetailItem(
                   title: S.of(context).departmentColon,
@@ -59,8 +61,8 @@ class WokerDetailCard extends StatelessWidget {
             ),
           ),
           EditOrDelete(
-            onEdit: () {
-              context.push(AppRoutes.updateWorker, extra: worker);
+            onEdit: () async {
+              await context.push(AppRoutes.updateWorker, extra: worker);
               context.read<WorkerCubit>().getWorkers();
             },
             onDelete: () {

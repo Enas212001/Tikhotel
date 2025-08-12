@@ -88,18 +88,18 @@ class ProblemCubit extends Cubit<ProblemState> {
     );
   }
 
-  Future<void> editProblem({required String id}) async {
+  Future<void> editProblem({required ProblemItem problem}) async {
     emit(ProblemEditing());
     final result = await repo.editProblem(
-      id,
+      problem.id.toString(),
       problemTopic: topicEditController.text.isEmpty
-          ? topicController.text
+          ? problem.topic.toString()
           : topicEditController.text,
       departmentId: departmentEditController.text.isEmpty
-          ? departmentController.text
+          ? problem.departmentId.toString()
           : departmentEditController.text,
       sla: slaEditController.text.isEmpty
-          ? slaController.text
+          ? problem.sla.toString()
           : slaEditController.text,
     );
     result.fold(

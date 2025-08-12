@@ -63,11 +63,11 @@ class UpdateUserBody extends StatelessWidget {
               ),
               DepartmentDropDown(
                 onChanged: (value) => cubit.selectedDepartmentEdit = value,
-                value: cubit.selectedDepartmentEdit ?? cubit.selectedDepartment,
+                value: cubit.selectedDepartmentEdit,
               ),
               StatusDropDown(
                 onChanged: (value) => cubit.selectedStatusEdit = (value),
-                value: cubit.selectedStatusEdit ?? cubit.selectedStatus,
+                value: cubit.selectedStatusEdit,
               ),
               CustomRequestTextField(
                 label: S.of(context).registrationDate,
@@ -80,7 +80,7 @@ class UpdateUserBody extends StatelessWidget {
             ],
           ),
           onPressed: () {
-            cubit.editUser(user.id.toString());
+            cubit.editUser(user: user);
           },
         );
       },

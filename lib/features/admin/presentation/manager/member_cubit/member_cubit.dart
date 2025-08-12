@@ -52,8 +52,9 @@ class MemberCubit extends Cubit<MemberState> with FilterableMixin<MemberModel> {
 
   @override
   bool searchItem(MemberModel member, String query) {
-    final name = '${member.title ?? ''} ${member.name ?? ''} ${member.email ?? ''}'
-        .toLowerCase();
+    final name =
+        '${member.title ?? ''} ${member.name ?? ''} ${member.email ?? ''}'
+            .toLowerCase();
     final queryLower = query.toLowerCase();
     return name.contains(queryLower);
   }
@@ -87,7 +88,11 @@ class MemberCubit extends Cubit<MemberState> with FilterableMixin<MemberModel> {
       title: selectedTitle ?? 'MR.',
       name: nameController.text,
       email: emailController.text,
-      status: selectedStatus ?? 'T',
+      status: selectedStatus == 'Inactive'
+          ? 'F'
+          : selectedStatus == 'Active'
+          ? 'T'
+          : '',
     );
     result.fold(
       (failure) => emit(MemberAddingError(error: failure.failure.errorMessage)),
@@ -95,14 +100,22 @@ class MemberCubit extends Cubit<MemberState> with FilterableMixin<MemberModel> {
     );
   }
 
-  Future<void> editMember(String id) async {
+  Future<void> editMember({required MemberModel member}) async {
     emit(MemberEditing());
     final result = await repo.editMember(
-      id,
-      title: selectedEditedTitle ?? selectedTitle ?? 'MR.',
-      name: nameEditController.text.isEmpty ? null : nameEditController.text,
-      email: emailEditController.text.isEmpty ? null : emailEditController.text,
-      status: selectedEditedStatus ?? selectedStatus ?? 'T',
+      member.id.toString(),
+      title: selectedEditedTitle ?? member.title ?? 'MR.',
+      name: nameEditController.text.isEmpty
+          ? member.name
+          : nameEditController.text,
+      email: emailEditController.text.isEmpty
+          ? member.email
+          : emailEditController.text,
+      status: selectedEditedStatus == 'Inactive'
+          ? 'F'
+          : selectedEditedStatus == 'Active'
+          ? 'T'
+          : member.status,
     );
     result.fold(
       (failure) =>

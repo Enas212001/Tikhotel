@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/func/container_decoration.dart';
 import 'package:ticket_flow/core/func/custom_show_dialog.dart';
 import 'package:ticket_flow/core/func/custom_toast.dart';
-import 'package:ticket_flow/features/Tickets/presentation/manager/cubit/ticket_cubit.dart';
+import 'package:ticket_flow/features/Tickets/presentation/manager/ticket_cubit/ticket_cubit.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/quantity_drop_down.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/request_type_drop_down.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/topics_drop_down.dart';

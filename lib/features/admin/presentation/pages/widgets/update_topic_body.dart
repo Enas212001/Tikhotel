@@ -8,6 +8,7 @@ import 'package:ticket_flow/features/Tickets/presentation/views/widgets/request_
 import 'package:ticket_flow/features/admin/data/models/topic_model/topic_item.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/topic_cubit/topic_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/department_drop_down_menu.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/widgets/status_drop_down_menu.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'add_update_page.dart';
@@ -32,7 +33,7 @@ class UpdateTopicBody extends StatelessWidget {
       builder: (context, state) {
         return AddOrUpdatePage(
           onPressed: () {
-            cubit.editTopic(id: topic.id.toString());
+            cubit.editTopic(topic: topic);
           },
           child: Column(
             children: [
@@ -55,6 +56,10 @@ class UpdateTopicBody extends StatelessWidget {
               DepartmentDropDown(
                 value: cubit.selectedEditedDepartment,
                 onChanged: (value) => cubit.selectedEditedDepartment = value,
+              ),
+              StatusDropDown(
+                onChanged: (value) => cubit.selectedEditedStatus = value,
+                value: cubit.selectedEditedStatus,
               ),
             ],
           ),

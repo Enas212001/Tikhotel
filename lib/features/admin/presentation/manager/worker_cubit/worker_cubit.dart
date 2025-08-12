@@ -99,8 +99,8 @@ class WorkerCubit extends Cubit<WorkerState> with FilterableMixin<WorkerItem> {
     final response = await workerRepo.addWorker(
       name: nameController.text,
       phone: phoneController.text,
-      status: selectedStatus ?? 'T',
-      department: selectedDepartment?.id.toString() ?? '1',
+      status: selectedStatus ?? '',
+      department: selectedDepartment?.id.toString() ?? '',
       statusWhatsapp: allowWhatsapp ? 1 : 0,
     );
     response.fold(
@@ -114,25 +114,24 @@ class WorkerCubit extends Cubit<WorkerState> with FilterableMixin<WorkerItem> {
   final TextEditingController nameEditController = TextEditingController();
   DepartmentModel? selectedEditedDepartment;
 
-  Future<void> editWorker({required String id}) async {
+  Future<void> editWorker({required WorkerItem worker}) async {
     emit(EditWorkerLoading());
     final response = await workerRepo.updateWorker(
-      id,
+      worker.id.toString(),
       name: nameEditController.text.isEmpty
-          ? nameController.text
+          ? worker.fname.toString()
           : nameEditController.text,
       phone: phoneEditController.text.isEmpty
-          ? phoneController.text
+          ? worker.phone.toString()
           : phoneEditController.text,
       status: selectedEditedStatus == 'Inactive'
           ? 'F'
           : selectedEditedStatus == 'Active'
           ? 'T'
-          : selectedStatus ?? 'T',
+          : worker.status.toString(),
       department:
           selectedEditedDepartment?.id.toString() ??
-          selectedDepartment?.id.toString() ??
-          '1',
+          worker.departmentId.toString(),
       statusWhatsapp: allowWhatsappEdit ? 1 : 0,
     );
     response.fold(

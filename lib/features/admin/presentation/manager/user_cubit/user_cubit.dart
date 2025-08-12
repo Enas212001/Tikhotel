@@ -29,15 +29,17 @@ class UserCubit extends Cubit<UserState> with FilterableMixin<UserModel> {
     );
   }
 
-
-
   @override
   bool filterItem(UserModel user, String filter) {
     switch (filter) {
       case 'active':
-        return user.isActive == 'active' || user.isActive == '1' || user.isActive == 'true';
+        return user.isActive == 'active' ||
+            user.isActive == '1' ||
+            user.isActive == 'true';
       case 'inactive':
-        return user.isActive == 'inactive' || user.isActive == '0' || user.isActive == 'false';
+        return user.isActive == 'inactive' ||
+            user.isActive == '0' ||
+            user.isActive == 'false';
       default:
         return true;
     }
@@ -49,10 +51,10 @@ class UserCubit extends Cubit<UserState> with FilterableMixin<UserModel> {
     final email = user.email?.toLowerCase() ?? '';
     final role = user.role?.toLowerCase() ?? '';
     final queryLower = query.toLowerCase();
-    
-    return name.contains(queryLower) || 
-           email.contains(queryLower) || 
-           role.contains(queryLower);
+
+    return name.contains(queryLower) ||
+        email.contains(queryLower) ||
+        role.contains(queryLower);
   }
 
   @override
@@ -105,7 +107,11 @@ class UserCubit extends Cubit<UserState> with FilterableMixin<UserModel> {
       password: passwordController.text,
       firstName: firstNameController.text,
       department: selectedDepartment?.id?.toString() ?? '',
-      status: selectedStatus ?? '',
+      status: selectedStatus == 'Inactive'
+          ? 'F'
+          : selectedStatus == 'Active'
+          ? 'T'
+          : '',
       operational: selectedOperational ?? '',
     );
     result.fold(
@@ -131,22 +137,27 @@ class UserCubit extends Cubit<UserState> with FilterableMixin<UserModel> {
     );
   }
 
-  Future<void> editUser(String id) async {
+  Future<void> editUser({required UserModel user}) async {
     emit(EditUserLoading());
     final result = await repo.editUser(
-      id,
+      user.id.toString(),
       roleId: selectedRoleEdit?.id ?? selectedRole?.id,
-      email: emailControllerEdit.text.isEmpty ? null : emailControllerEdit.text,
+      email: emailControllerEdit.text.isEmpty
+          ? user.email.toString()
+          : emailControllerEdit.text,
       password: passwordControllerEdit.text.isEmpty
-          ? null
+          ? user.password.toString()
           : passwordControllerEdit.text,
       firstName: firstNameControllerEdit.text.isEmpty
-          ? null
+          ? user.name.toString()
           : firstNameControllerEdit.text,
       department:
-          selectedDepartmentEdit?.id.toString() ??
-          selectedDepartment?.id.toString(),
-      status: selectedStatusEdit ?? selectedStatus,
+          selectedDepartmentEdit?.id.toString() ?? user.departments.toString(),
+      status: selectedStatusEdit == 'Inactive'
+          ? 'F'
+          : selectedStatusEdit == 'Active'
+          ? 'T'
+          : user.status,
     );
     result.fold(
       (failure) {

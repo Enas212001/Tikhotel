@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/widgets/common_page_widget.dart';
 import 'package:ticket_flow/core/utils/widgets/shimmer_loading.dart';
-import 'package:ticket_flow/features/Tickets/presentation/manager/cubit/ticket_cubit.dart';
+import 'package:ticket_flow/features/Tickets/presentation/manager/ticket_cubit/ticket_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'closed_work_order_card.dart';

@@ -23,6 +23,14 @@ class GuestFlowRepoImpl implements GuestFlowRepo {
         EndPoints.guestLogin,
         data: {ApiKey.roomNumber: roomNumber, ApiKey.firstName: firstName},
       );
+      if (response['status'] == false) {
+        final errorMessage = response['message'];
+        return left(
+          ServerFailure(
+            failure: FailureModel(errorMessage: errorMessage, status: false),
+          ),
+        );
+      }
       final user = GuestLoginModel.fromJson(response['data']);
       return right(user);
     } on ServerFailure catch (e) {
@@ -77,17 +85,12 @@ class GuestFlowRepoImpl implements GuestFlowRepo {
   @override
   Future<Either<ServerFailure, bool>> logoutGuest() async {
     try {
-      await getIt
-          .get<CacheHelper>()
-          .clearData(); // or removeData(key: ApiKey.userId)
+      await getIt.get<CacheHelper>().clearData();
       return right(true);
     } catch (e) {
       return left(
         ServerFailure(
-          failure: FailureModel(
-            status: false,
-            errorMessage: S.current.somethingWentWrong,
-          ),
+          failure: FailureModel(status: false, errorMessage: e.toString()),
         ),
       );
     }
