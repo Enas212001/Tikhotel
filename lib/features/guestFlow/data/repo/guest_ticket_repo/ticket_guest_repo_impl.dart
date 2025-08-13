@@ -2,8 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:ticket_flow/core/api/api_consumer.dart';
 import 'package:ticket_flow/core/error/server_failure.dart';
 import 'package:ticket_flow/core/utils/api_key.dart';
-import 'package:ticket_flow/features/Tickets/data/models/add_ticket_model/add_ticket_item.dart';
-import 'package:ticket_flow/features/Tickets/data/models/ticket_model/ticket_model.dart';
+import 'package:ticket_flow/features/guestFlow/data/models/add_guest_ticket_model/add_guest_ticket_item.dart';
+import 'package:ticket_flow/features/guestFlow/data/models/guest_ticket_model/guest_ticket_model.dart';
 import 'package:ticket_flow/features/guestFlow/data/repo/guest_ticket_repo/ticket_guest_repo.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
@@ -12,7 +12,7 @@ class TicketGuestRepoImpl implements TicketGuestRepo {
 
   TicketGuestRepoImpl({required this.api});
   @override
-  Future<Either<ServerFailure, AddTicketItem>> addGuestTicket({
+  Future<Either<ServerFailure, AddGuestTicketItem>> addGuestTicket({
     required String message,
     required int departmentId,
     required String id,
@@ -30,7 +30,7 @@ class TicketGuestRepoImpl implements TicketGuestRepo {
           ),
         );
       }
-      final ticket = AddTicketItem.fromJson(response['data']);
+      final ticket = AddGuestTicketItem.fromJson(response['data']);
       return right(ticket);
     } on ServerFailure catch (e) {
       return left(e);
@@ -38,13 +38,11 @@ class TicketGuestRepoImpl implements TicketGuestRepo {
   }
 
   @override
-  Future<Either<ServerFailure, TicketModel>> getGuestTicketsData({
+  Future<Either<ServerFailure, GuestTicketModel>> getGuestTicketsData({
     required String id,
   }) async {
     try {
-      final response = await api.get(
-        EndPoints.getGuestTicketsData(id),
-      );
+      final response = await api.get(EndPoints.getGuestTicketsData(id));
       if (response['status'] == false) {
         final errorMessage = response['message'];
         return left(
@@ -53,7 +51,7 @@ class TicketGuestRepoImpl implements TicketGuestRepo {
           ),
         );
       }
-      final ticket = TicketModel.fromJson(response['data']);
+      final ticket = GuestTicketModel.fromJson(response);
       return right(ticket);
     } on ServerFailure catch (e) {
       return left(e);
@@ -79,9 +77,8 @@ class TicketGuestRepoImpl implements TicketGuestRepo {
           ),
         );
       }
-      final ticket = TicketModel.fromJson(response['data']);
       return right(
-        ticket.message ?? S.current.theReplayHasBeenAddedSuccessfully,
+        response['message'] ?? S.current.theReplayHasBeenAddedSuccessfully,
       );
     } on ServerFailure catch (e) {
       return left(e);

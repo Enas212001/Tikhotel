@@ -122,4 +122,5 @@ class CacheKey {
   static const String guestLoggedIn = 'guest_logged_in';
   static const String requestedBy = 'requested_by';
   static const String guestData = 'guestData';
+  static const String guestId = 'guest_id';
 }

@@ -40,17 +40,23 @@ class DepartmentBody extends StatelessWidget {
                   FilterOption(
                     value: 'all',
                     label: S.of(context).all,
-                    onTap: () => context.read<DepartmentCubit>().filterDepartments('all'),
+                    onTap: () => context
+                        .read<DepartmentCubit>()
+                        .filterDepartments('all'),
                   ),
                   FilterOption(
                     value: 'active',
                     label: S.of(context).active,
-                    onTap: () => context.read<DepartmentCubit>().filterDepartments('active'),
+                    onTap: () => context
+                        .read<DepartmentCubit>()
+                        .filterDepartments('active'),
                   ),
                   FilterOption(
                     value: 'inactive',
                     label: S.of(context).inactive,
-                    onTap: () => context.read<DepartmentCubit>().filterDepartments('inactive'),
+                    onTap: () => context
+                        .read<DepartmentCubit>()
+                        .filterDepartments('inactive'),
                   ),
                 ],
               ),

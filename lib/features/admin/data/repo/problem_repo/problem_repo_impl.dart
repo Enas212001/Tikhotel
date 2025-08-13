@@ -129,7 +129,7 @@ class ProblemRepoImpl extends ProblemRepo {
         EndPoints.problems,
         queryParameters: {ApiKey.page: page, ApiKey.rowCount: rowCount},
       );
-      if (response is Map<String, dynamic> ) {
+      if (response is Map<String, dynamic>) {
         final problems = ProblemModel.fromJson(response);
         return right(problems);
       } else {

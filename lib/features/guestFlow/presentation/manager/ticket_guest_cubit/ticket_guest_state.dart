@@ -12,7 +12,7 @@ final class TicketInitial extends GuestTicketsState {}
 final class TicketsGuestLoading extends GuestTicketsState {}
 
 final class TicketsGuestSuccess extends GuestTicketsState {
-  final TicketModel ticketModel;
+  final GuestTicketModel ticketModel;
   const TicketsGuestSuccess({required this.ticketModel});
 }
 
@@ -24,7 +24,7 @@ final class TicketsGuestFailure extends GuestTicketsState {
 final class AddGuestTicketLoading extends GuestTicketsState {}
 
 final class AddGuestTicketSuccess extends GuestTicketsState {
-  final AddTicketItem addTicketItem;
+  final AddGuestTicketItem addTicketItem;
   const AddGuestTicketSuccess({required this.addTicketItem});
 }
 

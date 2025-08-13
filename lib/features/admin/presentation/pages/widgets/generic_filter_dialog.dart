@@ -8,20 +8,13 @@ class FilterOption {
   final String label;
   final VoidCallback onTap;
 
-  FilterOption({
-    required this.value,
-    required this.label,
-    required this.onTap,
-  });
+  FilterOption({required this.value, required this.label, required this.onTap});
 }
 
 class GenericFilterDialog extends StatelessWidget {
   final List<FilterOption> filterOptions;
 
-  const GenericFilterDialog({
-    super.key,
-    required this.filterOptions,
-  });
+  const GenericFilterDialog({super.key, required this.filterOptions});
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +47,15 @@ class GenericFilterDialog extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: filterOptions
-                    .map((option) => RequestTypeCheckbox(
-                          title: option.label,
-                          onTap: () {
-                            Navigator.of(context).pop();
-                            option.onTap();
-                          },
-                        ))
+                    .map(
+                      (option) => RequestTypeCheckbox(
+                        title: option.label,
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          option.onTap();
+                        },
+                      ),
+                    )
                     .toList(),
               ),
             ),

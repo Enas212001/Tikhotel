@@ -10,7 +10,8 @@ import 'package:ticket_flow/features/admin/presentation/manager/mixins/filterabl
 
 part 'request_type_state.dart';
 
-class RequestTypeCubit extends Cubit<RequestTypeState> with FilterableMixin<RequestTypeModel> {
+class RequestTypeCubit extends Cubit<RequestTypeState>
+    with FilterableMixin<RequestTypeModel> {
   RequestTypeCubit() : super(RequestTypeInitial());
   final RequestTypeRepo adminRepo = RequestTypeRepoImpl(
     api: getIt.get<DioConsumer>(),

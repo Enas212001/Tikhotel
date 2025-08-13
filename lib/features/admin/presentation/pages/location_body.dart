@@ -40,17 +40,22 @@ class LocationBody extends StatelessWidget {
                     FilterOption(
                       value: 'all',
                       label: S.of(context).all,
-                      onTap: () => context.read<LocationCubit>().filterLocations('all'),
+                      onTap: () =>
+                          context.read<LocationCubit>().filterLocations('all'),
                     ),
                     FilterOption(
                       value: 'active',
                       label: S.of(context).active,
-                      onTap: () => context.read<LocationCubit>().filterLocations('active'),
+                      onTap: () => context
+                          .read<LocationCubit>()
+                          .filterLocations('active'),
                     ),
                     FilterOption(
                       value: 'inactive',
                       label: S.of(context).inactive,
-                      onTap: () => context.read<LocationCubit>().filterLocations('inactive'),
+                      onTap: () => context
+                          .read<LocationCubit>()
+                          .filterLocations('inactive'),
                     ),
                   ],
                 ),

@@ -46,7 +46,6 @@ class AuthRepoImpl extends AuthRepo {
     }
   }
 
-
   @override
   Future<Either<ServerFailure, bool>> logout() async {
     try {

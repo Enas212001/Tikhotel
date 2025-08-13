@@ -33,12 +33,16 @@ mixin FilterableMixin<T> {
 
     // Apply status filter
     if (currentFilter != 'all') {
-      filtered = filtered.where((item) => filterItem(item, currentFilter)).toList();
+      filtered = filtered
+          .where((item) => filterItem(item, currentFilter))
+          .toList();
     }
 
     // Apply search filter
     if (currentSearchQuery.isNotEmpty) {
-      filtered = filtered.where((item) => searchItem(item, currentSearchQuery)).toList();
+      filtered = filtered
+          .where((item) => searchItem(item, currentSearchQuery))
+          .toList();
     }
 
     emitFilteredState(filtered);
@@ -50,7 +54,12 @@ mixin FilterableMixin<T> {
   }
 
   /// Helper method to get filter labels
-  static String getFilterLabel(String filter, String allLabel, String activeLabel, String inactiveLabel) {
+  static String getFilterLabel(
+    String filter,
+    String allLabel,
+    String activeLabel,
+    String inactiveLabel,
+  ) {
     switch (filter) {
       case 'all':
         return allLabel;

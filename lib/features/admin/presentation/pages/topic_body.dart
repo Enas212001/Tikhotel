@@ -52,12 +52,14 @@ class TopicBody extends StatelessWidget {
                   FilterOption(
                     value: 'active',
                     label: S.of(context).active,
-                    onTap: () => context.read<TopicCubit>().filterTopics('active'),
+                    onTap: () =>
+                        context.read<TopicCubit>().filterTopics('active'),
                   ),
                   FilterOption(
                     value: 'inactive',
                     label: S.of(context).inactive,
-                    onTap: () => context.read<TopicCubit>().filterTopics('inactive'),
+                    onTap: () =>
+                        context.read<TopicCubit>().filterTopics('inactive'),
                   ),
                 ],
               ),

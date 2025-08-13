@@ -98,6 +98,10 @@ class GuestFlowCubit extends Cubit<GuestFlowState> {
         (guestLogin) async {
           loggedInGuest = guestLogin;
           await _saveGuestData(guestLogin);
+          getIt.get<CacheHelper>().saveData(
+            key: CacheKey.guestId,
+            value: guestLogin.id.toString(),
+          );
           emit(GuestLoginSuccess(gusetLogin: guestLogin));
         },
       );
@@ -115,7 +119,6 @@ class GuestFlowCubit extends Cubit<GuestFlowState> {
   TextEditingController cellPhoneController = TextEditingController();
   String? country;
   Future<void> updateGuest(GuestModel guestModel) async {
-
     emit(UpdateGuestLoading());
     final result = await guestFlowRepo.updateGuest(
       guestModel.id.toString(),

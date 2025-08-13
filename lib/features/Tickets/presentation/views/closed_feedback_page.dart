@@ -16,22 +16,27 @@ class ClosedFeedbackPage extends StatelessWidget {
       child: Scaffold(
         drawer: MyAppDrawer(),
         body: ClosedFeedBackBody(),
-        bottomNavigationBar: BlocBuilder<ClosedFeedbackCubit, ClosedFeedbackState>(
-          builder: (context, state) {
-            if (state is TicketClosedFeedbackSuccess) {
-              final totalPages =
-                  (state.tickets.pagination!.total! / state.tickets.pagination!.limit!).ceil();
-              return PaginationControls(
-                currentPage: state.tickets.pagination!.page!,
-                totalPages: totalPages,
-                onPageSelected: (page) {
-                  context.read<ClosedFeedbackCubit>().fetchClosedFeedbackTickets(page: page);
-                },
-              );
-            }
-            return const SizedBox.shrink();
-          },
-        ),
+        bottomNavigationBar:
+            BlocBuilder<ClosedFeedbackCubit, ClosedFeedbackState>(
+              builder: (context, state) {
+                if (state is TicketClosedFeedbackSuccess) {
+                  final totalPages =
+                      (state.tickets.pagination!.total! /
+                              state.tickets.pagination!.limit!)
+                          .ceil();
+                  return PaginationControls(
+                    currentPage: state.tickets.pagination!.page!,
+                    totalPages: totalPages,
+                    onPageSelected: (page) {
+                      context
+                          .read<ClosedFeedbackCubit>()
+                          .fetchClosedFeedbackTickets(page: page);
+                    },
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
       ),
     );
   }

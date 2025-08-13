@@ -24,10 +24,12 @@ class FeedbackPage extends StatelessWidget {
                           state.tickets.pagination!.limit!)
                       .ceil();
               return PaginationControls(
-                currentPage: state.tickets. pagination!.page!,
+                currentPage: state.tickets.pagination!.page!,
                 totalPages: totalPages,
                 onPageSelected: (page) {
-                  context.read<FeedbackCubit>().fetchFeedbackTickets(page: page);
+                  context.read<FeedbackCubit>().fetchFeedbackTickets(
+                    page: page,
+                  );
                 },
               );
             }

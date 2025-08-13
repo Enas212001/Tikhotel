@@ -37,6 +37,7 @@ import 'package:ticket_flow/features/admin/presentation/pages/update_topic.dart'
 import 'package:ticket_flow/features/admin/presentation/pages/update_user_page.dart';
 import 'package:ticket_flow/features/auth/presentation/pages/admin_login_page.dart';
 import 'package:ticket_flow/features/auth/presentation/pages/forget_pass_page.dart';
+import 'package:ticket_flow/features/guestFlow/data/models/guest_ticket_model/guest_ticket_item.dart';
 import 'package:ticket_flow/features/guestFlow/presentation/views/guest_login_page.dart';
 import 'package:ticket_flow/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/closed_feedback_page.dart';
@@ -256,7 +257,10 @@ class AppRoutes {
       ),
       GoRoute(
         path: viewRequestGuestPage,
-        builder: (context, state) => const ViewGuestRequestPage(),
+        builder: (context, state) {
+          final ticketModel = state.extra as GuestTicketItem;
+          return ViewGuestRequestPage(ticketModel: ticketModel);
+        },
       ),
       GoRoute(
         path: newRequestGuestPage,

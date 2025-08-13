@@ -47,12 +47,14 @@ class UsersBody extends StatelessWidget {
                   FilterOption(
                     value: 'active',
                     label: S.of(context).active,
-                    onTap: () => context.read<UserCubit>().filterUsers('active'),
+                    onTap: () =>
+                        context.read<UserCubit>().filterUsers('active'),
                   ),
                   FilterOption(
                     value: 'inactive',
                     label: S.of(context).inactive,
-                    onTap: () => context.read<UserCubit>().filterUsers('inactive'),
+                    onTap: () =>
+                        context.read<UserCubit>().filterUsers('inactive'),
                   ),
                 ],
               ),

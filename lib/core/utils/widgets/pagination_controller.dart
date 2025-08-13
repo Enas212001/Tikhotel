@@ -28,10 +28,7 @@ class PaginationControls extends StatelessWidget {
               onTap: () => onPageSelected(pageNumber),
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 4.w),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 12.w,
-                  vertical: 8.h,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
                 decoration: BoxDecoration(
                   color: pageNumber == currentPage
                       ? AppColors.primary

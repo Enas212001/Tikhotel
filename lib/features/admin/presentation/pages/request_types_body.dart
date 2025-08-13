@@ -44,7 +44,9 @@ class RequestTypesBody extends StatelessWidget {
                     FilterOption(
                       value: 'all',
                       label: S.of(context).all,
-                      onTap: () => context.read<RequestTypeCubit>().filterRequestTypes('all'),
+                      onTap: () => context
+                          .read<RequestTypeCubit>()
+                          .filterRequestTypes('all'),
                     ),
                   ],
                 ),

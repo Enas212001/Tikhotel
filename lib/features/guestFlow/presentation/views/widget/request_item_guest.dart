@@ -22,6 +22,7 @@ class RequestItemGuest extends StatelessWidget {
         Text(title, style: TextStyles.text12RegularLightGrey),
         SizedBox(
           width: width ?? 150.w,
+          height: 35.h,
           child: Text(
             data,
             textAlign: TextAlign.center,

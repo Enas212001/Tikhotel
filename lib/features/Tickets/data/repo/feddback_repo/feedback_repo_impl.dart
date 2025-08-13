@@ -17,10 +17,7 @@ class FeedbackRepoImpl extends FeedbackRepo {
       final filtered = response.data!
           .where((ticket) => ['Closed'].contains(ticket.status))
           .toList();
-      return TicketModel(
-        data: filtered,
-        pagination: response.pagination,
-      );
+      return TicketModel(data: filtered, pagination: response.pagination);
     });
   }
 }

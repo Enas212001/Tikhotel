@@ -64,4 +64,3 @@ final class EditTicketFailure extends TicketState {
   final String message;
   const EditTicketFailure({required this.message});
 }
-

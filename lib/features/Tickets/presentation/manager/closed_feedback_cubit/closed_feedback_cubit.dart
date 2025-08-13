@@ -72,7 +72,7 @@ class ClosedFeedbackCubit extends Cubit<ClosedFeedbackState> {
         tickets: TicketModel(
           data: filtered,
           pagination: currentState.tickets.pagination,
-        )
+        ),
       ),
     );
   }

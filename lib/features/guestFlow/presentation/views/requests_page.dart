@@ -16,7 +16,7 @@ class RequestsPage extends StatelessWidget {
     return Scaffold(
       drawer: GuestDrawer(),
       body: BlocProvider(
-        create: (context) => GuestTicketsCubit(),
+        create: (context) => GuestTicketsCubit()..getGuestTicketsData(),
         child: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
@@ -30,18 +30,15 @@ class RequestsPage extends StatelessWidget {
               builder: (context, state) {
                 if (state is TicketsGuestSuccess) {
                   return SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        return GuestRequestCard(ticketModel: state.ticketModel.data![index]);
-                      },
-                      childCount: state.ticketModel.data?.length ?? 0,
-                    ),
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      return GuestRequestCard(
+                        ticketModel: state.ticketModel.data![index],
+                      );
+                    }, childCount: state.ticketModel.data!.length),
                   );
                 }
                 return const SliverToBoxAdapter(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                  child: Center(child: CircularProgressIndicator()),
                 );
               },
             ),

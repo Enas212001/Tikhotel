@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
-import 'package:ticket_flow/features/Tickets/data/models/ticket_model/ticket_item.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/ticket_shape_border.dart';
+import 'package:ticket_flow/features/guestFlow/data/models/guest_ticket_model/guest_ticket_item.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'doted_line_border.dart';
@@ -12,11 +12,12 @@ import 'request_item_guest.dart';
 
 class GuestRequestCard extends StatelessWidget {
   const GuestRequestCard({super.key, required this.ticketModel});
-  final TicketItem ticketModel;
+  final GuestTicketItem ticketModel;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.push(AppRoutes.viewRequestGuestPage),
+      onTap: () =>
+          context.push(AppRoutes.viewRequestGuestPage, extra: ticketModel),
       child: Padding(
         padding:
             EdgeInsets.symmetric(horizontal: 20.w) +
@@ -43,7 +44,7 @@ class GuestRequestCard extends StatelessWidget {
                           painter: DottedLinePainter(
                             color: AppColors.primary,
                             startFraction: 0.30.w,
-                            endFraction: 0.68.w,
+                            endFraction: 0.62.w,
                             showEdgeRhombus: true, // ✅ enables diamond markers
                             rhombusSize: 8.0, // ✅ diamond size
                           ),
@@ -66,7 +67,7 @@ class GuestRequestCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 22.h),
+                  SizedBox(height: 12.h),
                   SizedBox(
                     height: 1,
                     child: CustomPaint(
@@ -86,11 +87,11 @@ class GuestRequestCard extends StatelessWidget {
                       children: [
                         RequestItemGuest(
                           title: S.of(context).replay,
-                          data: 'Lorem ipsum dolor sit amet, consectetur',
+                          data: ticketModel.message ?? '',
                         ),
                         RequestItemGuest(
                           title: S.of(context).lastReplay,
-                          data: 'Lorem ipsum dolor sit amet, consectetur',
+                          data: ticketModel.ticketFeedback ?? '',
                         ),
                       ],
                     ),

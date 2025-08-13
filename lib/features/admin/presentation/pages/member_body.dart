@@ -40,17 +40,20 @@ class MemberBody extends StatelessWidget {
                   FilterOption(
                     value: 'all',
                     label: S.of(context).all,
-                    onTap: () => context.read<MemberCubit>().filterMembers('all'),
+                    onTap: () =>
+                        context.read<MemberCubit>().filterMembers('all'),
                   ),
                   FilterOption(
                     value: 'active',
                     label: S.of(context).active,
-                    onTap: () => context.read<MemberCubit>().filterMembers('active'),
+                    onTap: () =>
+                        context.read<MemberCubit>().filterMembers('active'),
                   ),
                   FilterOption(
                     value: 'inactive',
                     label: S.of(context).inactive,
-                    onTap: () => context.read<MemberCubit>().filterMembers('inactive'),
+                    onTap: () =>
+                        context.read<MemberCubit>().filterMembers('inactive'),
                   ),
                 ],
               ),
