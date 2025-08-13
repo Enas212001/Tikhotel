@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ticket_flow/features/Tickets/data/models/ticket_model/datum.dart';
+import 'package:ticket_flow/features/Tickets/data/models/ticket_model/ticket_item.dart';
 import 'package:ticket_flow/features/admin/data/models/department_model/department_model.dart';
 import 'package:ticket_flow/features/admin/data/models/location_model/location_item.dart';
 import 'package:ticket_flow/features/admin/data/models/member_model/member_model.dart';

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/widgets/common_page_widget.dart';
 import 'package:ticket_flow/core/utils/widgets/shimmer_loading.dart';
-import 'package:ticket_flow/features/Tickets/presentation/manager/ticket_cubit/ticket_cubit.dart';
+import 'package:ticket_flow/features/Tickets/presentation/manager/closed_work_order_cubit/closed_work_order_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'closed_work_order_card.dart';
@@ -14,10 +14,11 @@ class ClosedWorkOrderBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () =>
-          context.read<TicketCubit>().fetchClosedWorkOrderTickets(page: 1),
+      onRefresh: () => context
+          .read<ClosedWorkOrderCubit>()
+          .fetchClosedWorkOrderTickets(page: 1),
       color: AppColors.newColor,
-      child: BlocBuilder<TicketCubit, TicketState>(
+      child: BlocBuilder<ClosedWorkOrderCubit, ClosedWorkOrderState>(
         builder: (context, state) {
           if (state is TicketClosedWorkOrderLoading) {
             return CommonPageWidget(
@@ -35,12 +36,14 @@ class ClosedWorkOrderBody extends StatelessWidget {
               title: S.of(context).closedWorkOrder,
               search: S.of(context).forAnyClosedWorkOrder,
               onChanged: (value) => context
-                  .read<TicketCubit>()
+                  .read<ClosedWorkOrderCubit>()
                   .searchClosedWorkOrderTickets(value),
               listView: SliverList(
                 delegate: SliverChildBuilderDelegate((context, index) {
-                  return ClosedWorkOrderCard(ticket: state.tickets[index]);
-                }, childCount: state.tickets.length),
+                  return ClosedWorkOrderCard(
+                    ticket: state.tickets.data![index],
+                  );
+                }, childCount: state.tickets.data!.length),
               ),
             );
           }

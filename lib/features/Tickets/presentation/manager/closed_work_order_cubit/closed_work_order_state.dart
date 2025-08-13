@@ -8,3 +8,19 @@ sealed class ClosedWorkOrderState extends Equatable {
 }
 
 final class ClosedWorkOrderInitial extends ClosedWorkOrderState {}
+
+final class TicketClosedWorkOrderLoading extends ClosedWorkOrderState {}
+
+final class TicketClosedWorkOrderSuccess extends ClosedWorkOrderState {
+  final TicketModel tickets;
+
+  const TicketClosedWorkOrderSuccess({required this.tickets});
+  @override
+  List<Object> get props => [tickets];
+}
+
+final class TicketClosedWorkOrderFailure extends ClosedWorkOrderState {
+  final String message;
+
+  const TicketClosedWorkOrderFailure({required this.message});
+}

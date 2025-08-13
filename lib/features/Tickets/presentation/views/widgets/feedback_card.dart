@@ -6,7 +6,7 @@ import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/core/utils/text_styles.dart';
 import 'package:ticket_flow/core/utils/widgets/card_detail.dart';
 import 'package:ticket_flow/core/utils/widgets/detail_item.dart';
-import 'package:ticket_flow/features/Tickets/data/models/ticket_model/datum.dart';
+import 'package:ticket_flow/features/Tickets/data/models/ticket_model/ticket_item.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 class FeedbackCard extends StatelessWidget {

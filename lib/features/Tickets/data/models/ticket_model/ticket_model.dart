@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import 'datum.dart';
+import 'ticket_item.dart';
 import 'ticket_pagination.dart';
 
 class TicketModel extends Equatable {

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/widgets/common_page_widget.dart';
-import 'package:ticket_flow/features/Tickets/presentation/manager/ticket_cubit/ticket_cubit.dart';
+import 'package:ticket_flow/features/Tickets/presentation/manager/feedback_cubit/feedback_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
-import 'feedback_card.dart';
 import '../../../../../core/utils/widgets/shimmer_loading.dart';
+import 'feedback_card.dart';
 
 class FeedbackBody extends StatelessWidget {
   const FeedbackBody({super.key});
@@ -15,9 +15,9 @@ class FeedbackBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () =>
-          context.read<TicketCubit>().fetchFeedbackTickets(page: 1),
+          context.read<FeedbackCubit>().fetchFeedbackTickets(page: 1),
       color: AppColors.newColor,
-      child: BlocBuilder<TicketCubit, TicketState>(
+      child: BlocBuilder<FeedbackCubit, FeedbackState>(
         builder: (context, state) {
           if (state is TicketFeedbackLoading) {
             return CommonPageWidget(
@@ -36,12 +36,12 @@ class FeedbackBody extends StatelessWidget {
               title: S.of(context).feedback,
               search: S.of(context).forAnyFeedback,
               onChanged: (value) =>
-                  context.read<TicketCubit>().searchFeedBackTickets(value),
+                  context.read<FeedbackCubit>().searchFeedBackTickets(value),
               listView: SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) =>
-                      FeedbackCard(ticket: state.tickets[index]),
-                  childCount: state.tickets.length,
+                      FeedbackCard(ticket: state.tickets.data![index]),
+                  childCount: state.tickets.data!.length,
                 ),
               ),
             );

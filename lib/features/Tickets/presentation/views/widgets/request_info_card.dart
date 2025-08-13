@@ -5,7 +5,7 @@ import 'package:ticket_flow/core/func/refactor_date.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/widgets/detail_item.dart';
-import 'package:ticket_flow/features/Tickets/data/models/ticket_model/datum.dart';
+import 'package:ticket_flow/features/Tickets/data/models/ticket_model/ticket_item.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'ticket_shape_border.dart';

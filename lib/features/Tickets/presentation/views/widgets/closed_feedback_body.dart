@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/widgets/common_page_widget.dart';
-import 'package:ticket_flow/features/Tickets/presentation/manager/ticket_cubit/ticket_cubit.dart';
+import 'package:ticket_flow/features/Tickets/presentation/manager/closed_feedback_cubit/closed_feedback_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
-import 'closed_feedback_card.dart';
 import '../../../../../core/utils/widgets/shimmer_loading.dart';
+import 'closed_feedback_card.dart';
 
 class ClosedFeedBackBody extends StatelessWidget {
   const ClosedFeedBackBody({super.key});
@@ -14,9 +14,11 @@ class ClosedFeedBackBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () => context.read<TicketCubit>().fetchClosedFeedbackTickets(page: 1),
+      onRefresh: () => context
+          .read<ClosedFeedbackCubit>()
+          .fetchClosedFeedbackTickets(page: 1),
       color: AppColors.newColor,
-      child: BlocBuilder<TicketCubit, TicketState>(
+      child: BlocBuilder<ClosedFeedbackCubit, ClosedFeedbackState>(
         builder: (context, state) {
           if (state is TicketClosedFeedbackLoading) {
             return CommonPageWidget(
@@ -34,12 +36,12 @@ class ClosedFeedBackBody extends StatelessWidget {
               title: S.of(context).closedFeedback,
               search: S.of(context).forAnyClosedFeedback,
               onChanged: (value) => context
-                  .read<TicketCubit>()
+                  .read<ClosedFeedbackCubit>()
                   .searchClosedFeedbackTickets(value),
               listView: SliverList(
                 delegate: SliverChildBuilderDelegate((context, index) {
-                  return ClosedFeedbackCard(ticket: state.tickets[index]);
-                }, childCount: state.tickets.length),
+                  return ClosedFeedbackCard(ticket: state.tickets.data![index]);
+                }, childCount: state.tickets.data!.length),
               ),
             );
           }
