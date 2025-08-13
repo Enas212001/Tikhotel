@@ -16,10 +16,10 @@ class TopicsDropDown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TopicCubit()..getTopics(),
+      create: (context) => TopicCubit()..getAllTopics(),
       child: BlocBuilder<TopicCubit, TopicState>(
         builder: (context, state) {
-          if (state is TopicFetched) {
+          if (state is AllTopicFetched) {
             if (state.topics.data?.isEmpty ?? true) {
               return const SizedBox.shrink();
             }
@@ -48,9 +48,9 @@ class TopicsDropDown extends StatelessWidget {
                     : null,
               ),
             );
-          } else if (state is TopicFetchingError) {
+          } else if (state is AllTopicFetchingError) {
             return Center(child: Text(state.error));
-          } else if (state is TopicFetching) {
+          } else if (state is AllTopicFetching) {
             return ShimmerCard(height: 40.h);
           }
           return SizedBox.shrink();

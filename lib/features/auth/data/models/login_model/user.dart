@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class User extends Equatable {
+class AdminLogin extends Equatable {
   final int? id;
   final String? name;
   final String? email;
@@ -11,7 +11,7 @@ class User extends Equatable {
   final String? status;
   final String? isActive;
 
-  const User({
+  const AdminLogin({
     this.id,
     this.name,
     this.email,
@@ -23,7 +23,7 @@ class User extends Equatable {
     this.isActive,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
+  factory AdminLogin.fromJson(Map<String, dynamic> json) => AdminLogin(
     id: json['id'] as int?,
     name: json['name'] as String?,
     email: json['email'] as String?,

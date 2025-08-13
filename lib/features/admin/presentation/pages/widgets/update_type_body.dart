@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/request_text_field.dart';
-import 'package:ticket_flow/features/admin/data/models/request_type_model/request_type_model.dart';
+import 'package:ticket_flow/features/admin/data/models/request_type_model/request_type_item.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/request_type_cubit/request_type_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
@@ -13,7 +13,7 @@ import 'add_update_page.dart';
 
 class UpdateTypeBody extends StatelessWidget {
   const UpdateTypeBody({super.key, required this.requestType});
-  final RequestTypeModel requestType;
+  final RequestTypeItem requestType;
 
   @override
   Widget build(BuildContext context) {

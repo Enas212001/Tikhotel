@@ -48,6 +48,18 @@ class TopicCubit extends Cubit<TopicState> with FilterableMixin<TopicItem> {
     );
   }
 
+  Future<void> getAllTopics() async {
+    emit(AllTopicFetching());
+    final result = await repo.getAllTopics();
+    result.fold(
+      (l) => emit(AllTopicFetchingError(error: l.failure.errorMessage)),
+      (r) {
+        allTopics = r.data!;
+        emit(AllTopicFetched(topics: r));
+      },
+    );
+  }
+
   List<TopicItem> allTopics = [];
 
   @override

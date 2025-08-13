@@ -5,7 +5,7 @@ import 'user.dart';
 class LoginModel extends Equatable {
   final bool? status;
   final String? message;
-  final User? user;
+  final AdminLogin? user;
 
   const LoginModel({this.status, this.message, this.user});
 
@@ -14,7 +14,7 @@ class LoginModel extends Equatable {
     message: json['message'] as String?,
     user: json['user'] == null
         ? null
-        : User.fromJson(json['user'] as Map<String, dynamic>),
+        : AdminLogin.fromJson(json['user'] as Map<String, dynamic>),
   );
 
   Map<String, dynamic> toJson() => {

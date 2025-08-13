@@ -12,7 +12,7 @@ final class RequestTypeInitial extends RequestTypeState {}
 final class RequestTypeLoading extends RequestTypeState {}
 
 final class RequestTypeLoaded extends RequestTypeState {
-  final List<RequestTypeModel> requestTypes;
+  final RequestTypeModel requestTypes;
   const RequestTypeLoaded({required this.requestTypes});
 
   @override
@@ -26,9 +26,26 @@ final class RequestTypeFailure extends RequestTypeState {
   @override
   List<Object> get props => [error];
 }
+final class AllRequestTypeLoading extends RequestTypeState {}
+
+final class AllRequestTypeLoaded extends RequestTypeState {
+  final RequestTypeModel requestTypes;
+  const AllRequestTypeLoaded({required this.requestTypes});
+
+  @override
+  List<Object> get props => [requestTypes];
+}
+
+final class AllRequestTypeFailure extends RequestTypeState {
+  final String error;
+  const AllRequestTypeFailure({required this.error});
+
+  @override
+  List<Object> get props => [error];
+}
 
 final class RequestTypeAdded extends RequestTypeState {
-  final RequestTypeModel requestType;
+  final RequestTypeItem requestType;
   const RequestTypeAdded({required this.requestType});
 }
 
@@ -43,7 +60,7 @@ final class RequestTypeAddFailure extends RequestTypeState {
 }
 
 final class RequestTypeEdited extends RequestTypeState {
-  final RequestTypeModel requestType;
+  final RequestTypeItem requestType;
   const RequestTypeEdited({required this.requestType});
 }
 

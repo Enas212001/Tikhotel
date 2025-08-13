@@ -8,6 +8,7 @@ abstract class TopicRepo {
     int page = 1,
     int limit = 20,
   });
+  Future<Either<ServerFailure, TopicModel>> getAllTopics();
   Future<Either<ServerFailure, TopicItem>> addTopic({
     required String topic,
     required String departmentId,

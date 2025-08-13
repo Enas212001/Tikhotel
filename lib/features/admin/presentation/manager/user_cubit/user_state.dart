@@ -44,7 +44,7 @@ final class OperationalSelected extends UserState {
 }
 
 final class GetUsersSuccess extends UserState {
-  final List<UserModel> users;
+  final User users;
   const GetUsersSuccess({required this.users});
 
   @override

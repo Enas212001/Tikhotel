@@ -5,6 +5,7 @@ import 'package:ticket_flow/core/api/dio_consumer.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
 import 'package:ticket_flow/features/admin/data/models/department_model/department_model.dart';
 import 'package:ticket_flow/features/admin/data/models/worker_model/worker_item.dart';
+import 'package:ticket_flow/features/admin/data/models/worker_model/worker_model.dart';
 import 'package:ticket_flow/features/admin/data/repo/worker_repo/worker_repo.dart';
 import 'package:ticket_flow/features/admin/data/repo/worker_repo/worker_repo_impl.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/mixins/filterable_mixin.dart';
@@ -14,21 +15,40 @@ part 'worker_state.dart';
 class WorkerCubit extends Cubit<WorkerState> with FilterableMixin<WorkerItem> {
   WorkerCubit() : super(WorkerInitial());
   final WorkerRepo workerRepo = WorkerRepoImpl(api: getIt.get<DioConsumer>());
-  Future<void> getWorkers() async {
+  int workerPage = 1;
+  final int limit = 20;
+  List<WorkerItem> allWorkers = [];
+  Future<void> getWorkers({int? page}) async {
     emit(FetchWorkerLoading());
-    final response = await workerRepo.getWorkers();
+    final response = await workerRepo.getWorkers(
+      page: page ?? workerPage,
+      limit: limit,
+    );
     response.fold(
       (failure) =>
           emit(FetchWorkerFailure(message: failure.failure.errorMessage)),
       (workers) {
-        allWorkers = workers;
-        allItems = workers;
+        if (workerPage == 1) {
+          allWorkers.clear();
+        }
+        allWorkers.addAll(workers.data!);
+        allItems = allWorkers;
         emit(FetchWorkerSuccess(workers: workers));
       },
     );
   }
 
-  List<WorkerItem> allWorkers = [];
+  Future<void> getAllWorkers() async {
+    emit(FetchAllWorkerLoading());
+    final response = await workerRepo.getAllWorkers();
+    response.fold(
+      (failure) =>
+          emit(FetchAllWorkerFailure(message: failure.failure.errorMessage)),
+      (workers) {
+        emit(FetchAllWorkerSuccess(workers: workers));
+      },
+    );
+  }
 
   @override
   bool filterItem(WorkerItem worker, String filter) {
@@ -52,7 +72,7 @@ class WorkerCubit extends Cubit<WorkerState> with FilterableMixin<WorkerItem> {
 
   @override
   void emitFilteredState(List<WorkerItem> filteredItems) {
-    emit(FetchWorkerSuccess(workers: filteredItems));
+    emit(FetchWorkerSuccess(workers: WorkerModel(data: filteredItems)));
   }
 
   void searchWorker(String query) {

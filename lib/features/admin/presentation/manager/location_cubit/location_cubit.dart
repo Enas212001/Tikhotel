@@ -56,6 +56,21 @@ class LocationCubit extends Cubit<LocationState>
     }
   }
 
+  Future<void> getAllLocations() async {
+    emit(AllLocationsLoading());
+    try {
+      final locations = await locationRepo.getAllLocations();
+      locations.fold(
+        (l) => emit(AllLocationsLoadingError(message: l.failure.errorMessage)),
+        (r) {
+          emit(AllLocationsLoaded(locations: r));
+        },
+      );
+    } catch (e) {
+      emit(AllLocationsLoadingError(message: e.toString()));
+    }
+  }
+
   List<LocationItem> allLocations = [];
 
   @override

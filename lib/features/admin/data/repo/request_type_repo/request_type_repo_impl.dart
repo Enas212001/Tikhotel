@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:ticket_flow/core/api/api_consumer.dart';
 import 'package:ticket_flow/core/error/server_failure.dart';
 import 'package:ticket_flow/core/utils/api_key.dart';
+import 'package:ticket_flow/features/admin/data/models/request_type_model/request_type_item.dart';
 import 'package:ticket_flow/features/admin/data/models/request_type_model/request_type_model.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
@@ -13,14 +14,17 @@ class RequestTypeRepoImpl extends RequestTypeRepo {
   RequestTypeRepoImpl({required this.api});
 
   @override
-  Future<Either<ServerFailure, List<RequestTypeModel>>>
-  getRequestTypes() async {
+  Future<Either<ServerFailure, RequestTypeModel>> getRequestTypes({
+    int page = 1,
+    int limit = 20,
+  }) async {
     try {
-      final response = await api.get(EndPoints.requestTypes);
-      if (response is List) {
-        final requestTypes = response
-            .map((e) => RequestTypeModel.fromJson(e))
-            .toList();
+      final response = await api.get(
+        EndPoints.requestTypes,
+        queryParameters: {ApiKey.page: page, ApiKey.limit: limit},
+      );
+      if (response is Map<String, dynamic> && response['data'] != null) {
+        final requestTypes = RequestTypeModel.fromJson(response);
         return right(requestTypes);
       } else {
         return left(
@@ -44,7 +48,7 @@ class RequestTypeRepoImpl extends RequestTypeRepo {
   }
 
   @override
-  Future<Either<ServerFailure, RequestTypeModel>> addRequestType({
+  Future<Either<ServerFailure, RequestTypeItem>> addRequestType({
     required String requestType,
   }) async {
     try {
@@ -53,7 +57,7 @@ class RequestTypeRepoImpl extends RequestTypeRepo {
         data: {ApiKey.requestType: requestType},
       );
       if (response is Map<String, dynamic> && response['data'] != null) {
-        final requestType = RequestTypeModel.fromJson(response['data']);
+        final requestType = RequestTypeItem.fromJson(response['data']);
         return right(requestType);
       } else {
         return left(
@@ -104,7 +108,7 @@ class RequestTypeRepoImpl extends RequestTypeRepo {
   }
 
   @override
-  Future<Either<ServerFailure, RequestTypeModel>> editRequestType(
+  Future<Either<ServerFailure, RequestTypeItem>> editRequestType(
     String id, {
     required String requestType,
   }) async {
@@ -114,7 +118,7 @@ class RequestTypeRepoImpl extends RequestTypeRepo {
         data: {ApiKey.requestType: requestType},
       );
       if (response is Map<String, dynamic> && response['data'] != null) {
-        final requestType = RequestTypeModel.fromJson(response['data']);
+        final requestType = RequestTypeItem.fromJson(response['data']);
         return right(requestType);
       } else {
         return left(
@@ -122,6 +126,34 @@ class RequestTypeRepoImpl extends RequestTypeRepo {
             failure: FailureModel(
               errorMessage: S.current.anUnexpectedErrorOccurred,
               status: false,
+            ),
+          ),
+        );
+      }
+    } on ServerFailure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(
+        ServerFailure(
+          failure: FailureModel(errorMessage: e.toString(), status: false),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, RequestTypeModel>> getAllRequestTypes() async {
+    try {
+      final response = await api.get(EndPoints.requestTypes);
+      if (response is Map<String, dynamic> && response['data'] != null) {
+        final requestTypes = RequestTypeModel.fromJson(response);
+        return right(requestTypes);
+      } else {
+        return left(
+          ServerFailure(
+            failure: FailureModel(
+              status: false,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
             ),
           ),
         );

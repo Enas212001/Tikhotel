@@ -156,4 +156,32 @@ class TopicRepoImpl extends TopicRepo {
       );
     }
   }
+
+  @override
+  Future<Either<ServerFailure, TopicModel>> getAllTopics() async {
+    try {
+      final response = await api.get(EndPoints.topics);
+      if (response is Map<String, dynamic>) {
+        final model = TopicModel.fromJson(response);
+        return right(model);
+      } else {
+        return left(
+          ServerFailure(
+            failure: FailureModel(
+              status: false,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
+            ),
+          ),
+        );
+      }
+    } on ServerFailure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(
+        ServerFailure(
+          failure: FailureModel(errorMessage: e.toString(), status: false),
+        ),
+      );
+    }
+  }
 }

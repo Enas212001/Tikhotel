@@ -153,4 +153,29 @@ class LocationRepoImpl extends LocationRepo {
       );
     }
   }
+  @override
+  Future<Either<ServerFailure, LocationModel>> getAllLocations() async {
+    try {
+      final response = await api.get(EndPoints.locations);
+      if (response is Map<String, dynamic>) {
+        final locations = LocationModel.fromJson(response);
+        return right(locations);
+      } else {
+        return left(
+          ServerFailure(
+            failure: FailureModel(
+              status: false,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      return Left(
+        ServerFailure(
+          failure: FailureModel(errorMessage: e.toString(), status: false),
+        ),
+      );
+    }
+  }
 }

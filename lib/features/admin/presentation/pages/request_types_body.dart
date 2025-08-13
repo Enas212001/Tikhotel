@@ -56,9 +56,10 @@ class RequestTypesBody extends StatelessWidget {
               builder: (context, state) {
                 if (state is RequestTypeLoaded) {
                   return CommonAdminListView(
-                    item: (context, index) =>
-                        RequestTypeCard(requestType: state.requestTypes[index]),
-                    itemCount: state.requestTypes.length,
+                    item: (context, index) => RequestTypeCard(
+                      requestType: state.requestTypes.data![index],
+                    ),
+                    itemCount: state.requestTypes.data!.length,
                   );
                 } else if (state is RequestTypeFailure) {
                   return Center(

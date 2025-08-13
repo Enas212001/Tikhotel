@@ -17,10 +17,24 @@ final class WorkerWhatsappToggled extends WorkerState {
   List<Object> get props => [allowWhatsapp]; // ✅ ensures Bloc sees it as new
 }
 
+final class FetchAllWorkerLoading extends WorkerState {}
+
+final class FetchAllWorkerSuccess extends WorkerState {
+  final List<WorkerItem> workers;
+  const FetchAllWorkerSuccess({required this.workers});
+  @override
+  List<Object> get props => [workers];
+}
+
+final class FetchAllWorkerFailure extends WorkerState {
+  final String message;
+  const FetchAllWorkerFailure({required this.message});
+}
+
 final class FetchWorkerLoading extends WorkerState {}
 
 final class FetchWorkerSuccess extends WorkerState {
-  final List<WorkerItem> workers;
+  final WorkerModel workers;
   const FetchWorkerSuccess({required this.workers});
   @override
   List<Object> get props => [workers];

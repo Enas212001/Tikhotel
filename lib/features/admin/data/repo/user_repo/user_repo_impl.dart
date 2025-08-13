@@ -3,6 +3,7 @@ import 'package:ticket_flow/core/api/api_consumer.dart';
 import 'package:ticket_flow/core/error/server_failure.dart';
 import 'package:ticket_flow/core/utils/api_key.dart';
 import 'package:ticket_flow/features/admin/data/models/role_model/role_model.dart';
+import 'package:ticket_flow/features/admin/data/models/user_model/user.dart';
 import 'package:ticket_flow/features/admin/data/models/user_model/user_model.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
@@ -145,13 +146,17 @@ class UserRepoImpl extends UserRepo {
   }
 
   @override
-  Future<Either<ServerFailure, List<UserModel>>> getUsers() async {
+  Future<Either<ServerFailure, User>> getUsers({
+    int page = 1,
+    int limit = 20,
+  }) async {
     try {
-      final response = await api.get(EndPoints.users);
+      final response = await api.get(
+        EndPoints.users,
+        queryParameters: {ApiKey.page: page, ApiKey.limit: limit},
+      );
       if (response is Map<String, dynamic>) {
-        final users = (response['data'] as List)
-            .map((e) => UserModel.fromJson(e))
-            .toList();
+        final users = User.fromJson(response);
         return right(users);
       } else {
         return left(

@@ -16,10 +16,10 @@ class LocationDropDown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LocationCubit()..getLocations(),
+      create: (context) => LocationCubit()..getAllLocations(),
       child: BlocBuilder<LocationCubit, LocationState>(
         builder: (context, state) {
-          if (state is LocationsLoaded) {
+          if (state is AllLocationsLoaded) {
             return Padding(
               padding: EdgeInsets.only(bottom: 14.h),
               child: DropdownButtonFormField<LocationItem>(
@@ -45,9 +45,9 @@ class LocationDropDown extends StatelessWidget {
                     : null,
               ),
             );
-          } else if (state is LocationsLoadingError) {
+          } else if (state is AllLocationsLoadingError) {
             return Center(child: Text(state.message));
-          } else if (state is LocationsLoading) {
+          } else if (state is AllLocationsLoading) {
             return ShimmerCard(height: 40.h);
           }
           return SizedBox.shrink();

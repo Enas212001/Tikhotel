@@ -1,10 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:ticket_flow/core/error/server_failure.dart';
 import 'package:ticket_flow/features/admin/data/models/role_model/role_model.dart';
+import 'package:ticket_flow/features/admin/data/models/user_model/user.dart';
 import 'package:ticket_flow/features/admin/data/models/user_model/user_model.dart';
 
 abstract class UserRepo {
-  Future<Either<ServerFailure, List<UserModel>>> getUsers();
+  Future<Either<ServerFailure, User>> getUsers({int page = 1, int limit = 20});
   Future<Either<ServerFailure, UserModel>> addUser({
     required int roleId,
     required String email,

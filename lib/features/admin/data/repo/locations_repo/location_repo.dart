@@ -8,6 +8,7 @@ abstract class LocationRepo {
     int page = 1,
     int limit = 20,
   });
+  Future<Either<ServerFailure, LocationModel>> getAllLocations();
   Future<Either<ServerFailure, LocationItem>> addLocation({
     required String name,
     required String status,

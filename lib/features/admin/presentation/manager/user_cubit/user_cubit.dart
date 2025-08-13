@@ -5,6 +5,7 @@ import 'package:ticket_flow/core/api/dio_consumer.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
 import 'package:ticket_flow/features/admin/data/models/department_model/department_model.dart';
 import 'package:ticket_flow/features/admin/data/models/role_model/role_model.dart';
+import 'package:ticket_flow/features/admin/data/models/user_model/user.dart';
 import 'package:ticket_flow/features/admin/data/models/user_model/user_model.dart';
 import 'package:ticket_flow/features/admin/data/repo/user_repo/user_repo.dart';
 import 'package:ticket_flow/features/admin/data/repo/user_repo/user_repo_impl.dart';
@@ -23,7 +24,7 @@ class UserCubit extends Cubit<UserState> with FilterableMixin<UserModel> {
         emit(GetUsersFailure(message: failure.failure.errorMessage));
       },
       (users) {
-        allItems = users;
+        allItems = users.data!;
         emit(GetUsersSuccess(users: users));
       },
     );
@@ -59,7 +60,7 @@ class UserCubit extends Cubit<UserState> with FilterableMixin<UserModel> {
 
   @override
   void emitFilteredState(List<UserModel> filteredItems) {
-    emit(GetUsersSuccess(users: filteredItems));
+    emit(GetUsersSuccess(users: User(data: filteredItems)));
   }
 
   void searchUsers(String query) {

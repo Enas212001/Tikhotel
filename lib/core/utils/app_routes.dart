@@ -1,13 +1,18 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/features/Tickets/data/models/ticket_model/ticket_item.dart';
+import 'package:ticket_flow/features/Tickets/presentation/views/add_request_page.dart';
+import 'package:ticket_flow/features/Tickets/presentation/views/closed_feedback_page.dart';
+import 'package:ticket_flow/features/Tickets/presentation/views/closed_work_order_page.dart';
+import 'package:ticket_flow/features/Tickets/presentation/views/feedback_page.dart';
+import 'package:ticket_flow/features/Tickets/presentation/views/new_request_page.dart';
+import 'package:ticket_flow/features/Tickets/presentation/views/view_request_page.dart';
 import 'package:ticket_flow/features/admin/data/models/department_model/department_model.dart';
 import 'package:ticket_flow/features/admin/data/models/location_model/location_item.dart';
 import 'package:ticket_flow/features/admin/data/models/member_model/member_model.dart';
 import 'package:ticket_flow/features/admin/data/models/problem_model/problem_item.dart';
+import 'package:ticket_flow/features/admin/data/models/request_type_model/request_type_item.dart';
 import 'package:ticket_flow/features/admin/data/models/topic_model/topic_item.dart';
-import 'package:ticket_flow/features/admin/data/models/request_type_model/request_type_model.dart';
 import 'package:ticket_flow/features/admin/data/models/user_model/user_model.dart';
 import 'package:ticket_flow/features/admin/data/models/worker_model/worker_item.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/department_cubit/department_cubit.dart';
@@ -23,38 +28,31 @@ import 'package:ticket_flow/features/admin/presentation/pages/add_location_page.
 import 'package:ticket_flow/features/admin/presentation/pages/add_member_page.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/add_problem_page.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/add_request_type_page.dart';
-import 'package:ticket_flow/features/admin/presentation/pages/add_worker_page.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/add_topic_page.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/add_user_page.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/add_worker_page.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/admin_page.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/update_dep_page.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/update_location_page.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/update_member_page.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/update_problem_page.dart';
-import 'package:ticket_flow/features/admin/presentation/pages/update_worker_page.dart';
-import 'package:ticket_flow/features/admin/presentation/pages/update_type_page.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/update_topic.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/update_type_page.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/update_user_page.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/update_worker_page.dart';
 import 'package:ticket_flow/features/auth/presentation/pages/admin_login_page.dart';
 import 'package:ticket_flow/features/auth/presentation/pages/forget_pass_page.dart';
+import 'package:ticket_flow/features/dashboard/presentation/pages/dashboard_page.dart';
+import 'package:ticket_flow/features/guest/presentation/views/guest_page.dart';
 import 'package:ticket_flow/features/guestFlow/data/models/guest_ticket_model/guest_ticket_item.dart';
 import 'package:ticket_flow/features/guestFlow/presentation/views/guest_login_page.dart';
-import 'package:ticket_flow/features/dashboard/presentation/pages/dashboard_page.dart';
-import 'package:ticket_flow/features/Tickets/presentation/views/closed_feedback_page.dart';
-import 'package:ticket_flow/features/Tickets/presentation/views/feedback_page.dart';
-import 'package:ticket_flow/features/guest/presentation/views/guest_page.dart';
 import 'package:ticket_flow/features/guestFlow/presentation/views/new_guest_request_page.dart';
 import 'package:ticket_flow/features/guestFlow/presentation/views/profile_page.dart';
 import 'package:ticket_flow/features/guestFlow/presentation/views/requests_page.dart';
 import 'package:ticket_flow/features/guestFlow/presentation/views/view_guest_request_page.dart';
-import 'package:ticket_flow/features/report/presentation/pages/report_page.dart';
 import 'package:ticket_flow/features/onboarding/onboarding_page.dart';
-import 'package:ticket_flow/features/Tickets/presentation/views/add_request_page.dart';
-import 'package:ticket_flow/features/Tickets/presentation/views/new_request_page.dart';
-import 'package:ticket_flow/features/Tickets/presentation/views/view_request_page.dart';
+import 'package:ticket_flow/features/report/presentation/pages/report_page.dart';
 import 'package:ticket_flow/features/splash/splash_page.dart';
-import 'package:ticket_flow/features/Tickets/presentation/views/closed_work_order_page.dart';
-import 'package:ticket_flow/generated/l10n.dart';
 
 class AppRoutes {
   static const String splash = '/';
@@ -242,12 +240,8 @@ class AppRoutes {
       GoRoute(
         path: updateRequestType,
         builder: (context, state) {
-          final requestType = state.extra as RequestTypeModel?;
-          if (requestType == null) {
-            return Scaffold(
-              body: Center(child: Text(S.current.anUnexpectedErrorOccurred)),
-            );
-          }
+          final requestType = state.extra as RequestTypeItem;
+
           return UpdateTypePage(requestType: requestType);
         },
       ),

@@ -68,8 +68,8 @@ class UsersBody extends StatelessWidget {
                 if (state is GetUsersSuccess) {
                   return CommonAdminListView(
                     item: (context, index) =>
-                        UserDetailCard(user: state.users[index]),
-                    itemCount: state.users.length,
+                        UserDetailCard(user: state.users.data![index]),
+                    itemCount: state.users.data!.length,
                   );
                 } else if (state is GetUsersFailure) {
                   return Center(

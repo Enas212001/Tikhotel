@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:ticket_flow/core/api/dio_consumer.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
+import 'package:ticket_flow/features/admin/data/models/request_type_model/request_type_item.dart';
 import 'package:ticket_flow/features/admin/data/models/request_type_model/request_type_model.dart';
 import 'package:ticket_flow/features/admin/data/repo/request_type_repo/request_type_repo.dart';
 import 'package:ticket_flow/features/admin/data/repo/request_type_repo/request_type_repo_impl.dart';
@@ -11,7 +12,7 @@ import 'package:ticket_flow/features/admin/presentation/manager/mixins/filterabl
 part 'request_type_state.dart';
 
 class RequestTypeCubit extends Cubit<RequestTypeState>
-    with FilterableMixin<RequestTypeModel> {
+    with FilterableMixin<RequestTypeItem> {
   RequestTypeCubit() : super(RequestTypeInitial());
   final RequestTypeRepo adminRepo = RequestTypeRepoImpl(
     api: getIt.get<DioConsumer>(),
@@ -21,39 +22,60 @@ class RequestTypeCubit extends Cubit<RequestTypeState>
   final TextEditingController requestTypeControllerAdd =
       TextEditingController();
   final GlobalKey<FormState> formAddRequestTypeKey = GlobalKey<FormState>();
-
-  Future<void> getRequestTypes() async {
+  int requestTypePage = 1;
+  final int limit = 20;
+  Future<void> getRequestTypes({int? page}) async {
     emit(RequestTypeLoading());
-    final result = await adminRepo.getRequestTypes();
+    final result = await adminRepo.getRequestTypes(
+      page: page ?? requestTypePage,
+      limit: limit,
+    );
     result.fold(
       (failure) =>
           emit(RequestTypeFailure(error: failure.failure.errorMessage)),
       (requestTypes) {
-        allTypes = requestTypes;
-        allItems = requestTypes;
+        if (requestTypePage == 1) {
+          allTypes.clear();
+        }
+        allTypes.addAll(requestTypes.data!);
+        allItems = allTypes;
         emit(RequestTypeLoaded(requestTypes: requestTypes));
       },
     );
   }
 
-  List<RequestTypeModel> allTypes = [];
+  Future<void> getAllTypes() async {
+    emit(AllRequestTypeLoading());
+    final response = await adminRepo.getAllRequestTypes();
+    response.fold(
+      (failure) =>
+          emit(AllRequestTypeFailure(error: failure.failure.errorMessage)),
+      (types) {
+        emit(AllRequestTypeLoaded(requestTypes: types));
+      },
+    );
+  }
+
+  List<RequestTypeItem> allTypes = [];
 
   @override
-  bool filterItem(RequestTypeModel requestType, String filter) {
+  bool filterItem(RequestTypeItem requestType, String filter) {
     // RequestTypeModel doesn't have status field, so show all items
     return true;
   }
 
   @override
-  bool searchItem(RequestTypeModel requestType, String query) {
+  bool searchItem(RequestTypeItem requestType, String query) {
     final name = requestType.requestType?.toLowerCase() ?? '';
     final queryLower = query.toLowerCase();
     return name.contains(queryLower);
   }
 
   @override
-  void emitFilteredState(List<RequestTypeModel> filteredItems) {
-    emit(RequestTypeLoaded(requestTypes: filteredItems));
+  void emitFilteredState(List<RequestTypeItem> filteredItems) {
+    emit(
+      RequestTypeLoaded(requestTypes: RequestTypeModel(data: filteredItems)),
+    );
   }
 
   void searchRequestType(String query) {
@@ -76,7 +98,7 @@ class RequestTypeCubit extends Cubit<RequestTypeState>
     );
   }
 
-  Future<void> editRequestType({required RequestTypeModel requestType}) async {
+  Future<void> editRequestType({required RequestTypeItem requestType}) async {
     emit(RequestTypeEditing());
     final result = await adminRepo.editRequestType(
       requestType.newReqId.toString(),

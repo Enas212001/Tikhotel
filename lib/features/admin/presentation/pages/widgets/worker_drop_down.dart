@@ -16,10 +16,10 @@ class WorkerDropDown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => WorkerCubit()..getWorkers(),
+      create: (context) => WorkerCubit()..getAllWorkers(),
       child: BlocBuilder<WorkerCubit, WorkerState>(
         builder: (context, state) {
-          if (state is FetchWorkerSuccess) {
+          if (state is FetchAllWorkerSuccess) {
             return Padding(
               padding: EdgeInsets.only(bottom: 14.h),
               child: DropdownButtonFormField<WorkerItem>(
@@ -45,9 +45,9 @@ class WorkerDropDown extends StatelessWidget {
                     : null,
               ),
             );
-          } else if (state is FetchWorkerFailure) {
+          } else if (state is FetchAllWorkerFailure) {
             return Center(child: Text(state.message));
-          } else if (state is FetchWorkerLoading) {
+          } else if (state is FetchAllWorkerLoading) {
             return ShimmerCard(height: 40.h);
           }
           return SizedBox.shrink();

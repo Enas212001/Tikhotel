@@ -13,7 +13,7 @@ import 'package:ticket_flow/features/Tickets/data/repo/tickets_repo.dart';
 import 'package:ticket_flow/features/Tickets/data/repo/tickets_repo_impl.dart';
 import 'package:ticket_flow/features/admin/data/models/department_model/department_model.dart';
 import 'package:ticket_flow/features/admin/data/models/location_model/location_item.dart';
-import 'package:ticket_flow/features/admin/data/models/request_type_model/request_type_model.dart';
+import 'package:ticket_flow/features/admin/data/models/request_type_model/request_type_item.dart';
 import 'package:ticket_flow/features/admin/data/models/topic_model/topic_item.dart';
 import 'package:ticket_flow/features/admin/data/models/worker_model/worker_item.dart';
 
@@ -87,7 +87,7 @@ class TicketCubit extends Cubit<TicketState> {
   final requesteddBy = getIt.get<CacheHelper>().getData(
     key: CacheKey.requestedBy,
   );
-  RequestTypeModel? selectedRequestType;
+  RequestTypeItem? selectedRequestType;
   Future<void> addTicket() async {
     emit(AddTicketLoading());
     final result = await ticketsRepo.addTicket(

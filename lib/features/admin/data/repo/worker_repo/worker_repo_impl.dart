@@ -4,6 +4,7 @@ import 'package:ticket_flow/core/api/api_consumer.dart';
 import 'package:ticket_flow/core/error/server_failure.dart';
 import 'package:ticket_flow/core/utils/api_key.dart';
 import 'package:ticket_flow/features/admin/data/models/worker_model/worker_item.dart';
+import 'package:ticket_flow/features/admin/data/models/worker_model/worker_model.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'worker_repo.dart';
@@ -86,7 +87,37 @@ class WorkerRepoImpl extends WorkerRepo {
   }
 
   @override
-  Future<Either<ServerFailure, List<WorkerItem>>> getWorkers() async {
+  Future<Either<ServerFailure, WorkerModel>> getWorkers({
+    int page = 1,
+    int limit = 20,
+  }) async {
+    try {
+      final response = await api.get(
+        EndPoints.workers,
+        queryParameters: {ApiKey.page: page, ApiKey.limit: limit},
+      );
+      if (response is Map<String, dynamic>) {
+        final workers = WorkerModel.fromJson(response);
+        return Right(workers);
+      }
+      return Left(
+        ServerFailure(
+          failure: FailureModel(errorMessage: "Error", status: false),
+        ),
+      );
+    } on ServerFailure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(
+        ServerFailure(
+          failure: FailureModel(errorMessage: e.toString(), status: false),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, List<WorkerItem>>> getAllWorkers() async {
     try {
       final response = await api.get(EndPoints.workers);
       if (response is Map<String, dynamic>) {

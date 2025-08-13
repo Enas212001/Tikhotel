@@ -1,23 +1,30 @@
 import 'package:equatable/equatable.dart';
 
-class RequestTypeModel extends Equatable {
-  final int? newReqId;
-  final String? requestType;
+import 'request_type_item.dart';
 
-  const RequestTypeModel({this.newReqId, this.requestType});
+class RequestTypeModel extends Equatable {
+  final bool? status;
+  final String? message;
+  final List<RequestTypeItem>? data;
+
+  const RequestTypeModel({this.status, this.message, this.data});
 
   factory RequestTypeModel.fromJson(Map<String, dynamic> json) {
     return RequestTypeModel(
-      newReqId: json['NewReq_id'] as int?,
-      requestType: json['RequestType'] as String?,
+      status: json['status'] as bool?,
+      message: json['message'] as String?,
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) => RequestTypeItem.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
   }
 
   Map<String, dynamic> toJson() => {
-    'NewReq_id': newReqId,
-    'RequestType': requestType,
+    'status': status,
+    'message': message,
+    'data': data?.map((e) => e.toJson()).toList(),
   };
 
   @override
-  List<Object?> get props => [newReqId, requestType];
+  List<Object?> get props => [status, message, data];
 }

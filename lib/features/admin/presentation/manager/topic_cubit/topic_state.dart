@@ -25,6 +25,22 @@ final class TopicFetchingError extends TopicState {
   List<Object> get props => [error];
 }
 
+final class AllTopicFetching extends TopicState {}
+
+final class AllTopicFetched extends TopicState {
+  final TopicModel topics;
+  const AllTopicFetched({required this.topics});
+  @override
+  List<Object> get props => [topics];
+}
+
+final class AllTopicFetchingError extends TopicState {
+  final String error;
+  const AllTopicFetchingError({required this.error});
+  @override
+  List<Object> get props => [error];
+}
+
 final class TopicAdding extends TopicState {}
 
 final class TopicAdded extends TopicState {

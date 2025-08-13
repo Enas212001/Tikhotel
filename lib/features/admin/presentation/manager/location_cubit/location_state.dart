@@ -24,6 +24,21 @@ final class LocationsLoadingError extends LocationState {
   const LocationsLoadingError({required this.message});
 }
 
+final class AllLocationsLoading extends LocationState {}
+
+final class AllLocationsLoaded extends LocationState {
+  final LocationModel locations;
+  const AllLocationsLoaded({required this.locations});
+
+  @override
+  List<Object> get props => [locations];
+}
+
+final class AllLocationsLoadingError extends LocationState {
+  final String message;
+  const AllLocationsLoadingError({required this.message});
+}
+
 final class AddLocationLoading extends LocationState {}
 
 final class AddLocationSuccess extends LocationState {
