@@ -5,10 +5,10 @@ import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/request_text_field.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/topic_cubit/topic_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/add_update_page.dart';
-import 'package:ticket_flow/features/admin/presentation/pages/widgets/status_drop_down_menu.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/widgets/DropDown/status_drop_down_menu.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
-import 'department_single_select.dart';
+import 'DropDown/department_single_select.dart';
 
 class AddTopicBody extends StatelessWidget {
   const AddTopicBody({super.key});

@@ -12,8 +12,8 @@ import 'package:ticket_flow/generated/l10n.dart';
 
 import 'add_update_page.dart';
 import 'allow_whatsapp.dart';
-import 'department_single_select.dart';
-import 'status_drop_down_menu.dart';
+import 'DropDown/department_single_select.dart';
+import 'DropDown/status_drop_down_menu.dart';
 
 class UpdateWorkerBody extends StatelessWidget {
   const UpdateWorkerBody({super.key, required this.workerItem});

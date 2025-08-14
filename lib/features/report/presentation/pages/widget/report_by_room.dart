@@ -6,12 +6,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/core/utils/widgets/form_with_title.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/request_text_field.dart';
-import 'package:ticket_flow/features/admin/presentation/pages/widgets/department_single_select.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/widgets/DropDown/department_single_select.dart';
 import 'package:ticket_flow/features/onboarding/widget/custom_button.dart';
 import 'package:ticket_flow/features/report/presentation/manager/cubit/report_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
-import 'location_drop_down.dart';
+import '../../../../admin/presentation/pages/widgets/DropDown/location_drop_down.dart';
 
 class ReportByRoom extends StatelessWidget {
   const ReportByRoom({super.key});

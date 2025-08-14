@@ -52,29 +52,7 @@ class TicketCubit extends Cubit<TicketState> {
   }
 
   final List<TicketItem> allTickets = [];
-
-  // void searchTickets(String query) {
-  //   if (state is! TicketSuccess) return;
-  //   final currentState = state as TicketSuccess;
-
-  //   if (query.trim().isEmpty) {
-  //     emit(
-  //       TicketSuccess(tickets: allTickets, pagination: currentState.pagination),
-  //     );
-  //     return;
-  //   }
-
-  //   final lowerQuery = query.toLowerCase();
-  //   final filtered = allTickets.where((ticket) {
-  //     final fullName =
-  //         '${ticket.locationName ?? ''} ${ticket.problemTopic ?? ''}${ticket.departmentName ?? ''}${ticket.workerFname ?? ''}'
-  //             .toLowerCase();
-  //     return fullName.contains(lowerQuery);
-  //   }).toList();
-
-  //   emit(TicketSuccess(tickets: filtered, pagination: currentState.pagination));
-  // }
-
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController messageController = TextEditingController();
   TextEditingController compensationController = TextEditingController();
   TextEditingController amountEgp = TextEditingController();

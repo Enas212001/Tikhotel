@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
-import 'drop_down_user.dart';
+import '../drop_down_user.dart';
 
 class TitleDropDown extends StatelessWidget {
   const TitleDropDown({

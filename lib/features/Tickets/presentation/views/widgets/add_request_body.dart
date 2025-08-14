@@ -8,14 +8,14 @@ import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/features/Tickets/presentation/manager/ticket_cubit/ticket_cubit.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/file_upload.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/message_text_field.dart';
-import 'package:ticket_flow/features/Tickets/presentation/views/widgets/quantity_drop_down.dart';
-import 'package:ticket_flow/features/Tickets/presentation/views/widgets/request_type_drop_down.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/widgets/DropDown/quantity_drop_down.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/widgets/DropDown/request_type_drop_down.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/title_on_border.dart';
-import 'package:ticket_flow/features/Tickets/presentation/views/widgets/topics_drop_down.dart';
-import 'package:ticket_flow/features/admin/presentation/pages/widgets/department_single_select.dart';
-import 'package:ticket_flow/features/admin/presentation/pages/widgets/worker_drop_down.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/widgets/DropDown/topics_drop_down.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/widgets/DropDown/department_single_select.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/widgets/DropDown/worker_drop_down.dart';
 import 'package:ticket_flow/features/onboarding/widget/custom_button.dart';
-import 'package:ticket_flow/features/report/presentation/pages/widget/location_drop_down.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/widgets/DropDown/location_drop_down.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'request_text_field.dart';
@@ -47,60 +47,65 @@ class AddRequestBody extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.all(20.r),
             decoration: containerDecoration(),
-            child: Column(
-              children: [
-                LocationDropDown(
-                  onChanged: (value) => cubit.locationId = value,
-                  value: cubit.locationId,
-                ),
-                RequestTypeDropDown(
-                  onChanged: (value) => cubit.selectedRequestType = value,
-                  value: cubit.selectedRequestType,
-                ),
-                QuantityDropDown(),
-                DepartmentSingleSelect(
-                  onChanged: (value) =>
-                      cubit.setSelectedDepartment(value, context),
-                  value: cubit.selectedDepartment,
-                ),
-                CustomRequestTextField(
-                  label: S.of(context).compensation,
-                  isReadOnly: false,
-                  controller: cubit.compensationController,
-                ),
-                CustomRequestTextField(
-                  label: S.of(context).amount,
-                  isReadOnly: false,
-                  controller: cubit.amountEgp,
-                ),
-                ProblemsDropDown(
-                  value: cubit.problemId,
-                  onChanged: (value) => cubit.problemId = value,
-                  selectedDepartment: cubit.selectedDepartment,
-                ),
-                WorkerDropDown(
-                  value: cubit.workerId,
-                  onChanged: (value) => cubit.workerId = value,
-                ),
-                MessageTextField(
-                  controller: cubit.messageController,
-                  label: S.of(context).message,
-                ),
-                SizedBox(height: 16.h),
-                UploadFile(
-                  onUpload: () {},
-                  title: S.of(context).file,
-                  child: FileUpload(),
-                ),
-                SizedBox(height: 16.h),
-                CustomButton(
-                  text: S.of(context).save,
-                  isPrimary: true,
-                  onPressed: () {
-                    cubit.addTicket();
-                  },
-                ),
-              ],
+            child: Form(
+              key: cubit.formKey,
+              child: Column(
+                children: [
+                  LocationDropDown(
+                    onChanged: (value) => cubit.locationId = value,
+                    value: cubit.locationId,
+                  ),
+                  RequestTypeDropDown(
+                    onChanged: (value) => cubit.selectedRequestType = value,
+                    value: cubit.selectedRequestType,
+                  ),
+                  QuantityDropDown(),
+                  DepartmentSingleSelect(
+                    onChanged: (value) =>
+                        cubit.setSelectedDepartment(value, context),
+                    value: cubit.selectedDepartment,
+                  ),
+                  CustomRequestTextField(
+                    label: S.of(context).compensation,
+                    isReadOnly: false,
+                    controller: cubit.compensationController,
+                  ),
+                  CustomRequestTextField(
+                    label: S.of(context).amount,
+                    isReadOnly: false,
+                    controller: cubit.amountEgp,
+                  ),
+                  ProblemsDropDown(
+                    value: cubit.problemId,
+                    onChanged: (value) => cubit.problemId = value,
+                    selectedDepartment: cubit.selectedDepartment,
+                  ),
+                  WorkerDropDown(
+                    value: cubit.workerId,
+                    onChanged: (value) => cubit.workerId = value,
+                  ),
+                  MessageTextField(
+                    controller: cubit.messageController,
+                    label: S.of(context).message,
+                  ),
+                  SizedBox(height: 16.h),
+                  UploadFile(
+                    onUpload: () {},
+                    title: S.of(context).file,
+                    child: FileUpload(),
+                  ),
+                  SizedBox(height: 16.h),
+                  CustomButton(
+                    text: S.of(context).save,
+                    isPrimary: true,
+                    onPressed: () {
+                      if (cubit.formKey.currentState!.validate()) {
+                        cubit.addTicket();
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         );

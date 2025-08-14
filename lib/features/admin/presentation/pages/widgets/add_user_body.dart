@@ -9,9 +9,9 @@ import 'package:ticket_flow/features/admin/presentation/manager/user_cubit/user_
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/add_update_page.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
-import 'department_muliple_select.dart';
+import 'DropDown/department_muliple_select.dart';
 import 'drop_down_user.dart';
-import 'status_drop_down_menu.dart';
+import 'DropDown/status_drop_down_menu.dart';
 import 'user_roles.dart';
 
 class AddUserBody extends StatelessWidget {

@@ -11,8 +11,8 @@ import 'package:ticket_flow/features/admin/presentation/pages/widgets/user_roles
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'add_update_page.dart';
-import 'department_muliple_select.dart';
-import 'status_drop_down_menu.dart';
+import 'DropDown/department_muliple_select.dart';
+import 'DropDown/status_drop_down_menu.dart';
 
 class UpdateUserBody extends StatelessWidget {
   const UpdateUserBody({super.key, required this.user});

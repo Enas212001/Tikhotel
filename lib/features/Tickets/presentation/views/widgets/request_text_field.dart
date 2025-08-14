@@ -5,6 +5,7 @@ import 'package:ticket_flow/core/func/border_text_field.dart';
 import 'package:ticket_flow/core/utils/app_colors.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/core/utils/text_styles.dart';
+import 'package:ticket_flow/generated/l10n.dart';
 
 class CustomRequestTextField extends StatelessWidget {
   const CustomRequestTextField({
@@ -39,6 +40,12 @@ class CustomRequestTextField extends StatelessWidget {
         onChanged: onChanged,
         onTap: onTap,
         obscureText: isPassword,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return S.of(context).pleaseEnter(label ?? '');
+          }
+          return null;
+        },
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: ' $label ',

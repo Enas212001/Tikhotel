@@ -1,7 +1,9 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_flow/core/func/border_text_field.dart';
+import 'package:ticket_flow/core/func/dropdown_decoration.dart';
 import 'package:ticket_flow/core/utils/text_styles.dart';
 import 'package:ticket_flow/core/utils/widgets/shimmer_loading.dart';
 import 'package:ticket_flow/features/admin/data/models/worker_model/worker_item.dart';
@@ -13,6 +15,7 @@ class WorkerDropDown extends StatelessWidget {
 
   final WorkerItem? value;
   final ValueChanged<WorkerItem?>? onChanged;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -20,25 +23,37 @@ class WorkerDropDown extends StatelessWidget {
       child: BlocBuilder<WorkerCubit, WorkerState>(
         builder: (context, state) {
           if (state is FetchAllWorkerSuccess) {
+            final workers = state.workers;
+
+            if (workers.isEmpty) {
+              return const SizedBox.shrink();
+            }
+
             return Padding(
               padding: EdgeInsets.only(bottom: 14.h),
-              child: DropdownButtonFormField<WorkerItem>(
-                value: value,
-                style: TextStyles.text12LightGrey,
-                decoration: InputDecoration(
-                  labelText: S.of(context).worker,
-                  border: borderTextField(),
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  labelStyle: TextStyles.text14RegularGrey,
+              child: DropdownSearch<WorkerItem>(
+                selectedItem: value,
+                compareFn: (item, selected) => item.id == selected.id,
+                items: (filter, _) {
+                  if (filter.isEmpty) return workers;
+                  return workers
+                      .where(
+                        (w) => (w.fname ?? '').toLowerCase().contains(
+                          filter.toLowerCase(),
+                        ),
+                      )
+                      .toList();
+                },
+                itemAsString: (item) => item.fname ?? '',
+                decoratorProps: DropDownDecoratorProps(
+                  decoration: InputDecoration(
+                    labelText: S.of(context).worker,
+                    border: borderTextField(),
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    labelStyle: TextStyles.text14RegularGrey,
+                  ),
                 ),
-                items: state.workers
-                    .map(
-                      (workers) => DropdownMenuItem<WorkerItem>(
-                        value: workers,
-                        child: Text(workers.fname ?? ''),
-                      ),
-                    )
-                    .toList(),
+                popupProps: dropdownDecoration<WorkerItem>(context),
                 onChanged: onChanged,
                 validator: (value) => value == null
                     ? S.of(context).pleaseSelect(S.of(context).worker)
@@ -50,7 +65,7 @@ class WorkerDropDown extends StatelessWidget {
           } else if (state is FetchAllWorkerLoading) {
             return ShimmerCard(height: 40.h);
           }
-          return SizedBox.shrink();
+          return const SizedBox.shrink();
         },
       ),
     );
