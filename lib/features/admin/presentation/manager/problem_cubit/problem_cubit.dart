@@ -26,7 +26,7 @@ class ProblemCubit extends Cubit<ProblemState> {
     emit(ProblemFetching());
     final result = await repo.getProblems(
       page: page ?? problemPage,
-      rowCount: limit,
+      limit: limit,
     );
     result.fold(
       (l) => emit(ProblemFetchingError(error: l.failure.errorMessage)),
@@ -35,17 +35,17 @@ class ProblemCubit extends Cubit<ProblemState> {
           allProblems.clear();
         }
         allProblems.addAll(r.data!);
-        emit(
-          ProblemFetched(
-            problems: ProblemModel(
-              data: allProblems,
-              page: r.page,
-              rowCount: r.rowCount,
-              total: r.total,
-              status: r.status,
-            ),
-          ),
-        );
+        emit(ProblemFetched(problems: r));
+      },
+    );
+  }
+  Future<void> getAllProblems() async {
+    emit(AllProblemFetching());
+    final result = await repo.getAllProblem();
+    result.fold(
+      (l) => emit(AllProblemFetchingError(error: l.failure.errorMessage)),
+      (r) {
+        emit(AllProblemFetched(problems: r));
       },
     );
   }
@@ -64,15 +64,7 @@ class ProblemCubit extends Cubit<ProblemState> {
       return name.contains(query.toLowerCase());
     }).toList();
 
-    emit(
-      ProblemFetched(
-        problems: ProblemModel(
-          data: filtered,
-          page: currentState.problems.page,
-          rowCount: currentState.problems.rowCount,
-        ),
-      ),
-    );
+    emit(ProblemFetched(problems: ProblemModel(data: filtered)));
   }
 
   Future<void> addProblem() async {

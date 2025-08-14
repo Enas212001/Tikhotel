@@ -50,11 +50,11 @@ class ProblemsBody extends StatelessWidget {
               }
               if (state is ProblemFetched) {
                 final totalPages =
-                    (state.problems.total! / state.problems.rowCount!).ceil();
+                    (state.problems.pagination!.total! / state.problems.pagination!.limit!).ceil();
                 return Column(
                   children: [
                     PaginationControls(
-                      currentPage: state.problems.page!,
+                      currentPage: state.problems.pagination!.page!,
                       totalPages: totalPages,
                       onPageSelected: (page) {
                         context.read<ProblemCubit>().getProblems(page: page);

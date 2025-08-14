@@ -4,28 +4,35 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticket_flow/core/func/border_text_field.dart';
 import 'package:ticket_flow/core/utils/text_styles.dart';
 import 'package:ticket_flow/core/utils/widgets/shimmer_loading.dart';
-import 'package:ticket_flow/features/admin/data/models/topic_model/topic_item.dart';
-import 'package:ticket_flow/features/admin/presentation/manager/topic_cubit/topic_cubit.dart';
+import 'package:ticket_flow/features/admin/data/models/department_model/department_item.dart';
+import 'package:ticket_flow/features/admin/data/models/problem_model/problem_item.dart';
+import 'package:ticket_flow/features/admin/presentation/manager/problem_cubit/problem_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
-class TopicsDropDown extends StatelessWidget {
-  const TopicsDropDown({super.key, this.value, this.onChanged});
+class ProblemsDropDown extends StatelessWidget {
+  const ProblemsDropDown({
+    super.key,
+    this.value,
+    this.onChanged,
+    this.selectedDepartment,
+  });
 
-  final TopicItem? value;
-  final ValueChanged<TopicItem?>? onChanged;
+  final ProblemItem? value;
+  final ValueChanged<ProblemItem?>? onChanged;
+  final DepartmentItem? selectedDepartment;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TopicCubit()..getAllTopics(),
-      child: BlocBuilder<TopicCubit, TopicState>(
+      create: (context) => ProblemCubit()..getAllProblems(),
+      child: BlocBuilder<ProblemCubit, ProblemState>(
         builder: (context, state) {
-          if (state is AllTopicFetched) {
-            if (state.topics.data?.isEmpty ?? true) {
+          if (state is AllProblemFetched) {
+            if (state.problems.data?.isEmpty ?? true) {
               return const SizedBox.shrink();
             }
             return Padding(
               padding: EdgeInsets.only(bottom: 14.h),
-              child: DropdownButtonFormField<TopicItem>(
+              child: DropdownButtonFormField<ProblemItem>(
                 value: value,
                 style: TextStyles.text12LightGrey,
                 decoration: InputDecoration(
@@ -34,23 +41,27 @@ class TopicsDropDown extends StatelessWidget {
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                   labelStyle: TextStyles.text14RegularGrey,
                 ),
-                items: state.topics.data!
+                items: state.problems.data!
+                    .where(
+                      (problem) =>
+                          problem.departmentId == selectedDepartment?.id,
+                    )
                     .map(
-                      (topic) => DropdownMenuItem<TopicItem>(
-                        value: topic,
-                        child: Text(topic.topic ?? ''),
+                      (problem) => DropdownMenuItem<ProblemItem>(
+                        value: problem,
+                        child: Text(problem.topic ?? ''),
                       ),
                     )
                     .toList(),
                 onChanged: onChanged,
                 validator: (value) => value == null
-                    ? S.of(context).pleaseSelect(S.of(context).topic)
+                    ? S.of(context).pleaseSelect(S.of(context).problem)
                     : null,
               ),
             );
-          } else if (state is AllTopicFetchingError) {
+          } else if (state is AllProblemFetchingError) {
             return Center(child: Text(state.error));
-          } else if (state is AllTopicFetching) {
+          } else if (state is AllProblemFetching) {
             return ShimmerCard(height: 40.h);
           }
           return SizedBox.shrink();

@@ -6,8 +6,9 @@ import 'package:ticket_flow/features/admin/data/models/problem_model/problem_mod
 abstract class ProblemRepo {
   Future<Either<ServerFailure, ProblemModel>> getProblems({
     int page = 1,
-    int rowCount = 20,
+    int limit = 20,
   });
+  Future<Either<ServerFailure, ProblemModel>> getAllProblem();
   Future<Either<ServerFailure, ProblemItem>> addProblem({
     required String problemTopic,
     required String departmentId,

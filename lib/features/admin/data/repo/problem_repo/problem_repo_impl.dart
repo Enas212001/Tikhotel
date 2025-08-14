@@ -122,13 +122,41 @@ class ProblemRepoImpl extends ProblemRepo {
   @override
   Future<Either<ServerFailure, ProblemModel>> getProblems({
     int page = 1,
-    int rowCount = 20,
+    int limit = 20,
   }) async {
     try {
       final response = await api.get(
         EndPoints.problems,
-        queryParameters: {ApiKey.page: page, ApiKey.rowCount: rowCount},
+        queryParameters: {ApiKey.page: page, ApiKey.limit: limit},
       );
+      if (response is Map<String, dynamic>) {
+        final problems = ProblemModel.fromJson(response);
+        return right(problems);
+      } else {
+        return left(
+          ServerFailure(
+            failure: FailureModel(
+              status: false,
+              errorMessage: S.current.anUnexpectedErrorOccurred,
+            ),
+          ),
+        );
+      }
+    } on ServerFailure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(
+        ServerFailure(
+          failure: FailureModel(errorMessage: e.toString(), status: false),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, ProblemModel>> getAllProblem() async {
+    try {
+      final response = await api.get(EndPoints.problems);
       if (response is Map<String, dynamic>) {
         final problems = ProblemModel.fromJson(response);
         return right(problems);

@@ -59,7 +59,8 @@ class AddRequestBody extends StatelessWidget {
                 ),
                 QuantityDropDown(),
                 DepartmentSingleSelect(
-                  onChanged: (value) => cubit.selectedDepartment = value,
+                  onChanged: (value) =>
+                      cubit.setSelectedDepartment(value, context),
                   value: cubit.selectedDepartment,
                 ),
                 CustomRequestTextField(
@@ -69,13 +70,13 @@ class AddRequestBody extends StatelessWidget {
                 ),
                 CustomRequestTextField(
                   label: S.of(context).amount,
-                  isList: true,
                   isReadOnly: false,
                   controller: cubit.amountEgp,
                 ),
-                TopicsDropDown(
+                ProblemsDropDown(
                   value: cubit.problemId,
                   onChanged: (value) => cubit.problemId = value,
+                  selectedDepartment: cubit.selectedDepartment,
                 ),
                 WorkerDropDown(
                   value: cubit.workerId,

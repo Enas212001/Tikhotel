@@ -9,6 +9,8 @@ sealed class TicketState extends Equatable {
 
 final class TicketInitial extends TicketState {}
 
+final class TicketDepartmentChanged extends TicketState {}
+
 final class TicketLoading extends TicketState {}
 
 final class TicketSuccess extends TicketState {

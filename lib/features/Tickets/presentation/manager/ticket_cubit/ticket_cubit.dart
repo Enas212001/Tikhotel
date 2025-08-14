@@ -1,6 +1,6 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ticket_flow/core/api/dio_consumer.dart';
 import 'package:ticket_flow/core/cache/cache_helper.dart';
 import 'package:ticket_flow/core/utils/api_key.dart';
@@ -13,8 +13,8 @@ import 'package:ticket_flow/features/Tickets/data/repo/tickets_repo.dart';
 import 'package:ticket_flow/features/Tickets/data/repo/tickets_repo_impl.dart';
 import 'package:ticket_flow/features/admin/data/models/department_model/department_item.dart';
 import 'package:ticket_flow/features/admin/data/models/location_model/location_item.dart';
+import 'package:ticket_flow/features/admin/data/models/problem_model/problem_item.dart';
 import 'package:ticket_flow/features/admin/data/models/request_type_model/request_type_item.dart';
-import 'package:ticket_flow/features/admin/data/models/topic_model/topic_item.dart';
 import 'package:ticket_flow/features/admin/data/models/worker_model/worker_item.dart';
 
 part 'ticket_state.dart';
@@ -82,12 +82,18 @@ class TicketCubit extends Cubit<TicketState> {
   final userId = getIt.get<CacheHelper>().getData(key: ApiKey.userId);
   WorkerItem? workerId;
   LocationItem? locationId;
-  TopicItem? problemId;
+  ProblemItem? problemId;
   int? quantity;
   final requesteddBy = getIt.get<CacheHelper>().getData(
     key: CacheKey.requestedBy,
   );
   RequestTypeItem? selectedRequestType;
+  void setSelectedDepartment(DepartmentItem? department, BuildContext context) {
+    selectedDepartment = department;
+    problemId = null;
+    emit(TicketDepartmentChanged());
+  }
+
   Future<void> addTicket() async {
     emit(AddTicketLoading());
     final result = await ticketsRepo.addTicket(
@@ -112,7 +118,7 @@ class TicketCubit extends Cubit<TicketState> {
 
   String? selectedStatus;
   WorkerItem? workerIdEdit;
-  TopicItem? problemIdEdit;
+  ProblemItem? problemIdEdit;
   Future<void> editTicket(TicketItem ticket) async {
     emit(EditTicketLoading());
     final result = await ticketsRepo.editTicket(

@@ -72,7 +72,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     final isAdminLoggedIn = cache.getData(key: CacheKey.adminLoggedIn) == true;
     final isGuestLoggedIn = cache.getData(key: CacheKey.guestLoggedIn) == true;
     if (isAdminLoggedIn) {
-      if (mounted) context.go(AppRoutes.admin);
+      if (mounted) context.go(AppRoutes.newRequest);
     } else if (isGuestLoggedIn) {
       if (mounted) context.go(AppRoutes.requestsGuestPage);
     } else {

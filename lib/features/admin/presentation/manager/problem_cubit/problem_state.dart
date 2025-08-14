@@ -25,6 +25,22 @@ final class ProblemFetchingError extends ProblemState {
   List<Object> get props => [error];
 }
 
+final class AllProblemFetching extends ProblemState {}
+
+final class AllProblemFetched extends ProblemState {
+  final ProblemModel problems;
+  const AllProblemFetched({required this.problems});
+  @override
+  List<Object> get props => [problems];
+}
+
+final class AllProblemFetchingError extends ProblemState {
+  final String error;
+  const AllProblemFetchingError({required this.error});
+  @override
+  List<Object> get props => [error];
+}
+
 final class ProblemAdding extends ProblemState {}
 
 final class ProblemAdded extends ProblemState {
