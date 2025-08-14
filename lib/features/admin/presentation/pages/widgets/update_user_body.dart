@@ -5,13 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/request_text_field.dart';
-import 'package:ticket_flow/features/admin/data/models/user_model/user_model.dart';
+import 'package:ticket_flow/features/admin/data/models/user/user_model.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/user_cubit/user_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/user_roles.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'add_update_page.dart';
-import 'department_drop_down_menu.dart';
+import 'department_muliple_select.dart';
 import 'status_drop_down_menu.dart';
 
 class UpdateUserBody extends StatelessWidget {
@@ -47,7 +47,7 @@ class UpdateUserBody extends StatelessWidget {
               CustomRequestTextField(
                 label: S.of(context).password,
                 isReadOnly: false,
-                value: user.password,
+                value: '*********',
                 isPassword: true,
                 onChanged: (value) {
                   cubit.passwordControllerEdit.text = value;
@@ -61,9 +61,9 @@ class UpdateUserBody extends StatelessWidget {
                   cubit.firstNameControllerEdit.text = value;
                 },
               ),
-              DepartmentDropDown(
-                onChanged: (value) => cubit.selectedDepartmentEdit = value,
-                value: cubit.selectedDepartmentEdit,
+              DepartmentMultiSelect(
+                selectedDepartments: cubit.selectedDepartmentsEdit,
+                onConfirm: (values) => cubit.selectedDepartmentsEdit = values,
               ),
               StatusDropDown(
                 onChanged: (value) => cubit.selectedStatusEdit = (value),

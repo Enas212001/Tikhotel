@@ -8,7 +8,7 @@ import 'package:ticket_flow/core/func/container_decoration.dart';
 import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/features/Tickets/data/models/ticket_model/ticket_item.dart';
 import 'package:ticket_flow/features/Tickets/presentation/manager/ticket_cubit/ticket_cubit.dart';
-import 'package:ticket_flow/features/admin/presentation/pages/widgets/department_drop_down_menu.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/widgets/department_single_select.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/status_drop_down_menu.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/worker_drop_down.dart';
 import 'package:ticket_flow/features/onboarding/widget/custom_button.dart';
@@ -64,7 +64,7 @@ class EditRequest extends StatelessWidget {
                       value: ticket.closed,
                       isDate: true,
                     ),
-                    DepartmentDropDown(
+                    DepartmentSingleSelect(
                       value: cubit.selectedDepartment,
                       onChanged: (value) => cubit.selectedDepartment = value,
                     ),

@@ -3,6 +3,7 @@ import 'package:ticket_flow/core/api/api_consumer.dart';
 
 import 'package:ticket_flow/core/error/server_failure.dart';
 import 'package:ticket_flow/core/utils/api_key.dart';
+import 'package:ticket_flow/features/admin/data/models/department_model/department_item.dart';
 
 import 'package:ticket_flow/features/admin/data/models/department_model/department_model.dart';
 import 'package:ticket_flow/generated/l10n.dart';
@@ -14,7 +15,7 @@ class DepartmentRepoImpl extends DepartmentRepo {
 
   DepartmentRepoImpl({required this.api});
   @override
-  Future<Either<ServerFailure, DepartmentModel>> addDepartment({
+  Future<Either<ServerFailure, DepartmentItem>> addDepartment({
     required String name,
     required String status,
   }) async {
@@ -24,7 +25,7 @@ class DepartmentRepoImpl extends DepartmentRepo {
         data: {ApiKey.name: name, ApiKey.status: status},
       );
       if (response is Map<String, dynamic> && response['data'] != null) {
-        final departments = DepartmentModel.fromJson(response['data']);
+        final departments = DepartmentItem.fromJson(response['data']);
         return right(departments);
       } else {
         return left(
@@ -87,7 +88,7 @@ class DepartmentRepoImpl extends DepartmentRepo {
   }
 
   @override
-  Future<Either<ServerFailure, DepartmentModel>> editDepartment(
+  Future<Either<ServerFailure, DepartmentItem>> editDepartment(
     String id, {
     required String name,
     required String status,
@@ -98,7 +99,7 @@ class DepartmentRepoImpl extends DepartmentRepo {
         data: {ApiKey.name: name, ApiKey.status: status},
       );
       if (response is Map<String, dynamic> && response['data'] != null) {
-        final department = DepartmentModel.fromJson(response['data']);
+        final department = DepartmentItem.fromJson(response['data']);
         return right(department);
       } else {
         return left(
@@ -122,13 +123,17 @@ class DepartmentRepoImpl extends DepartmentRepo {
   }
 
   @override
-  Future<Either<ServerFailure, List<DepartmentModel>>> getDepartments() async {
+  Future<Either<ServerFailure, DepartmentModel>> getDepartments({
+    int page = 1,
+    int limit = 20,
+  }) async {
     try {
-      final response = await api.get(EndPoints.departments);
+      final response = await api.get(
+        EndPoints.departments,
+        queryParameters: {ApiKey.page: page, ApiKey.limit: limit},
+      );
       if (response is Map<String, dynamic> && response['data'] != null) {
-        final departments = (response['data'] as List)
-            .map((e) => DepartmentModel.fromJson(e))
-            .toList();
+        final departments = DepartmentModel.fromJson(response);
         return right(departments);
       } else {
         return left(

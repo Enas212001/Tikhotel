@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:ticket_flow/core/api/dio_consumer.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
-import 'package:ticket_flow/features/admin/data/models/department_model/department_model.dart';
+import 'package:ticket_flow/features/admin/data/models/department_model/department_item.dart';
 import 'package:ticket_flow/features/admin/data/models/worker_model/worker_item.dart';
 import 'package:ticket_flow/features/admin/data/models/worker_model/worker_model.dart';
 import 'package:ticket_flow/features/admin/data/repo/worker_repo/worker_repo.dart';
@@ -112,7 +112,7 @@ class WorkerCubit extends Cubit<WorkerState> with FilterableMixin<WorkerItem> {
   final TextEditingController phoneController = TextEditingController();
   String? selectedStatus;
   String? selectedEditedStatus;
-  DepartmentModel? selectedDepartment;
+  DepartmentItem? selectedDepartment;
 
   Future<void> addWorker() async {
     emit(AddWorkerLoading());
@@ -132,7 +132,7 @@ class WorkerCubit extends Cubit<WorkerState> with FilterableMixin<WorkerItem> {
 
   final TextEditingController phoneEditController = TextEditingController();
   final TextEditingController nameEditController = TextEditingController();
-  DepartmentModel? selectedEditedDepartment;
+  DepartmentItem? selectedEditedDepartment;
 
   Future<void> editWorker({required WorkerItem worker}) async {
     emit(EditWorkerLoading());

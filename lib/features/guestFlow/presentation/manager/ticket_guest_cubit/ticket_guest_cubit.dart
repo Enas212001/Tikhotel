@@ -6,7 +6,7 @@ import 'package:ticket_flow/core/cache/cache_helper.dart';
 import 'package:ticket_flow/core/error/server_failure.dart';
 import 'package:ticket_flow/core/utils/api_key.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
-import 'package:ticket_flow/features/admin/data/models/department_model/department_model.dart';
+import 'package:ticket_flow/features/admin/data/models/department_model/department_item.dart';
 import 'package:ticket_flow/features/guestFlow/data/models/add_guest_ticket_model/add_guest_ticket_item.dart';
 import 'package:ticket_flow/features/guestFlow/data/models/guest_ticket_model/guest_ticket_model.dart';
 import 'package:ticket_flow/features/guestFlow/data/repo/guest_ticket_repo/ticket_guest_repo.dart';
@@ -37,7 +37,7 @@ class GuestTicketsCubit extends Cubit<GuestTicketsState> {
   }
 
   TextEditingController messageController = TextEditingController();
-  DepartmentModel? departmentItem;
+  DepartmentItem? departmentItem;
   Future<void> addGuestTicket() async {
     emit(AddGuestTicketLoading());
     try {

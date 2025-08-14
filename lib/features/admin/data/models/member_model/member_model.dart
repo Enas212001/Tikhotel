@@ -1,40 +1,34 @@
 import 'package:equatable/equatable.dart';
 
-class MemberModel extends Equatable {
-  final int? id;
-  final String? title;
-  final String? name;
-  final String? email;
-  final String? status;
-  final String? ts;
+import 'member_item.dart';
+import 'member_pagination.dart';
 
-  const MemberModel({
-    this.id,
-    this.title,
-    this.name,
-    this.email,
-    this.status,
-    this.ts,
-  });
+class MemberModel extends Equatable {
+  final bool? status;
+  final String? message;
+  final List<MemberItem>? data;
+  final MemberPagination? pagination;
+
+  const MemberModel({this.status, this.message, this.data, this.pagination});
 
   factory MemberModel.fromJson(Map<String, dynamic> json) => MemberModel(
-    id: json['id'] as int?,
-    title: json['title'] as String?,
-    name: json['name'] as String?,
-    email: json['email'] as String?,
-    status: json['status'] as String?,
-    ts: json['ts'] as String?,
+    status: json['status'] as bool?,
+    message: json['message'] as String?,
+    data: (json['data'] as List<dynamic>?)
+        ?.map((e) => MemberItem.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    pagination: json['pagination'] == null
+        ? null
+        : MemberPagination.fromJson(json['pagination'] as Map<String, dynamic>),
   );
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'title': title,
-    'name': name,
-    'email': email,
     'status': status,
-    'ts': ts,
+    'message': message,
+    'data': data?.map((e) => e.toJson()).toList(),
+    'pagination': pagination?.toJson(),
   };
 
   @override
-  List<Object?> get props => [id, title, name, email, status, ts];
+  List<Object?> get props => [status, message, data, pagination];
 }

@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:ticket_flow/core/api/dio_consumer.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
-import 'package:ticket_flow/features/admin/data/models/department_model/department_model.dart';
+import 'package:ticket_flow/features/admin/data/models/department_model/department_item.dart';
 import 'package:ticket_flow/features/admin/data/models/topic_model/topic_item.dart';
 import 'package:ticket_flow/features/admin/data/models/topic_model/topic_model.dart';
 import 'package:ticket_flow/features/admin/data/repo/topic_repo/topic_repo.dart';
@@ -23,8 +23,8 @@ class TopicCubit extends Cubit<TopicState> with FilterableMixin<TopicItem> {
   TextEditingController slaEditController = TextEditingController();
   String? selectedStatus;
   String? selectedEditedStatus;
-  DepartmentModel? selectedDepartment;
-  DepartmentModel? selectedEditedDepartment;
+  DepartmentItem? selectedDepartment;
+  DepartmentItem? selectedEditedDepartment;
   int topicPage = 1;
   final int limit = 20;
   Future<void> getTopics({int? page}) async {

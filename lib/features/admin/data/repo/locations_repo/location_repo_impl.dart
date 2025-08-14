@@ -153,6 +153,7 @@ class LocationRepoImpl extends LocationRepo {
       );
     }
   }
+
   @override
   Future<Either<ServerFailure, LocationModel>> getAllLocations() async {
     try {

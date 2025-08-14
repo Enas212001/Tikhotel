@@ -2,19 +2,19 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 import 'package:ticket_flow/core/api/dio_consumer.dart';
 import 'package:ticket_flow/core/error/server_failure.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
-import 'package:ticket_flow/features/admin/data/models/department_model/department_model.dart';
+import 'package:ticket_flow/features/admin/data/models/department_model/department_item.dart';
 import 'package:ticket_flow/features/admin/data/models/location_model/location_item.dart';
 import 'package:ticket_flow/features/report/data/models/report_model/report_item.dart';
 import 'package:ticket_flow/features/report/data/repo/report_repo.dart';
 import 'package:ticket_flow/features/report/data/repo/report_repo_impl.dart';
-
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
 import 'package:ticket_flow/generated/l10n.dart';
+
 part 'report_state.dart';
 
 class ReportCubit extends Cubit<ReportState> {
@@ -23,7 +23,7 @@ class ReportCubit extends Cubit<ReportState> {
   TextEditingController dateFromController = TextEditingController();
   TextEditingController dateToController = TextEditingController();
 
-  DepartmentModel? selectedDepartment;
+  DepartmentItem? selectedDepartment;
   LocationItem? selectedLocation;
 
   Future<void> getReportByDate() async {

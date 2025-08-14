@@ -22,7 +22,7 @@ class AddOrUpdatePage extends StatelessWidget {
         child: Column(
           children: [
             child,
-            SizedBox(height: MediaQuery.sizeOf(context).height * 0.15.h),
+            SizedBox(height: 32.h),
             CustomButton(
               text: S.of(context).save,
               isPrimary: true,

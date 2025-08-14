@@ -5,7 +5,7 @@ import 'package:ticket_flow/core/func/refactor_date.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/core/utils/widgets/detail_item.dart';
-import 'package:ticket_flow/features/admin/data/models/user_model/user_model.dart';
+import 'package:ticket_flow/features/admin/data/models/user/user_model.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/user_cubit/user_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 

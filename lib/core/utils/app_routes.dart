@@ -7,13 +7,13 @@ import 'package:ticket_flow/features/Tickets/presentation/views/closed_work_orde
 import 'package:ticket_flow/features/Tickets/presentation/views/feedback_page.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/new_request_page.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/view_request_page.dart';
-import 'package:ticket_flow/features/admin/data/models/department_model/department_model.dart';
+import 'package:ticket_flow/features/admin/data/models/department_model/department_item.dart';
 import 'package:ticket_flow/features/admin/data/models/location_model/location_item.dart';
-import 'package:ticket_flow/features/admin/data/models/member_model/member_model.dart';
+import 'package:ticket_flow/features/admin/data/models/member_model/member_item.dart';
 import 'package:ticket_flow/features/admin/data/models/problem_model/problem_item.dart';
 import 'package:ticket_flow/features/admin/data/models/request_type_model/request_type_item.dart';
 import 'package:ticket_flow/features/admin/data/models/topic_model/topic_item.dart';
-import 'package:ticket_flow/features/admin/data/models/user_model/user_model.dart';
+import 'package:ticket_flow/features/admin/data/models/user/user_model.dart';
 import 'package:ticket_flow/features/admin/data/models/worker_model/worker_item.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/department_cubit/department_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/location_cubit/location_cubit.dart';
@@ -170,7 +170,7 @@ class AppRoutes {
       GoRoute(
         path: updateDepartment,
         builder: (context, state) {
-          final department = state.extra as DepartmentModel;
+          final department = state.extra as DepartmentItem;
           return UpdateDepPage(department: department);
         },
       ),
@@ -218,7 +218,7 @@ class AppRoutes {
       GoRoute(
         path: updateMember,
         builder: (context, state) {
-          final member = state.extra as MemberModel;
+          final member = state.extra as MemberItem;
           return UpdateMemberPage(member: member);
         },
       ),

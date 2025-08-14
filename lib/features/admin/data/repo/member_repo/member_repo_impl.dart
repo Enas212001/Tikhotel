@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:ticket_flow/core/api/api_consumer.dart';
 import 'package:ticket_flow/core/error/server_failure.dart';
 import 'package:ticket_flow/core/utils/api_key.dart';
+import 'package:ticket_flow/features/admin/data/models/member_model/member_item.dart';
 import 'package:ticket_flow/features/admin/data/models/member_model/member_model.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
@@ -13,7 +14,7 @@ class MemberRepoImpl extends MemberRepo {
   MemberRepoImpl({required this.api});
 
   @override
-  Future<Either<ServerFailure, MemberModel>> addMember({
+  Future<Either<ServerFailure, MemberItem>> addMember({
     required String title,
     required String name,
     required String email,
@@ -30,7 +31,7 @@ class MemberRepoImpl extends MemberRepo {
         },
       );
       if (response is Map<String, dynamic> && response['data'] != null) {
-        final member = MemberModel.fromJson(response['data']);
+        final member = MemberItem.fromJson(response['data']);
         return right(member);
       } else {
         return left(
@@ -82,7 +83,7 @@ class MemberRepoImpl extends MemberRepo {
   }
 
   @override
-  Future<Either<ServerFailure, MemberModel>> editMember(
+  Future<Either<ServerFailure, MemberItem>> editMember(
     String id, {
     String? title,
     String? name,
@@ -100,7 +101,7 @@ class MemberRepoImpl extends MemberRepo {
         },
       );
       if (response is Map<String, dynamic> && response['data'] != null) {
-        final member = MemberModel.fromJson(response['data']);
+        final member = MemberItem.fromJson(response['data']);
         return right(member);
       } else {
         return left(
@@ -124,11 +125,17 @@ class MemberRepoImpl extends MemberRepo {
   }
 
   @override
-  Future<Either<ServerFailure, List<MemberModel>>> getMembers() async {
+  Future<Either<ServerFailure, MemberModel>> getMembers({
+    int page = 1,
+    int limit = 20,
+  }) async {
     try {
-      final response = await api.get(EndPoints.members);
-      if (response is List) {
-        final members = response.map((e) => MemberModel.fromJson(e)).toList();
+      final response = await api.get(
+        EndPoints.members,
+        queryParameters: {ApiKey.page: page, ApiKey.limit: limit},
+      );
+      if (response is Map<String, dynamic>) {
+        final members = MemberModel.fromJson(response);
         return right(members);
       } else {
         return left(

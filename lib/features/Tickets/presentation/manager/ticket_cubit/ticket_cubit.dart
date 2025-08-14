@@ -11,7 +11,7 @@ import 'package:ticket_flow/features/Tickets/data/models/ticket_model/ticket_ite
 import 'package:ticket_flow/features/Tickets/data/models/ticket_model/ticket_pagination.dart';
 import 'package:ticket_flow/features/Tickets/data/repo/tickets_repo.dart';
 import 'package:ticket_flow/features/Tickets/data/repo/tickets_repo_impl.dart';
-import 'package:ticket_flow/features/admin/data/models/department_model/department_model.dart';
+import 'package:ticket_flow/features/admin/data/models/department_model/department_item.dart';
 import 'package:ticket_flow/features/admin/data/models/location_model/location_item.dart';
 import 'package:ticket_flow/features/admin/data/models/request_type_model/request_type_item.dart';
 import 'package:ticket_flow/features/admin/data/models/topic_model/topic_item.dart';
@@ -78,7 +78,7 @@ class TicketCubit extends Cubit<TicketState> {
   TextEditingController messageController = TextEditingController();
   TextEditingController compensationController = TextEditingController();
   TextEditingController amountEgp = TextEditingController();
-  DepartmentModel? selectedDepartment;
+  DepartmentItem? selectedDepartment;
   final userId = getIt.get<CacheHelper>().getData(key: ApiKey.userId);
   WorkerItem? workerId;
   LocationItem? locationId;

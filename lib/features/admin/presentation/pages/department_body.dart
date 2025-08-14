@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/widgets/add_filter_widget.dart';
+import 'package:ticket_flow/core/utils/widgets/pagination_controller.dart';
 import 'package:ticket_flow/core/utils/widgets/shimmer_loading.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/department_cubit/department_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/department_card.dart';
@@ -70,11 +71,28 @@ class DepartmentBody extends StatelessWidget {
                 log(state.message);
                 return Center(child: Text(state.message));
               } else if (state is DepartmentFetchSuccess) {
-                return CommonAdminListView(
-                  item: (context, index) => DepartmentDetailCard(
-                    department: state.departments[index],
-                  ),
-                  itemCount: state.departments.length,
+                final totalPages =
+                    (state.departments.pagination!.total! /
+                            state.departments.pagination!.limit!)
+                        .ceil();
+                return Column(
+                  children: [
+                    PaginationControls(
+                      currentPage: state.departments.pagination!.page!,
+                      totalPages: totalPages,
+                      onPageSelected: (page) {
+                        context.read<DepartmentCubit>().fetchDepartments(
+                          page: page,
+                        );
+                      },
+                    ),
+                    CommonAdminListView(
+                      item: (context, index) => DepartmentDetailCard(
+                        department: state.departments.data![index],
+                      ),
+                      itemCount: state.departments.data!.length,
+                    ),
+                  ],
                 );
               }
               return ShimmerLoadingList();

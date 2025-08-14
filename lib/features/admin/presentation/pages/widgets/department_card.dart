@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/core/utils/widgets/detail_item.dart';
-import 'package:ticket_flow/features/admin/data/models/department_model/department_model.dart';
+import 'package:ticket_flow/features/admin/data/models/department_model/department_item.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/department_cubit/department_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
@@ -13,7 +13,7 @@ import 'delete_department.dart';
 
 class DepartmentDetailCard extends StatelessWidget {
   const DepartmentDetailCard({super.key, required this.department});
-  final DepartmentModel department;
+  final DepartmentItem department;
   @override
   Widget build(BuildContext context) {
     return AdminCard(

@@ -3,10 +3,10 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:ticket_flow/core/api/dio_consumer.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
-import 'package:ticket_flow/features/admin/data/models/department_model/department_model.dart';
+import 'package:ticket_flow/features/admin/data/models/department_model/department_item.dart';
 import 'package:ticket_flow/features/admin/data/models/role_model/role_model.dart';
-import 'package:ticket_flow/features/admin/data/models/user_model/user.dart';
-import 'package:ticket_flow/features/admin/data/models/user_model/user_model.dart';
+import 'package:ticket_flow/features/admin/data/models/user/user.dart';
+import 'package:ticket_flow/features/admin/data/models/user/user_model.dart';
 import 'package:ticket_flow/features/admin/data/repo/user_repo/user_repo.dart';
 import 'package:ticket_flow/features/admin/data/repo/user_repo/user_repo_impl.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/mixins/filterable_mixin.dart';
@@ -16,15 +16,22 @@ part 'user_state.dart';
 class UserCubit extends Cubit<UserState> with FilterableMixin<UserModel> {
   UserCubit() : super(UserInitial());
   final UserRepo repo = UserRepoImpl(api: getIt<DioConsumer>());
-  Future<void> getUsers() async {
+  int userPage = 1;
+  final int limit = 20;
+  List<UserModel> allUsers = [];
+  Future<void> getUsers({int? page}) async {
     emit(GetUsersLoading());
-    final result = await repo.getUsers();
+    final result = await repo.getUsers(page: page ?? userPage, limit: limit);
     result.fold(
       (failure) {
         emit(GetUsersFailure(message: failure.failure.errorMessage));
       },
       (users) {
-        allItems = users.data!;
+        if (userPage == 1) {
+          allUsers.clear();
+        }
+        allUsers.addAll(users.data!);
+        allItems = allUsers;
         emit(GetUsersSuccess(users: users));
       },
     );
@@ -79,26 +86,13 @@ class UserCubit extends Cubit<UserState> with FilterableMixin<UserModel> {
   final TextEditingController passwordControllerEdit = TextEditingController();
   final TextEditingController firstNameControllerEdit = TextEditingController();
   // Add these variables
-  DepartmentModel? selectedDepartment;
+  List<DepartmentItem> selectedDepartments = [];
   String? selectedStatus;
   String? selectedOperational;
   RoleModel? selectedRole;
-  DepartmentModel? selectedDepartmentEdit;
+  List<DepartmentItem> selectedDepartmentsEdit = [];
   String? selectedStatusEdit;
   RoleModel? selectedRoleEdit;
-
-  // Add methods to update them
-  void setRole(RoleModel? value) {
-    selectedRole = value;
-  }
-
-  void setRoleEdit(RoleModel? value) {
-    selectedRoleEdit = value;
-  }
-
-  void setOperational(String? value) {
-    selectedOperational = value;
-  }
 
   Future<void> addUser() async {
     emit(AddUserLoading());
@@ -107,7 +101,9 @@ class UserCubit extends Cubit<UserState> with FilterableMixin<UserModel> {
       email: emailController.text,
       password: passwordController.text,
       firstName: firstNameController.text,
-      department: selectedDepartment?.id?.toString() ?? '',
+      department: selectedDepartments
+          .map((dept) => dept.id!.toString())
+          .toList(),
       status: selectedStatus == 'Inactive'
           ? 'F'
           : selectedStatus == 'Active'
@@ -147,13 +143,14 @@ class UserCubit extends Cubit<UserState> with FilterableMixin<UserModel> {
           ? user.email.toString()
           : emailControllerEdit.text,
       password: passwordControllerEdit.text.isEmpty
-          ? user.password.toString()
+          ? null
           : passwordControllerEdit.text,
       firstName: firstNameControllerEdit.text.isEmpty
           ? user.name.toString()
           : firstNameControllerEdit.text,
-      department:
-          selectedDepartmentEdit?.id.toString() ?? user.departments.toString(),
+      department: selectedDepartmentsEdit
+          .map((dept) => dept.id.toString())
+          .toList(),
       status: selectedStatusEdit == 'Inactive'
           ? 'F'
           : selectedStatusEdit == 'Active'

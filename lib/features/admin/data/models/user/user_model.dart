@@ -11,7 +11,6 @@ class UserModel extends Equatable {
   final String? isActive;
   final String? ip;
   final String? role;
-  final String? password;
   final String? departments;
 
   const UserModel({
@@ -25,7 +24,6 @@ class UserModel extends Equatable {
     this.isActive,
     this.ip,
     this.role,
-    this.password,
     this.departments,
   });
 
@@ -36,11 +34,10 @@ class UserModel extends Equatable {
     phone: json['phone'] as dynamic,
     created: json['created'] as String?,
     lastLogin: json['last_login'] as String?,
-    status: json['status']?.toString(),
+    status: json['status'] as String?,
     isActive: json['is_active'] as String?,
     ip: json['ip'] as String?,
     role: json['role'] as String?,
-    password: json['password'] ?? '********',
     departments: json['departments'] as String?,
   );
 
@@ -55,7 +52,6 @@ class UserModel extends Equatable {
     'is_active': isActive,
     'ip': ip,
     'role': role,
-    'password': password,
     'departments': departments,
   };
 
@@ -72,7 +68,6 @@ class UserModel extends Equatable {
       isActive,
       ip,
       role,
-      password,
       departments,
     ];
   }

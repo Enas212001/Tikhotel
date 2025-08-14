@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:ticket_flow/core/api/dio_consumer.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
+import 'package:ticket_flow/features/admin/data/models/department_model/department_item.dart';
 import 'package:ticket_flow/features/admin/data/models/department_model/department_model.dart';
 import 'package:ticket_flow/features/admin/data/repo/department_repo/department_repo.dart';
 import 'package:ticket_flow/features/admin/data/repo/department_repo/department_repo_impl.dart';
@@ -11,7 +12,7 @@ import 'package:ticket_flow/features/admin/presentation/manager/mixins/filterabl
 part 'department_state.dart';
 
 class DepartmentCubit extends Cubit<DepartmentState>
-    with FilterableMixin<DepartmentModel> {
+    with FilterableMixin<DepartmentItem> {
   DepartmentCubit() : super(DepartmentInitial());
   final DepartmentRepo departmentRepo = DepartmentRepoImpl(
     api: getIt.get<DioConsumer>(),
@@ -22,20 +23,27 @@ class DepartmentCubit extends Cubit<DepartmentState>
   final TextEditingController nameEditedController = TextEditingController();
   String? selectedStatus;
   String? selectedEditedStatus;
-  Future<void> fetchDepartments() async {
+  final int limit = 20;
+  int departmentPage = 1;
+  List<DepartmentItem> allDepartments = [];
+  Future<void> fetchDepartments({int? page}) async {
     emit(DepartmentFetchLoading());
     final result = await departmentRepo.getDepartments();
     result.fold(
       (l) => emit(DepartmentFetchFailure(message: l.failure.errorMessage)),
       (r) {
-        allItems = r;
+        if (departmentPage == 1) {
+          allDepartments.clear();
+        }
+        allDepartments.addAll(r.data!);
+        allItems = allDepartments;
         emit(DepartmentFetchSuccess(departments: r));
       },
     );
   }
 
   @override
-  bool filterItem(DepartmentModel department, String filter) {
+  bool filterItem(DepartmentItem department, String filter) {
     switch (filter) {
       case 'active':
         return department.status == 'T';
@@ -47,15 +55,17 @@ class DepartmentCubit extends Cubit<DepartmentState>
   }
 
   @override
-  bool searchItem(DepartmentModel department, String query) {
+  bool searchItem(DepartmentItem department, String query) {
     final name = department.name?.toLowerCase() ?? '';
     final queryLower = query.toLowerCase();
     return name.contains(queryLower);
   }
 
   @override
-  void emitFilteredState(List<DepartmentModel> filteredItems) {
-    emit(DepartmentFetchSuccess(departments: filteredItems));
+  void emitFilteredState(List<DepartmentItem> filteredItems) {
+    emit(
+      DepartmentFetchSuccess(departments: DepartmentModel(data: filteredItems)),
+    );
   }
 
   void searchDepartments(String query) {
@@ -78,7 +88,7 @@ class DepartmentCubit extends Cubit<DepartmentState>
     );
   }
 
-  Future<void> editDepartment({required DepartmentModel department}) async {
+  Future<void> editDepartment({required DepartmentItem department}) async {
     emit(DepartmentEditing());
     final result = await departmentRepo.editDepartment(
       department.id.toString(),

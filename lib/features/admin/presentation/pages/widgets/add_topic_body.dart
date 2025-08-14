@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/func/custom_toast.dart';
+import 'package:ticket_flow/features/Tickets/presentation/views/widgets/request_text_field.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/topic_cubit/topic_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/add_update_page.dart';
-import 'package:ticket_flow/features/Tickets/presentation/views/widgets/request_text_field.dart';
-import 'package:ticket_flow/features/admin/presentation/pages/widgets/department_drop_down_menu.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/status_drop_down_menu.dart';
 import 'package:ticket_flow/generated/l10n.dart';
+
+import 'department_single_select.dart';
 
 class AddTopicBody extends StatelessWidget {
   const AddTopicBody({super.key});
@@ -39,7 +40,7 @@ class AddTopicBody extends StatelessWidget {
                   isReadOnly: false,
                   controller: cubit.slaController,
                 ),
-                DepartmentDropDown(
+                DepartmentSingleSelect(
                   value: cubit.selectedDepartment,
                   onChanged: (value) => cubit.selectedDepartment = value,
                 ),

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/widgets/add_filter_widget.dart';
+import 'package:ticket_flow/core/utils/widgets/pagination_controller.dart';
 import 'package:ticket_flow/core/utils/widgets/shimmer_loading.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/member_cubit/member_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/generic_filter_dialog.dart';
@@ -67,10 +68,25 @@ class MemberBody extends StatelessWidget {
                 log(state.message);
                 return Center(child: Text(state.message));
               } else if (state is MemberLoaded) {
-                return CommonAdminListView(
-                  item: (context, index) =>
-                      MemberCard(member: state.members[index]),
-                  itemCount: state.members.length,
+                final totalPages =
+                    (state.members.pagination!.total! /
+                            state.members.pagination!.limit!)
+                        .ceil();
+                return Column(
+                  children: [
+                    PaginationControls(
+                      currentPage: state.members.pagination!.page!,
+                      totalPages: totalPages,
+                      onPageSelected: (page) {
+                        context.read<MemberCubit>().getMembers(page: page);
+                      },
+                    ),
+                    CommonAdminListView(
+                      item: (context, index) =>
+                          MemberCard(member: state.members.data![index]),
+                      itemCount: state.members.data!.length,
+                    ),
+                  ],
                 );
               }
               return const ShimmerLoadingList();

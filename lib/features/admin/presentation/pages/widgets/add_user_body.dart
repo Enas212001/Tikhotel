@@ -9,7 +9,7 @@ import 'package:ticket_flow/features/admin/presentation/manager/user_cubit/user_
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/add_update_page.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
-import 'department_drop_down_menu.dart';
+import 'department_muliple_select.dart';
 import 'drop_down_user.dart';
 import 'status_drop_down_menu.dart';
 import 'user_roles.dart';
@@ -51,9 +51,9 @@ class AddUserBody extends StatelessWidget {
                   isReadOnly: false,
                   controller: cubit.firstNameController,
                 ),
-                DepartmentDropDown(
-                  onChanged: (value) => cubit.selectedDepartment = value,
-                  value: cubit.selectedDepartment,
+                DepartmentMultiSelect(
+                  selectedDepartments: cubit.selectedDepartments,
+                  onConfirm: (values) => cubit.selectedDepartments = values,
                 ),
                 StatusDropDown(
                   onChanged: (value) => cubit.selectedStatus = value,
@@ -84,7 +84,7 @@ class OperationalDropDown extends StatelessWidget {
       value: cubit.selectedOperational,
       items: [S.of(context).active, S.of(context).inactive],
       label: S.of(context).operational,
-      onChanged: (value) => cubit.setOperational(value),
+      onChanged: (value) => cubit.selectedOperational = (value),
     );
   }
 }

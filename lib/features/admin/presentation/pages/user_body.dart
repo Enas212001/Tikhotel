@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/widgets/add_filter_widget.dart';
+import 'package:ticket_flow/core/utils/widgets/pagination_controller.dart';
 import 'package:ticket_flow/core/utils/widgets/shimmer_loading.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/user_cubit/user_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/generic_filter_dialog.dart';
@@ -66,10 +67,25 @@ class UsersBody extends StatelessWidget {
             child: BlocBuilder<UserCubit, UserState>(
               builder: (context, state) {
                 if (state is GetUsersSuccess) {
-                  return CommonAdminListView(
-                    item: (context, index) =>
-                        UserDetailCard(user: state.users.data![index]),
-                    itemCount: state.users.data!.length,
+                  final totalPages =
+                      (state.users.pagination!.total! /
+                              state.users.pagination!.limit!)
+                          .ceil();
+                  return Column(
+                    children: [
+                      PaginationControls(
+                        currentPage: state.users.pagination!.page!,
+                        totalPages: totalPages,
+                        onPageSelected: (page) {
+                          context.read<UserCubit>().getUsers(page: page);
+                        },
+                      ),
+                      CommonAdminListView(
+                        item: (context, index) =>
+                            UserDetailCard(user: state.users.data![index]),
+                        itemCount: state.users.data!.length,
+                      ),
+                    ],
                   );
                 } else if (state is GetUsersFailure) {
                   return Center(

@@ -9,7 +9,7 @@ import 'package:ticket_flow/features/Tickets/presentation/views/widgets/message_
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/request_text_field.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/success_message.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/title_on_border.dart';
-import 'package:ticket_flow/features/admin/presentation/pages/widgets/department_drop_down_menu.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/widgets/department_single_select.dart';
 import 'package:ticket_flow/features/guestFlow/presentation/manager/ticket_guest_cubit/ticket_guest_cubit.dart';
 import 'package:ticket_flow/features/onboarding/widget/custom_button.dart';
 import 'package:ticket_flow/generated/l10n.dart';
@@ -47,7 +47,7 @@ class NewRequestGuestBody extends StatelessWidget {
                 title: S.of(context).sendRequest,
                 child: Column(
                   children: [
-                    DepartmentDropDown(
+                    DepartmentSingleSelect(
                       onChanged: (value) => cubit.departmentItem = value,
                     ),
                     MessageTextField(

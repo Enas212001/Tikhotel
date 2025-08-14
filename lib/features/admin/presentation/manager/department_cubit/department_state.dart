@@ -12,7 +12,7 @@ final class DepartmentInitial extends DepartmentState {}
 final class DepartmentFetchLoading extends DepartmentState {}
 
 final class DepartmentFetchSuccess extends DepartmentState {
-  final List<DepartmentModel> departments;
+  final DepartmentModel departments;
   const DepartmentFetchSuccess({required this.departments});
   @override
   List<Object> get props => [departments];
@@ -26,7 +26,7 @@ final class DepartmentFetchFailure extends DepartmentState {
 final class DepartmentAdding extends DepartmentState {}
 
 final class DepartmentAdded extends DepartmentState {
-  final DepartmentModel department;
+  final DepartmentItem department;
   const DepartmentAdded({required this.department});
 }
 
@@ -50,7 +50,7 @@ final class DepartmentDeleteFailure extends DepartmentState {
 final class DepartmentEditing extends DepartmentState {}
 
 final class DepartmentEdited extends DepartmentState {
-  final DepartmentModel department;
+  final DepartmentItem department;
   const DepartmentEdited({required this.department});
 }
 

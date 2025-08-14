@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/assets.dart';
 import 'package:ticket_flow/core/utils/widgets/detail_item.dart';
-import 'package:ticket_flow/features/admin/data/models/member_model/member_model.dart';
+import 'package:ticket_flow/features/admin/data/models/member_model/member_item.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/member_cubit/member_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/admin_card.dart';
 import 'package:ticket_flow/generated/l10n.dart';
@@ -13,7 +13,7 @@ import 'delete_membber.dart';
 
 class MemberCard extends StatelessWidget {
   const MemberCard({super.key, required this.member});
-  final MemberModel member;
+  final MemberItem member;
   @override
   Widget build(BuildContext context) {
     return AdminCard(

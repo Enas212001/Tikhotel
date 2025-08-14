@@ -3,8 +3,8 @@ import 'package:ticket_flow/core/api/api_consumer.dart';
 import 'package:ticket_flow/core/error/server_failure.dart';
 import 'package:ticket_flow/core/utils/api_key.dart';
 import 'package:ticket_flow/features/admin/data/models/role_model/role_model.dart';
-import 'package:ticket_flow/features/admin/data/models/user_model/user.dart';
-import 'package:ticket_flow/features/admin/data/models/user_model/user_model.dart';
+import 'package:ticket_flow/features/admin/data/models/user/user.dart';
+import 'package:ticket_flow/features/admin/data/models/user/user_model.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'user_repo.dart';
@@ -19,7 +19,7 @@ class UserRepoImpl extends UserRepo {
     required String email,
     required String password,
     required String firstName,
-    required String department,
+    required List<String> department,
     required String status,
     required String operational,
   }) async {
@@ -31,13 +31,13 @@ class UserRepoImpl extends UserRepo {
           ApiKey.password: password,
           ApiKey.name: firstName,
           ApiKey.roleId: roleId,
-          ApiKey.department: department,
+          ApiKey.departmentId: department,
           ApiKey.isActive: status,
           ApiKey.operational: operational,
         },
       );
       if (response is Map<String, dynamic>) {
-        final user = UserModel.fromJson(response);
+        final user = UserModel.fromJson(response['user']);
         return right(user);
       } else {
         return left(
@@ -106,7 +106,7 @@ class UserRepoImpl extends UserRepo {
     String? email,
     String? password,
     String? firstName,
-    String? department,
+    List<String>? department,
     String? status,
   }) async {
     try {

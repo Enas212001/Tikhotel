@@ -40,8 +40,9 @@ class UserRoles extends StatelessWidget {
                     ),
                   )
                   .toList(),
-              onChanged: (RoleModel? value) =>
-                  isEdit ? cubit.setRoleEdit(value) : cubit.setRole(value),
+              onChanged: (RoleModel? value) => isEdit
+                  ? cubit.selectedRoleEdit = (value)
+                  : cubit.selectedRole = (value),
               validator: (value) => value == null
                   ? S.of(context).pleaseSelect(S.of(context).role)
                   : null,

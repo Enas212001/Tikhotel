@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:ticket_flow/core/api/dio_consumer.dart';
 import 'package:ticket_flow/core/utils/service_locator.dart';
+import 'package:ticket_flow/features/admin/data/models/member_model/member_item.dart';
 import 'package:ticket_flow/features/admin/data/models/member_model/member_model.dart';
 import 'package:ticket_flow/features/admin/data/repo/member_repo/member_repo.dart';
 import 'package:ticket_flow/features/admin/data/repo/member_repo/member_repo_impl.dart';
@@ -10,7 +11,7 @@ import 'package:ticket_flow/features/admin/presentation/manager/mixins/filterabl
 
 part 'member_state.dart';
 
-class MemberCubit extends Cubit<MemberState> with FilterableMixin<MemberModel> {
+class MemberCubit extends Cubit<MemberState> with FilterableMixin<MemberItem> {
   MemberCubit() : super(MemberInitial());
 
   final MemberRepo repo = MemberRepoImpl(api: getIt.get<DioConsumer>());
@@ -23,23 +24,30 @@ class MemberCubit extends Cubit<MemberState> with FilterableMixin<MemberModel> {
   String? selectedTitle;
   String? selectedEditedTitle;
   String? selectedEditedStatus;
-  Future<void> getMembers() async {
+  int memberPage = 1;
+  final int limit = 20;
+  List<MemberItem> allMembers = [];
+  Future<void> getMembers({int? page}) async {
     emit(MemberLoading());
-    final response = await repo.getMembers();
+    final response = await repo.getMembers(
+      page: page ?? memberPage,
+      limit: limit,
+    );
     response.fold(
       (failure) => emit(MemberError(message: failure.failure.errorMessage)),
       (members) {
-        allMembers = members;
-        allItems = members;
+        if (memberPage == 1) {
+          allMembers.clear();
+        }
+        allMembers.addAll(members.data!);
+        allItems = allMembers;
         emit(MemberLoaded(members: members));
       },
     );
   }
 
-  List<MemberModel> allMembers = [];
-
   @override
-  bool filterItem(MemberModel member, String filter) {
+  bool filterItem(MemberItem member, String filter) {
     switch (filter) {
       case 'active':
         return member.status == 'T';
@@ -51,7 +59,7 @@ class MemberCubit extends Cubit<MemberState> with FilterableMixin<MemberModel> {
   }
 
   @override
-  bool searchItem(MemberModel member, String query) {
+  bool searchItem(MemberItem member, String query) {
     final name =
         '${member.title ?? ''} ${member.name ?? ''} ${member.email ?? ''}'
             .toLowerCase();
@@ -60,8 +68,8 @@ class MemberCubit extends Cubit<MemberState> with FilterableMixin<MemberModel> {
   }
 
   @override
-  void emitFilteredState(List<MemberModel> filteredItems) {
-    emit(MemberLoaded(members: filteredItems));
+  void emitFilteredState(List<MemberItem> filteredItems) {
+    emit(MemberLoaded(members: MemberModel(data: filteredItems)));
   }
 
   void searchMember(String query) {
@@ -100,7 +108,7 @@ class MemberCubit extends Cubit<MemberState> with FilterableMixin<MemberModel> {
     );
   }
 
-  Future<void> editMember({required MemberModel member}) async {
+  Future<void> editMember({required MemberItem member}) async {
     emit(MemberEditing());
     final result = await repo.editMember(
       member.id.toString(),

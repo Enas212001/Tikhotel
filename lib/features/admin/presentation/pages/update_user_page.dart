@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ticket_flow/core/utils/widgets/custom_app_bar.dart';
-import 'package:ticket_flow/features/admin/data/models/user_model/user_model.dart';
+import 'package:ticket_flow/features/admin/data/models/user/user_model.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/user_cubit/user_cubit.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 

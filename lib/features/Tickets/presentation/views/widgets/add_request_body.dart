@@ -6,16 +6,16 @@ import 'package:ticket_flow/core/func/container_decoration.dart';
 import 'package:ticket_flow/core/func/custom_show_dialog.dart';
 import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/features/Tickets/presentation/manager/ticket_cubit/ticket_cubit.dart';
-import 'package:ticket_flow/features/Tickets/presentation/views/widgets/quantity_drop_down.dart';
-import 'package:ticket_flow/features/Tickets/presentation/views/widgets/request_type_drop_down.dart';
-import 'package:ticket_flow/features/Tickets/presentation/views/widgets/topics_drop_down.dart';
-import 'package:ticket_flow/features/admin/presentation/pages/widgets/worker_drop_down.dart';
-import 'package:ticket_flow/features/admin/presentation/pages/widgets/department_drop_down_menu.dart';
-import 'package:ticket_flow/features/report/presentation/pages/widget/location_drop_down.dart';
-import 'package:ticket_flow/features/onboarding/widget/custom_button.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/file_upload.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/message_text_field.dart';
+import 'package:ticket_flow/features/Tickets/presentation/views/widgets/quantity_drop_down.dart';
+import 'package:ticket_flow/features/Tickets/presentation/views/widgets/request_type_drop_down.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/title_on_border.dart';
+import 'package:ticket_flow/features/Tickets/presentation/views/widgets/topics_drop_down.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/widgets/department_single_select.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/widgets/worker_drop_down.dart';
+import 'package:ticket_flow/features/onboarding/widget/custom_button.dart';
+import 'package:ticket_flow/features/report/presentation/pages/widget/location_drop_down.dart';
 import 'package:ticket_flow/generated/l10n.dart';
 
 import 'request_text_field.dart';
@@ -58,7 +58,7 @@ class AddRequestBody extends StatelessWidget {
                   value: cubit.selectedRequestType,
                 ),
                 QuantityDropDown(),
-                DepartmentDropDown(
+                DepartmentSingleSelect(
                   onChanged: (value) => cubit.selectedDepartment = value,
                   value: cubit.selectedDepartment,
                 ),

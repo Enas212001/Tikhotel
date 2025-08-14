@@ -26,6 +26,7 @@ final class RequestTypeFailure extends RequestTypeState {
   @override
   List<Object> get props => [error];
 }
+
 final class AllRequestTypeLoading extends RequestTypeState {}
 
 final class AllRequestTypeLoaded extends RequestTypeState {

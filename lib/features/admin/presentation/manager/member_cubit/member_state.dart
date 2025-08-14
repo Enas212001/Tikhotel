@@ -12,7 +12,7 @@ final class MemberInitial extends MemberState {}
 final class MemberLoading extends MemberState {}
 
 final class MemberLoaded extends MemberState {
-  final List<MemberModel> members;
+  final MemberModel members;
   const MemberLoaded({required this.members});
 
   @override
@@ -37,7 +37,7 @@ final class MemberDeletingError extends MemberState {
 }
 
 final class MemberAdded extends MemberState {
-  final MemberModel message;
+  final MemberItem message;
   const MemberAdded({required this.message});
 }
 
@@ -49,7 +49,7 @@ final class MemberAddingError extends MemberState {
 }
 
 final class MemberEdited extends MemberState {
-  final MemberModel message;
+  final MemberItem message;
   const MemberEdited({required this.message});
 }
 
