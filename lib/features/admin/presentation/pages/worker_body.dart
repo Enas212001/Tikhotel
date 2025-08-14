@@ -59,6 +59,7 @@ class WorkerBody extends StatelessWidget {
             ),
           ),
           BlocBuilder<WorkerCubit, WorkerState>(
+            buildWhen: (previous, current) => current is! FetchWorkerLoading,
             builder: (context, state) {
               if (state is FetchWorkerSuccess) {
                 final totalPages =

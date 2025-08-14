@@ -62,6 +62,7 @@ class LocationBody extends StatelessWidget {
               ),
             ),
             BlocBuilder<LocationCubit, LocationState>(
+              buildWhen: (previous, current) => current is! LocationsLoading,
               builder: (context, state) {
                 if (state is LocationsLoading) {
                   return const ShimmerLoadingList();

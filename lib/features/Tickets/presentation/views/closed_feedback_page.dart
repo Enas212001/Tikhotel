@@ -18,6 +18,8 @@ class ClosedFeedbackPage extends StatelessWidget {
         body: ClosedFeedBackBody(),
         bottomNavigationBar:
             BlocBuilder<ClosedFeedbackCubit, ClosedFeedbackState>(
+              buildWhen: (previous, current) =>
+                  current is! TicketClosedFeedbackLoading,
               builder: (context, state) {
                 if (state is TicketClosedFeedbackSuccess) {
                   final totalPages =

@@ -61,6 +61,7 @@ class MemberBody extends StatelessWidget {
             ),
           ),
           BlocBuilder<MemberCubit, MemberState>(
+            buildWhen: (previous, current) => current is! MemberLoading,
             builder: (context, state) {
               if (state is MemberLoading) {
                 return const ShimmerLoadingList();

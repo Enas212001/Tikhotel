@@ -41,6 +41,7 @@ class ProblemsBody extends StatelessWidget {
             },
           ),
           BlocBuilder<ProblemCubit, ProblemState>(
+            buildWhen: (previous, current) => current is! ProblemFetching,
             builder: (context, state) {
               if (state is ProblemFetching) {
                 return const ShimmerLoadingList();

@@ -66,6 +66,7 @@ class TopicBody extends StatelessWidget {
             ),
           ),
           BlocBuilder<TopicCubit, TopicState>(
+            buildWhen: (previous, current) => current is! TopicFetching,
             builder: (context, state) {
               if (state is TopicFetching) {
                 return const ShimmerLoadingList();

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ticket_flow/core/func/custom_toast.dart';
 import 'package:ticket_flow/core/utils/app_routes.dart';
 import 'package:ticket_flow/core/utils/widgets/add_filter_widget.dart';
+import 'package:ticket_flow/core/utils/widgets/pagination_controller.dart';
 import 'package:ticket_flow/core/utils/widgets/shimmer_loading.dart';
 import 'package:ticket_flow/features/admin/presentation/manager/request_type_cubit/request_type_cubit.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/generic_filter_dialog.dart';
@@ -53,13 +54,31 @@ class RequestTypesBody extends StatelessWidget {
               ),
             ),
             BlocBuilder<RequestTypeCubit, RequestTypeState>(
+              buildWhen: (previous, current) => current is! RequestTypeLoading,
               builder: (context, state) {
                 if (state is RequestTypeLoaded) {
-                  return CommonAdminListView(
-                    item: (context, index) => RequestTypeCard(
-                      requestType: state.requestTypes.data![index],
-                    ),
-                    itemCount: state.requestTypes.data!.length,
+                  final totalPages =
+                      (state.requestTypes.pagination!.total! /
+                              state.requestTypes.pagination!.limit!)
+                          .ceil();
+                  return Column(
+                    children: [
+                      PaginationControls(
+                        currentPage: state.requestTypes.pagination!.page!,
+                        totalPages: totalPages,
+                        onPageSelected: (page) {
+                          context.read<RequestTypeCubit>().getRequestTypes(
+                            page: page,
+                          );
+                        },
+                      ),
+                      CommonAdminListView(
+                        item: (context, index) => RequestTypeCard(
+                          requestType: state.requestTypes.data![index],
+                        ),
+                        itemCount: state.requestTypes.data!.length,
+                      ),
+                    ],
                   );
                 } else if (state is RequestTypeFailure) {
                   return Center(

@@ -64,6 +64,8 @@ class DepartmentBody extends StatelessWidget {
             ),
           ),
           BlocBuilder<DepartmentCubit, DepartmentState>(
+            buildWhen: (previous, current) =>
+                current is! DepartmentFetchLoading,
             builder: (context, state) {
               if (state is DepartmentFetchLoading) {
                 return const ShimmerLoadingList();

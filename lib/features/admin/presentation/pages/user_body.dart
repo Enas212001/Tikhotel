@@ -65,6 +65,7 @@ class UsersBody extends StatelessWidget {
             onRefresh: () => context.read<UserCubit>().getUsers(),
             color: Theme.of(context).colorScheme.primary,
             child: BlocBuilder<UserCubit, UserState>(
+              buildWhen: (previous, current) => current is! GetUsersLoading,
               builder: (context, state) {
                 if (state is GetUsersSuccess) {
                   final totalPages =

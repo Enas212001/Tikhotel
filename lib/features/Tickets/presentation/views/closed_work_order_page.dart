@@ -19,6 +19,8 @@ class ClosedWorkOrderPage extends StatelessWidget {
         body: ClosedWorkOrderBody(),
         bottomNavigationBar:
             BlocBuilder<ClosedWorkOrderCubit, ClosedWorkOrderState>(
+              buildWhen: (previous, current) =>
+                  current is! TicketClosedWorkOrderLoading,
               builder: (context, state) {
                 if (state is TicketClosedWorkOrderSuccess) {
                   final totalPages =

@@ -17,6 +17,7 @@ class FeedbackPage extends StatelessWidget {
         drawer: MyAppDrawer(),
         body: FeedbackBody(),
         bottomNavigationBar: BlocBuilder<FeedbackCubit, FeedbackState>(
+          buildWhen: (previous, current) => current is! TicketFeedbackLoading,
           builder: (context, state) {
             if (state is TicketFeedbackSuccess) {
               final totalPages =

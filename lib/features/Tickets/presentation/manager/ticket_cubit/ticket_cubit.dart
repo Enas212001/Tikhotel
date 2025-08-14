@@ -24,12 +24,8 @@ class TicketCubit extends Cubit<TicketState> {
   final TicketsRepo ticketsRepo = TicketsRepoImpl(
     api: getIt.get<DioConsumer>(),
   );
-  // Pagination tracking for each type
   int ticketsPage = 1;
-
   final int limit = 20;
-
-  // ✅ Normal Tickets
   Future<void> fetchTickets({int? page}) async {
     ticketsPage = page ?? ticketsPage;
     emit(TicketLoading());
