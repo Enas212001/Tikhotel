@@ -12,8 +12,9 @@ PopupProps<T> dropdownDecoration<T>(BuildContext context) {
     searchFieldProps: TextFieldProps(
       decoration: InputDecoration(
         hintText: S.of(context).search,
-        border: borderTextField(),
         floatingLabelBehavior: FloatingLabelBehavior.never,
+        enabled: true,
+        border: borderTextField(),
         enabledBorder: borderTextField(),
         focusedBorder: borderTextField(),
         contentPadding: EdgeInsets.symmetric(horizontal: 12.w),

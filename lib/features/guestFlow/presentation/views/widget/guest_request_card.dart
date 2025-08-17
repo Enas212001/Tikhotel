@@ -60,7 +60,21 @@ class GuestRequestCard extends StatelessWidget {
                           ),
                           RequestItemGuest(
                             title: S.of(context).status,
-                            data: ticketModel.status ?? '',
+                            data: ticketModel.status == 'In Progress'
+                                ? S.of(context).accepted
+                                : ticketModel.status == 'RepliedByClient'
+                                ? S.of(context).repliedByGuest
+                                : ticketModel.status == 'Closed'
+                                ? S.of(context).closed
+                                : ticketModel.status == 'RepliedBySupport'
+                                ? S.of(context).repliedByDep
+                                : ticketModel.status == 'ClosedWithFeedback'
+                                ? S.of(context).closed
+                                : ticketModel.status == 'Hold'
+                                ? S.of(context).hold
+                                : ticketModel.status == 'New'
+                                ? S.of(context).neW
+                                : '',
                             width: 100.w,
                           ),
                         ],

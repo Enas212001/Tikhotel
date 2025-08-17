@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,10 +64,12 @@ class TicketCubit extends Cubit<TicketState> {
     key: CacheKey.requestedBy,
   );
   RequestTypeItem? selectedRequestType;
-  void setSelectedDepartment(DepartmentItem? department, BuildContext context) {
-    selectedDepartment = department;
-    problemId = null;
-    emit(TicketDepartmentChanged());
+  void setSelectedDepartment(BuildContext context, DepartmentItem? department) {
+    if (selectedDepartment?.id != department?.id) {
+      selectedDepartment = department;
+      log(department!.name!);
+      emit(TicketDepartmentChanged(department: department));
+    }
   }
 
   Future<void> addTicket() async {

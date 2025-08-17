@@ -31,15 +31,31 @@ class RequestsPage extends StatelessWidget {
                 if (state is TicketsGuestSuccess) {
                   return SliverList(
                     delegate: SliverChildBuilderDelegate((context, index) {
+                      if (state.ticketModel.data!.isEmpty) {
+                        return SliverFillRemaining(
+                          child: Center(child: Text(S.of(context).noRequests)),
+                        );
+                      }
                       return GuestRequestCard(
                         ticketModel: state.ticketModel.data![index],
                       );
                     }, childCount: state.ticketModel.data!.length),
                   );
+                } else if (state is TicketsGuestFailure) {
+                  return SliverToBoxAdapter(
+                    child: Center(child: Text(state.message)),
+                  );
+                } else if (state is TicketsGuestLoading) {
+                  return SliverToBoxAdapter(
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                } else {
+                  return SliverToBoxAdapter(
+                    child: Center(
+                      child: Text(S.of(context).anUnexpectedErrorOccurred),
+                    ),
+                  );
                 }
-                return const SliverToBoxAdapter(
-                  child: Center(child: CircularProgressIndicator()),
-                );
               },
             ),
           ],

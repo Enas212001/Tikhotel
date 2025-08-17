@@ -11,7 +11,7 @@ import 'package:ticket_flow/features/Tickets/presentation/views/widgets/message_
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/DropDown/quantity_drop_down.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/DropDown/request_type_drop_down.dart';
 import 'package:ticket_flow/features/Tickets/presentation/views/widgets/title_on_border.dart';
-import 'package:ticket_flow/features/admin/presentation/pages/widgets/DropDown/topics_drop_down.dart';
+import 'package:ticket_flow/features/admin/presentation/pages/widgets/DropDown/problem_drop_down.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/DropDown/department_single_select.dart';
 import 'package:ticket_flow/features/admin/presentation/pages/widgets/DropDown/worker_drop_down.dart';
 import 'package:ticket_flow/features/onboarding/widget/custom_button.dart';
@@ -61,8 +61,9 @@ class AddRequestBody extends StatelessWidget {
                   ),
                   QuantityDropDown(),
                   DepartmentSingleSelect(
-                    onChanged: (value) =>
-                        cubit.setSelectedDepartment(value, context),
+                    onChanged: (value) {
+                      cubit.setSelectedDepartment(context, value);
+                    },
                     value: cubit.selectedDepartment,
                   ),
                   CustomRequestTextField(
@@ -78,7 +79,6 @@ class AddRequestBody extends StatelessWidget {
                   ProblemsDropDown(
                     value: cubit.problemId,
                     onChanged: (value) => cubit.problemId = value,
-                    selectedDepartment: cubit.selectedDepartment,
                   ),
                   WorkerDropDown(
                     value: cubit.workerId,

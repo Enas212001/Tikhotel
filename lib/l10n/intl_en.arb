@@ -262,5 +262,10 @@
     "forAnyFeedback": "for any feedback",
     "all": "All",
     "neW": "New",
-    "ticketUpdated": "Ticket updated"
+    "ticketUpdated": "Ticket updated",
+    "repliedByDep": "Replied By Dep",
+    "repliedByGuest": "Replied By Guest",
+    "closed": "Closed",
+    "closedWithFeedback": "Closed With Feedback",
+    "hold": "Hold"
 }

@@ -2339,6 +2339,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Replied By Dep`
+  String get repliedByDep {
+    return Intl.message(
+      'Replied By Dep',
+      name: 'repliedByDep',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Replied By Guest`
+  String get repliedByGuest {
+    return Intl.message(
+      'Replied By Guest',
+      name: 'repliedByGuest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Closed`
+  String get closed {
+    return Intl.message(
+      'Closed',
+      name: 'closed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Closed With Feedback`
+  String get closedWithFeedback {
+    return Intl.message(
+      'Closed With Feedback',
+      name: 'closedWithFeedback',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hold`
+  String get hold {
+    return Intl.message(
+      'Hold',
+      name: 'hold',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

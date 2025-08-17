@@ -65,10 +65,13 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please choose to continue as a Guest or an Administrator"),
         "closeTime": MessageLookupByLibrary.simpleMessage("Close time"),
         "closeTimeColon": MessageLookupByLibrary.simpleMessage("Close time :"),
+        "closed": MessageLookupByLibrary.simpleMessage("Closed"),
         "closedFeedback":
             MessageLookupByLibrary.simpleMessage("Closed Feedback"),
         "closedRequests":
             MessageLookupByLibrary.simpleMessage("Closed Requests"),
+        "closedWithFeedback":
+            MessageLookupByLibrary.simpleMessage("Closed With Feedback"),
         "closedWorkOrder":
             MessageLookupByLibrary.simpleMessage("Closed Work Order"),
         "closedWorkOrders":
@@ -135,6 +138,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "guest": MessageLookupByLibrary.simpleMessage("Guest"),
         "guests": MessageLookupByLibrary.simpleMessage("Guests"),
         "hideDetails": MessageLookupByLibrary.simpleMessage("Hide Details"),
+        "hold": MessageLookupByLibrary.simpleMessage("Hold"),
         "housekeeping": MessageLookupByLibrary.simpleMessage("Housekeeping"),
         "inactive": MessageLookupByLibrary.simpleMessage("Inactive"),
         "info": MessageLookupByLibrary.simpleMessage("Info"),
@@ -201,6 +205,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Registration Date"),
         "replay": MessageLookupByLibrary.simpleMessage("Replay"),
         "replayMessage": MessageLookupByLibrary.simpleMessage("Replay Message"),
+        "repliedByDep": MessageLookupByLibrary.simpleMessage("Replied By Dep"),
+        "repliedByGuest":
+            MessageLookupByLibrary.simpleMessage("Replied By Guest"),
         "report": MessageLookupByLibrary.simpleMessage("Report"),
         "reportAddedSuccessfully":
             MessageLookupByLibrary.simpleMessage("Report added successfully"),

@@ -9,7 +9,14 @@ sealed class TicketState extends Equatable {
 
 final class TicketInitial extends TicketState {}
 
-final class TicketDepartmentChanged extends TicketState {}
+final class TicketDepartmentChanged extends TicketState {
+  final DepartmentItem? department;
+
+  const TicketDepartmentChanged({required this.department});
+
+  @override
+  List<Object> get props => [department ?? const []];
+}
 
 final class TicketLoading extends TicketState {}
 
